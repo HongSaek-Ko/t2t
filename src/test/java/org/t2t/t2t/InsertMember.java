@@ -6,7 +6,7 @@ import java.sql.*;
 public class InsertMember {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/t2t?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8","k8go4go","k8go4go");
+        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/t2t?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8","test1","1234");
         con.setAutoCommit(false);
         PreparedStatement pstmt = con.prepareStatement("INSERT INTO MEM " +
                 "(USRID, PASSWD, NM, EMAIL, ROLEID, " +
