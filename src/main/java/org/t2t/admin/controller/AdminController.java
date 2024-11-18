@@ -7,8 +7,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/adm")
 public class AdminController {
-    @GetMapping("post")
-    public String post() {
-        return "post";
-    }
+
 }
