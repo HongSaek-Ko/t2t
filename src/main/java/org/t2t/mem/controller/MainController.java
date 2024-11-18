@@ -8,6 +8,7 @@ import org.t2t.mem.dto.MemberDTO;
 
 @Controller
 public class MainController {
+    /*
     @GetMapping("/testuser")
     public String getTestLogin(HttpServletRequest request) {
         MemberDTO dto = MemberDTO.builder()
@@ -19,7 +20,7 @@ public class MainController {
         session.setAttribute("user", dto);
         return "redirect:/";
     }
-
+*/
     @GetMapping("/")
     public String getHome(HttpServletRequest request) {
         return "index";
