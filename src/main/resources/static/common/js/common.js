@@ -3,6 +3,30 @@ $(document).ready(function () {
         {
             '#loginEvent': function () {
                 $('#loginModal').modal('show');
+            },
+            '#loginBtn': function (){
+                var id = $("#userID").val();
+                var pw = $("#password").val();
+                console.log('아이디:', id);
+                console.log('비밀번호:', pw);
+
+                $.ajax({
+                    url: '/login',
+                    type: 'POST',
+                    data: {
+                        'username': id,
+                        'password': pw
+                    },
+                    success: function (response) {
+                        if(response.success) {
+                            $('#loginModal').hide();
+
+                            $('#logoutEvent').show();
+
+                        }
+                    }
+                });
+
             }
             , '#settingEvent': function () {
                 console.log('settingEvent');
@@ -12,11 +36,22 @@ $(document).ready(function () {
             }
             , '#logoutEvent': function () {
                 console.log('logoutEvent');
+                $.ajax({
+                    url: '/logout',
+                    type: 'GET',
+                    success:function (){
+                        $('#loginEvent').show();
+                        $('#logoutEvent').hide();
+                    }
+                })
             }
         };
     console.log(_tag);
     register_event(_tag);
 });
+
+
+
 
 function register_event(_targets) {
     let _keys = Object.keys(_targets);
