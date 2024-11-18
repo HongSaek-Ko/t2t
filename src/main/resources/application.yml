@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: t2t
+
+  devtools:
+    restart:
+      enabled: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username:
+    password:
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 30MB
+
+#uploadfile.dir: D:\\project\\t2t\\src\\main\\resources\\static\\upload\\
+#movingfile.from: profile\\temp\\
+#movedfile.to: profile\\
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+
+logging:
+  level:
+    org.springframework.jdbc: debug
+    org.apache.coyote.http11: trace
+    org.k8go4go.miniboard.mapper: trace
+
+server:
+  servlet:
+    context-path: /
+
