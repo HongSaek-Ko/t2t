@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::header('회원정보보기')"></head>
+<body>
+<div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
+    <!-- Sidebar -->
+    <th:block th:fragment="searchbar">
+        <th:block th:replace="fragments/searchbar::searchbar"></th:block>
+    </th:block>
+
+    <!-- Sidebar -->
+
+    <th:block th:fragment="sidebar">
+        <th:block th:replace="fragments/sidebar::setMySideBar(~{::content})">
+            <th:block th:fragment="content">
+
+                <h1>Content Test</h1>
+
+
+            </th:block>
+        </th:block>
+    </th:block>
+    <!-- End of Sidebar -->
+</div>
+</body>
+</html>
