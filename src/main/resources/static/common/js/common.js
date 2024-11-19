@@ -28,11 +28,11 @@ $(document).ready(function () {
                 });
 
             }
-            , '#settingEvent': function () {
-                console.log('settingEvent');
+            , '#joinEvent': function () {
+                $('#joinModal').modal('show');
             }
-            , '#profileEvent': function () {
-                console.log('profileEvent');
+            , '#leaveEvent': function () {
+                $('#leaveModal').modal('show');
             }
             , '#logoutEvent': function () {
                 console.log('logoutEvent');
