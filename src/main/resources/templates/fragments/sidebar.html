@@ -63,10 +63,84 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
-                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="검색필터">
-                        <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
-                    </a>
+                    <div class="dropright">
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0"
+                           data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60, -100">
+                            <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
+                        </a>
+                        <div class="dropdown-menu" id="filterCategory">
+                            <form class="px-4 py-3">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="cateTitle">카테고리<span id="cateTitle"></span></label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateAnimalCheck">
+                                        <label class="form-check-label" for="cateAnimalCheck">동물</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="catePersonCheck">
+                                        <label class="form-check-label" for="catePersonCheck">인물</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateTourCheck">
+                                        <label class="form-check-label" for="cateTourCheck">여행</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateFoodCheck">
+                                        <label class="form-check-label" for="cateFoodCheck">음식</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateAllCheck">
+                                        <label class="form-check-label" for="cateAllCheck">전체</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="gradeTitle">등급별<span id="gradeTitle"></span></label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeACheck">
+                                        <label class="form-check-label" for="gradeACheck">A등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeBCheck">
+                                        <label class="form-check-label" for="gradeBCheck">B등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeCCheck">
+                                        <label class="form-check-label" for="gradeCCheck">C등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeDCheck">
+                                        <label class="form-check-label" for="gradeDCheck">D등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeECheck">
+                                        <label class="form-check-label" for="gradeECheck">E등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeAllCheck">
+                                        <label class="form-check-label" for="gradeAllCheck">전체</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-ch">
+                                    <button type="button"  class="btn btn-primary btn-sm">적용</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </li>
                 <li>
                     <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
@@ -88,7 +162,9 @@
                     tooltipTriggerList.forEach(tooltipTriggerEl => {
                         new bootstrap.Tooltip(tooltipTriggerEl)
                     })
-                })()
+                })();
+
+
             </script>
         </div>
         <th:block th:replace="${content}"></th:block>
@@ -112,10 +188,84 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
-                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="검색필터">
-                        <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
-                    </a>
+                    <div class="dropright">
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0"
+                           data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60, -100">
+                            <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
+                        </a>
+                        <div class="dropdown-menu" id="filterCategory">
+                            <form class="px-4 py-3">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="cateTitle">카테고리<span id="cateTitle"></span></label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateAnimalCheck">
+                                        <label class="form-check-label" for="cateAnimalCheck">동물</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="catePersonCheck">
+                                        <label class="form-check-label" for="catePersonCheck">인물</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateTourCheck">
+                                        <label class="form-check-label" for="cateTourCheck">여행</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateFoodCheck">
+                                        <label class="form-check-label" for="cateFoodCheck">음식</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateAllCheck">
+                                        <label class="form-check-label" for="cateAllCheck">전체</label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="gradeTitle">등급별<span id="gradeTitle"></span></label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeACheck">
+                                        <label class="form-check-label" for="gradeACheck">A등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeBCheck">
+                                        <label class="form-check-label" for="gradeBCheck">B등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeCCheck">
+                                        <label class="form-check-label" for="gradeCCheck">C등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeDCheck">
+                                        <label class="form-check-label" for="gradeDCheck">D등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeECheck">
+                                        <label class="form-check-label" for="gradeECheck">E등급</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="gradeAllCheck">
+                                        <label class="form-check-label" for="gradeAllCheck">전체</label>
+                                    </div>
+                                </div>
+                                <div class="form-check form-ch">
+                                    <button type="button"  class="btn btn-primary btn-sm">적용</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </li>
                 <li>
                     <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
@@ -157,11 +307,38 @@
                     tooltipTriggerList.forEach(tooltipTriggerEl => {
                         new bootstrap.Tooltip(tooltipTriggerEl)
                     })
-                })()
+                })();
             </script>
         </div>
         <th:block th:replace="${content}"></th:block>
+
+        <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="loginModalLabel">검색 필터</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label class="col-form-label">카테고리별</label>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary">설정하기</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="bundle-login.css">
 </th:block>
 
 </html>
