@@ -18,6 +18,7 @@ import java.util.Map;
 @Controller
 @Slf4j
 public class MainController {
+    /*
     @GetMapping("/testuser")
 
     public String getTestLogin(HttpServletRequest request) {
@@ -31,7 +32,7 @@ public class MainController {
 
         return "redirect:/";
     }
-
+*/
     @GetMapping("/")
     public String getHome(HttpServletRequest request) {
         return "index";

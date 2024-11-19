@@ -1,3 +1,4 @@
+
 spring:
   application:
     name: t2t
@@ -9,8 +10,8 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: k8go4go
-    password: k8go4go
+    username: test1
+    password: 1234
 
   servlet:
     multipart:
