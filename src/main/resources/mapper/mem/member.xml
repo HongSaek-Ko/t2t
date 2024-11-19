@@ -19,11 +19,11 @@
         DELETE FROM MEM WHERE USRID=#{USRID}
     </delete>
     <!-- 마일리지 충전 -->
-    <insert id="addMiles">
+    <insert id="addMile">
         INSERT INTO MILES VALUE POINT
     </insert>
     <!-- 마일리지 환전 -->
-    <update id="minMIles">
+    <update id="minMIle">
         UPDATE MILES SET POINT
         WHERE USRID=#{USRID}
     </update>

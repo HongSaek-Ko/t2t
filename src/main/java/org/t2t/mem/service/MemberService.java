@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.t2t.mem.dto.MemberDTO;
 import org.t2t.mem.dto.MemberStatus;
 import org.t2t.mem.dto.RoleId;
+import org.t2t.mem.repository.MemberMapper;
 
 import java.time.LocalDateTime;
 
@@ -47,4 +48,20 @@ public class MemberService {
 
         return dto;
     }
-}
+
+/*
+    public Long addPoint(String usrId) {
+        MileDTO dto = MileDTO.builder()
+                .usrId(usrId)
+                .point(1000L)
+                .regDt(LocalDateTime.now())
+                .lastDt(LocalDateTime.now())
+                .build();
+
+
+        return '';
+        }
+*/
+
+     }
+
