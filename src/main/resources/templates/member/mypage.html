@@ -13,14 +13,127 @@
     <th:block th:fragment="sidebar">
         <th:block th:replace="fragments/sidebar::setMySideBar(~{::content})">
             <th:block th:fragment="content">
+                <div class="container text-center">
+                    <div class="row">
+                        <div class="col">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <img th:src="@{/upload/profile/profile1.jpg}" width="300px;" height="300px;"
+                                             class="img-thumbnail mx-auto rounded-circle" alt="...">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="mb-3">
+                                            <label for="exampleFormControlTextarea1" class="form-label">자기소개</label>
+                                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"
+                                                      style="height:250px;resize:none;"  th:text="${myuser.intro}"></textarea>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col">
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="mile">보유 마일리지</span>
+                                            <input type="text" class="form-control" placeholder="Username"
+                                                   aria-label="Username" aria-describedby="mile" readonly th:value="${myuser.mile.point}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="input-group mb-3">
+                                            <span class="input-group-text" id="grade">등급 현황</span>
+                                            <input type="text" class="form-control" placeholder="Username"
+                                                   aria-label="Username" aria-describedby="grade" readonly th:value="${myuser.rank.score}">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <button type="button" class="btn btn-primary" id="rechargeEvent" value="rechargeEvent">충전</button>
+                                        <button type="button" class="btn btn-warning" id="exchageEvent" value="exchageEvent">환전</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="usrID" class="form-label">ID</label>
+                                        <input type="email" class="form-control" id="usrID" placeholder="ID" readonly th:value="${myuser.usrId}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="email" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" id="email" placeholder="Email"
+                                               readonly th:value="${myuser.email}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="email" class="form-control" id="name" placeholder="이름" readonly th:value="${myuser.nm}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="bkAcntName" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="bkAcntName" placeholder="계좌주"
+                                               readonly th:value="${myuser.bankAcntOwr}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="bkname" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="bkname" placeholder="은행명" readonly th:value="${myuser.bankNm}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="bankAcnt" class="form-label">Bank name</label>
+                                        <input type="text" class="form-control" id="bankAcnt" placeholder="계좌번호" th:value="${myuser.bankAcnt}">
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal fade" id="commonModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="commonModalLabel">New message</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
 
-                <h1>Content Test</h1>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary">Send message</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
 
+                <script type="text/javascript" th:src='@{/js/mypage.js}'></script>
             </th:block>
         </th:block>
     </th:block>
     <!-- End of Sidebar -->
 </div>
 </body>
+
+
 </html>

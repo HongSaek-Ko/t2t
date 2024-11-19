@@ -22,6 +22,7 @@ spring:
 #uploadfile.dir: D:\\project\\t2t\\src\\main\\resources\\static\\upload\\
 #movingfile.from: profile\\temp\\
 #movedfile.to: profile\\
+HTTP_SESSION_USER: t2t_session_user
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

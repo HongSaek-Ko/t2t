@@ -2,6 +2,30 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.t2t.mem.">
+<mapper namespace="org.t2t.mem.repository.MemberMapper">
+    <!-- 회원 1명 정보 조회 -->
+    <select id="findByID" resultType="MemberDTO">
+        SELECT * FROM MEM WHERE USRID=#{USRID}
+    </select>
+    <!-- 회원 전체 조회 -->
+    <select id="findList" resultType="MemberDTO">
+        SELECT * FROM MEM
+    </select>
+    <update id="updateMem">
+        UPDATE MEM SET(NM, EMAIL, INTRO) WHERE USRID=#{USRID}
+    </update>
+    <!-- 회원 탈퇴 -->
+    <delete id="deelteMem">
+        DELETE FROM MEM WHERE USRID=#{USRID}
+    </delete>
+    <!-- 마일리지 충전 -->
+    <insert id="addMiles">
+        INSERT INTO MILES VALUE POINT
+    </insert>
+    <!-- 마일리지 환전 -->
+    <update id="minMIles">
+        UPDATE MILES SET POINT
+        WHERE USRID=#{USRID}
+    </update>
 
 </mapper>

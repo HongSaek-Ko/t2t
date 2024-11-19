@@ -2,6 +2,7 @@ package org.t2t.mem.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +16,8 @@ import java.util.Map;
 
 @Controller
 public class MainController {
-    /*
+    @Value("${HTTP_SESSION_USER}")
+    private String HTTP_SESSION_USER;
     @GetMapping("/testuser")
     public String getTestLogin(HttpServletRequest request) {
         MemberDTO dto = MemberDTO.builder()
@@ -24,10 +26,10 @@ public class MainController {
                 .build();
 
         HttpSession session = request.getSession();
-        session.setAttribute("user", dto);
+        session.setAttribute(HTTP_SESSION_USER, dto);
         return "redirect:/";
     }
-*/
+
     @GetMapping("/")
     public String getHome(HttpServletRequest request) {
         return "index";
