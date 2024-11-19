@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="side">
+    <main class="d-flex flex-nowrap">
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+                <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page"
+                   data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                    <i class="bi bi-house-door" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="Dashboard">
+                    <i class="bi bi-file-earmark-plus" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                    <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Products" data-bs-original-title="Products">
+                    <i class="bi bi-chat-text" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Customers" data-bs-original-title="Customers">
+                    <i class="bi bi-question-square" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+        </ul>
+        <script type="text/javascript">
+            (() => {
+                'use strict'
+                const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                tooltipTriggerList.forEach(tooltipTriggerEl => {
+                    new bootstrap.Tooltip(tooltipTriggerEl)
+                })
+            })()
+        </script>
+    </main>
+</th:block>
+<th:block th:fragment="setSideBar(content)">
+    <main class="d-flex flex-nowrap">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="margin:5px;">
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page"
+                       data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home"
+                       data-bs-original-title="Home">
+                        <i class="bi bi-house-door" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="Dashboard">
+                        <i class="bi bi-file-earmark-plus" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                        <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Products" data-bs-original-title="Products">
+                        <i class="bi bi-chat-text" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Customers" data-bs-original-title="Customers">
+                        <i class="bi bi-question-square" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+            </ul>
+            <script type="text/javascript">
+                (() => {
+                    'use strict'
+                    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    tooltipTriggerList.forEach(tooltipTriggerEl => {
+                        new bootstrap.Tooltip(tooltipTriggerEl)
+                    })
+                })()
+            </script>
+        </div>
+        <th:block th:replace="${content}"></th:block>
+    </main>
+</th:block>
+</html>

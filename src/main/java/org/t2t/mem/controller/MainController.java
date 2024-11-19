@@ -30,4 +30,10 @@ public class MainController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @GetMapping("/testlayout")
+    public String getTestLayout() {
+        return "/member/test";
+    }
+
 }
