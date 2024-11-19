@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::header('회원정보보기')"></head>
+<body>
+<div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
+  <!-- Sidebar -->
+  <th:block th:fragment="searchbar">
+    <th:block th:replace="fragments/searchbar::searchbar"></th:block>
+  </th:block>
+
+  <!-- Sidebar -->
+
+  <th:block th:fragment="sidebar">
+    <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+      <th:block th:fragment="content">
+        <!-- 컨텐츠 시작 지점 -->
+
+        <div class="container text-center">
+
+          <div class="row">
+            <div class="col">
+              <div align="left">
+                <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="https://cdn.eyesmag.com/content/uploads/sliderImages/2022/12/30/3-fb9fd982-6568-4662-8ed1-d16ceb53ada9.jpg" alt="mdo" width="72" height="72" class="rounded-circle">
+                <span>사용자 닉네임</span></a>
+  <!--      <button><i class="bi bi-house-door" th:onclick="|location.href='@{/}'|"></i></button> / <a href=""> </a>-->
+              </div>
+              <div class="mx-auto">
+                <div class="card" style="width: 30rem;">
+                  <img th:src="@{/common/img/default.png}" class="card-img-top" alt="기본이미지">
+                  <div class="card-body">
+                      <div align="center">
+                      <a type="button">
+                        <i class="bi bi-heart-fill"></i>
+                      </a>
+                        <span>좋아요(숫자)</span>
+
+                      <a type="button">
+                        <i class="bi bi-eye"></i>
+                      </a>
+                        <span>조회수(숫자)</span>
+
+                      <a type="button">
+                        <i class="bi bi-cash"></i>
+                      </a>
+                      <span>구매량(숫자)</span>
+
+                        <p class="margin"></p><br/>
+                          <button type="button" class="btn btn-success marg" >판매자와 연락하기</button>
+                          <p class="margin"></p><br/>
+                          <button type="button" class="btn btn-primary">구매하기</button>
+                      </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="col">
+              <div align="right">
+                <button type="button" class="btn btn-danger"> 신고 </button>
+                <button type="button" class="btn btn-danger"> 수정 </button>
+                <button type="button" class="btn btn-danger" id="deleteBtn"> 삭제 </button>
+              </div>
+              <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">제목</label>
+                  <input type="text" value="제목" class="form-control" id="exampleFormControlInput1" readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">설명</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly></textarea>
+                </div> <!--제목/설명 끝-->
+
+                <div class="card">
+                  <div class="card-body">
+                    기입한 #해시태그들...
+                  </div>
+                </div>
+                <p class="margin">
+
+                <div class="card">
+                  <div class="card-body">
+                    <p>가격: [[n]]원</p>
+                    남은 수량: [[n]]개
+                  </div>
+                </div>
+                <p class="margin">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">댓글</h6>
+                  </div>
+                  <div class="card-body">
+                    <form action="/replies/add" method="post" id="replyForm">
+                      <div class="mb-3">
+                        <label class="form-label">작성자</label>
+                        <input type="text" id="newReplyer" class="form-control"  />
+                      </div>
+                      <div class="mb-3">
+                        <label class="form-label">댓글 내용</label>
+                        <input type="text" id="newReply" class="form-control"  />
+                      </div>
+                      <button type="button" id="newReplySubmit" class="btn btn-primary">작성</button>
+                    </form>
+                  </div>
+                  <hr/>
+                  <div class="card-body" id="replyListDiv">
+                    <div class="row no-gutters align-items-center">
+                      <div class="col mr-2">
+                        <div class="h5 mb-1 font-weight-bold text-gray-800"> 댓글 내용 </div>
+                        <div class="text-xs-font-weight-bold text-primary">
+                          작성자 <span class="ml-2 text-gray-500">2024.10.28.</span>
+                        </div>
+                      </div>
+                      <div class="col-auto btn-group-sm">
+                        <button type="button" class="btn btn-info" id="modifyBtn"> 수정 </button> <!--id="modifBtn" 이렇게, id 식으로 하면 계속 반복되므로 권장되지 않음-->
+                        <button type="button" class="btn btn-danger" id="deleteReply"> 삭제 </button>
+                      </div>
+                    </div>
+                  </div> <!--/댓글 목록 (replyList) -->
+                  <!-- 댓글 Pagination -->
+                  <div class="card-footer">
+
+                  </div>
+                </div> <!--댓글 끝-->
+              </div>  <!-- 종료 지점: 가로배치 우회 -->
+              <!--댓글 시작 -->
+            </div>
+          </div>
+        </div>
+
+        <div class="modal fade" id="deletePrdModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <img src="/common/img/t2t.png" width="40" height="40"/>
+                <h1 class="modal-title fs-5" id="deleteModalLabel">삭제하시겠습니까?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form id="deletePrdForm">
+                  <div class="form-floating mb-2">
+                    <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">
+                    <label for="floatingDeletePassword">Password</label>
+                  </div>
+                  <div class="mb-5" style="display: flex; justify-content: center">
+                    <button type="submit" class="btn btn-danger mx-2" id="deletePrdComplete" >삭제</button>
+                  </div>
+                  <ul class="nav justify-content-center mb-2">
+                    <li class="nav-item">
+                      <a class="nav-link" href="#">비밀번호 찾기</a>
+                    </li>
+                  </ul>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+
+        <script type="text/javascript" th:src='@{/js/prdDetail.js}'></script>
+        <!-- 컨텐츠 종료 지점 -->
+      </th:block>
+    </th:block>
+  </th:block>
+
+
+  <!-- End of Sidebar -->
+</div>
+</body>
+</html>

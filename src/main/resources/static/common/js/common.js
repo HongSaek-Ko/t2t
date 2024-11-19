@@ -50,9 +50,6 @@ $(document).ready(function () {
     register_event(_tag);
 });
 
-
-
-
 function register_event(_targets) {
     let _keys = Object.keys(_targets);
     // $(_keys[0]).on('click', function() {
