@@ -51,32 +51,32 @@
             <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
                 <li class="nav-item">
                     <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page"
-                       data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home"
+                       data-bs-toggle="tooltip" data-bs-placement="right" aria-label="홈으로.."
                        data-bs-original-title="Home">
                         <i class="bi bi-house-door" style="font-size: 24px; text-align: center;"></i>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
-                       data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="Dashboard">
+                       data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="상품등록">
                         <i class="bi bi-file-earmark-plus" style="font-size: 24px; text-align: center;"></i>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
-                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="검색필터">
                         <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
-                       data-bs-placement="right" aria-label="Products" data-bs-original-title="Products">
+                       data-bs-placement="right" aria-label="Products" data-bs-original-title="채팅목록">
                         <i class="bi bi-chat-text" style="font-size: 24px; text-align: center;"></i>
                     </a>
                 </li>
                 <li>
                     <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
-                       data-bs-placement="right" aria-label="Customers" data-bs-original-title="Customers">
+                       data-bs-placement="right" aria-label="Customers" data-bs-original-title="FAQ">
                         <i class="bi bi-question-square" style="font-size: 24px; text-align: center;"></i>
                     </a>
                 </li>
@@ -94,4 +94,74 @@
         <th:block th:replace="${content}"></th:block>
     </main>
 </th:block>
+<th:block th:fragment="setMySideBar(content)">
+    <main class="d-flex flex-nowrap">
+        <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="margin:5px;">
+            <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page"
+                       data-bs-toggle="tooltip" data-bs-placement="right" aria-label="홈으로.."
+                       data-bs-original-title="Home">
+                        <i class="bi bi-house-door" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="상품등록">
+                        <i class="bi bi-file-earmark-plus" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="검색필터">
+                        <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Products" data-bs-original-title="채팅목록">
+                        <i class="bi bi-chat-text" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Customers" data-bs-original-title="FAQ">
+                        <i class="bi bi-question-square" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Orders" data-bs-original-title="현재거래내역">
+                        <i class="bi bi-badge-tm" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Products" data-bs-original-title="과거거래내역">
+                        <i class="bi bi-r-square-fill" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                       data-bs-placement="right" aria-label="Customers" data-bs-original-title="신고목록">
+                        <i class="bi bi-flag-fill" style="font-size: 24px; text-align: center;"></i>
+                    </a>
+                </li>
+
+
+            </ul>
+            <script type="text/javascript">
+                (() => {
+                    'use strict'
+                    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+                    tooltipTriggerList.forEach(tooltipTriggerEl => {
+                        new bootstrap.Tooltip(tooltipTriggerEl)
+                    })
+                })()
+            </script>
+        </div>
+        <th:block th:replace="${content}"></th:block>
+    </main>
+</th:block>
+
 </html>

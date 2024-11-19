@@ -11,11 +11,10 @@
     <!-- Sidebar -->
 
     <th:block th:fragment="sidebar">
-        <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+        <th:block th:replace="fragments/sidebar::setMySideBar(~{::content})">
             <th:block th:fragment="content">
 
                 <h1>Content Test</h1>
-
 
 
             </th:block>
