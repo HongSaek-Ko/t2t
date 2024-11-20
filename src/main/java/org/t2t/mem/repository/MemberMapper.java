@@ -1,6 +1,7 @@
 package org.t2t.mem.repository;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.t2t.mem.dto.CmpDTO;
 import org.t2t.mem.dto.MileDTO;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface MemberMapper {
     void deleteMem(String usrId);
 
 
+    List<CmpDTO> selectComplaintList(String usrId);
 }

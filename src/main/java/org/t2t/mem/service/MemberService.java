@@ -12,44 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberMapper memberMapper;
+    public List<CmpDTO> findComplaintListByUsrId(String usrId) {
+        return memberMapper.selectComplaintList(usrId);
+    }
 
     public MemberDTO findByUserId(String usrId) {
-        MileDTO mileDTO = MileDTO.builder()
-                .usrId(usrId)
-                .point(1000L)
-                .regDt(LocalDateTime.now())
-                .lastDt(LocalDateTime.now())
-                .build();
-
-        RankingDTO rankDTO = RankingDTO.builder()
-                .usrId(usrId)
-                .score(1000L)
-                .lastActDt(LocalDateTime.now())
-                .regDt(LocalDateTime.now())
-                .lastDt(LocalDateTime.now())
-                .build();
-
-        MemberDTO dto = MemberDTO.builder()
-                .usrId(usrId)
-                .nm("짱나")
-                .email("짱나@gmail.com")
-                .roleId(RoleId.MEMBER.name())
-                .memStat(MemberStatus.MEM01.getKey())
-                .intro("나는 잘몰라요")
-                .profImg("profile1.jpg")
-                .profOrgImg("/upload/profile/profile1.jpg")
-                .bankNm("카카오뱅크")
-                .bankAcnt("333344445555")
-                .bankAcntOwr("나짱")
-                .regDt(LocalDateTime.now())
-                .lastDt(LocalDateTime.now())
-                .mile(mileDTO)
-                .rank(rankDTO)
-                .build();
-
-
-
-        return dto;
+        return MemberDTO_.findByUsrId(usrId);
     }
     //마일리지 충전/환전
     public void addMile(MileDTO mile) {

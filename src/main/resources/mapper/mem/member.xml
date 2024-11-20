@@ -5,7 +5,7 @@
 <mapper namespace="org.t2t.mem.repository.MemberMapper">
     <!-- 회원 1명 정보 조회 -->
     <select id="findByID" resultType="org.t2t.mem.dto.MemberDTO">
-        SELECT * FROM MEM WHERE USRID=#{USRID}
+        SELECT * FROM MEM WHERE USRID=#{usrId}
     </select>
     <!-- 회원 전체 조회 -->
     <select id="findList" resultType="org.t2t.mem.dto.MemberDTO">
@@ -52,5 +52,13 @@
             ON M.USRID = MI.USRID
         WHERE
             M.USRID =#{usrId}
+    </select>
+    <select id="selectComplaintList" parameterType="string" resultType="org.t2t.mem.dto.CmpDTO">
+        SELECT
+            C.*
+        FROM PRD R LEFT OUTER JOIN CMP C
+        ON R.PRDID = C.PRDID
+        WHERE
+            R.USRID = #{usrId}
     </select>
 </mapper>

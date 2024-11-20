@@ -31,10 +31,11 @@ public class MainController {
     private final MainService mainService;
     private final MainMapper mainMapper;
 
+
     @GetMapping("/testuser")
     public String getTestLogin(HttpServletRequest request) {
         MemberDTO dto = MemberDTO.builder()
-                .usrId("test1")
+                .usrId("test2")
                 .logAtmCnt(1)
                 .build();
 

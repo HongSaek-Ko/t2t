@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.t2t.mem.dto.CmpDTO;
 import org.t2t.mem.dto.MemberDTO;
 import org.t2t.mem.dto.Trade;
 import org.t2t.mem.service.MemberService;
@@ -17,6 +18,7 @@ import org.t2t.mem.dto.MileDTO;
 
 import java.lang.reflect.Member;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -31,8 +33,7 @@ public class MemberController {
     private String HTTP_SESSION_USER;
 
     @GetMapping("/mypage")
-    public String getMypage(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
+    public String getMypage(HttpSession session, Model model) {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
         MemberDTO findUser = memberService.findByUserId("test1");
         model.addAttribute("myuser", findUser);
@@ -80,21 +81,22 @@ public class MemberController {
     }
 
     //나의 판매/ 구매목록 리스트 보기
-    @GetMapping("/mypageList")
+    @GetMapping("/mypage/purchaseList")
     public String mypagelist(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        MemberDTO findUser = memberService.findByUserId("test1");
-        return "/member/mypageList";
+
+        return "/member/purchaseList";
     }
 
 
     //나의 신고내역
-    @GetMapping("/mycomplaint")
+    @GetMapping("/mypage/complist")
     public String myComplaint(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        MemberDTO findUser = memberService.findByUserId("test1");
-        return "/member/mycomplaint";
+        List<CmpDTO> cmpList = memberService.findComplaintListByUsrId(user.getUsrId());
+        model.addAttribute("cmpList", cmpList);
+        return "member/mycomplaint";
     }
 }
