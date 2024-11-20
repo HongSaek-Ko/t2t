@@ -20,37 +20,33 @@
         <div class="container text-center">
 
           <div class="row">
+            <!-- 프사/닉네임(타인), 사진, 좋아요, 조회수, 구매량 부분-->
             <div class="col">
               <div align="left">
                   <input type="hidden" name="prdId" th:value="1">
                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="https://cdn.eyesmag.com/content/uploads/sliderImages/2022/12/30/3-fb9fd982-6568-4662-8ed1-d16ceb53ada9.jpg" alt="mdo" width="72" height="72" class="rounded-circle">
-                <span>사용자 닉네임</span></a> <!-- th:value="${mem.name}"--> <!--타인의 게시글일 경우 표시-->
+                <span>사용자 닉네임</span></a> <!-- th:value="${mem.name}"--> <!--타인의 게시글일 경우 표시. null인지 아닌지로 걸면 될듯?-->
               </div>
               <!--<h1> 홈 / TtoT </h1> 내 게시글일 경우 표시 -->
               <div class="mx-auto">
-                <div class="mb-3">
-                  <label for="exampleFormControlTextarea1" class="form-label">제목</label>
-                  <input type="text" value="제목" class="form-control" id="exampleFormControlInput1" readonly>
-                </div>
                 <div class="card" style="width: 30rem;">
                   <img th:src="@{/common/img/default.png}" class="card-img-top" alt="기본이미지">
+
+                  <!--좋아요, 조회수, 구매량 표시 부분-->
                   <div class="card-body">
                       <div align="center">
                       <a type="button" id="goodEvent">
-                        <i class="bi bi-heart-fill"></i>
-                      </a>
-                        <span>좋아요(숫자)</span>
-
+                        <i class="bi bi-heart"></i>
+                      </a><span id="goodCount">0</span> <!--줄바꿈 안하려고 span 씀, 문자열은 바꿔야 할 부분...-->
+                        <!--todo: 간격 벌리기 -->
                       <a type="button">
                         <i class="bi bi-eye"></i>
-                      </a>
-                        <span>조회수(숫자)</span>
+                      </a><span>조회수(숫자)</span>
 
                       <a type="button">
                         <i class="bi bi-cash"></i>
-                      </a>
-                      <span>구매량(숫자)</span>
+                      </a><span>구매량(숫자)</span>
 
                         <p class="margin"></p><br/>
                           <button type="button" class="btn btn-success marg" >판매자와 연락하기</button> <!--채팅으로 연결-->
@@ -73,6 +69,10 @@
 <!--                  <label for="exampleFormControlTextarea1" class="form-label">제목</label>-->
 <!--                  <input type="text" value="제목" class="form-control" id="exampleFormControlInput1" readonly>-->
 <!--                </div>-->
+                <div class="mb-2">
+                    <label for="prdTitle" class="form-label">제목</label>
+                    <input type="text" value="제목" class="form-control" id="prdTitle" readonly>
+                </div>
                 <div class="mb-3">
                   <label for="exampleFormControlTextarea1" class="form-label">설명</label>
                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly></textarea>

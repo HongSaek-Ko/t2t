@@ -6,9 +6,9 @@ $(document).ready(function () {
 function registerGoodEvent(registerGoodEvent) {
     $(registerGoodEvent).on('click', function() {
         $.ajax({
-           type: get,
-           url : '/product/detail/good/' + $('input[name=prdId]').val()
-            
+           url : '/product/detail/good/' + $('input[name=prdId]').val(),
+           type: 'GET'
+
         });
     });
 }
@@ -155,4 +155,21 @@ $(document).ready(function(){
         });
     })
 })
+*/
+
+/*
+function clickGood() { todo: 좋아요 하트, 수 변경 제이쿼리
+    // 하트 클릭 시 빈 하트 ↔ 채워진 하트 상태 변경
+
+    // AJAX 요청을 사용하여 서버에 좋아요 상태를 전달
+    $.ajax({
+        url: '/good/' + prdId,  // 서버로 요청할 URL
+        type: 'GET',             // 요청 방식 (GET, POST 등)
+        success: function(data) {
+            // 좋아요 수 업데이트; 좋아요가 추가되었으면 카운트 증가, 삭제되었으면 감소
+             누르면 현재값에서 1 추가, 이미 누른 유저가 한 번 더 누르면 1 감소
+
+        }
+    });
+}
 */
