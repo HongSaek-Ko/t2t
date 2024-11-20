@@ -1,4 +1,4 @@
-package org.t2t.mem.service;
+package org.t2t.mem.dto;
 
 import lombok.Builder;
 import lombok.Data;
