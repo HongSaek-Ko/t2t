@@ -1,7 +1,17 @@
 $(document).ready(function () {
     registerEvent(['#complaintEvent', '#modifyEvent', '#deleteEvent']);
+    registerGoodEvent('#goodEvent') ;
 });
 
+function registerGoodEvent(registerGoodEvent) {
+    $(registerGoodEvent).on('click', function() {
+        $.ajax({
+           type: get,
+           url : '/product/detail/good/' + $('input[name=prdId]').val()
+            
+        });
+    });
+}
 function registerEvent(_target) {
     $.each(_target, function (_i, _el) {
         $(_el).on('click', function (e) {
@@ -10,19 +20,19 @@ function registerEvent(_target) {
             if (_id == 'complaintEvent') {
                 $('#complaintModal').find('.modal-body').empty(); // 모달 새로 열 때마다 기존 것 비워줘야하므로...
                 $('#complaintModal').find('.modal-body').append(createComplaintLayout()); // 모달에 이거 추가...
-                $('#complaintModalLabel').text('신고 사유를 선택해주세요.');
+                $('#complaintModalLabel').text('신고');
                 $('#complaintModal').modal('show');
 
             } else if (_id =='modifyEvent') {
                 $('#modifyPrdModal').find('.modal-body').empty();
                 $('#modifyPrdModal').find('.modal-body').append(createModifyLayout());
-                $('#modifyPrdModalLabel').text('수정하려면 비밀번호를 입력해주세요.');
+                $('#modifyPrdModalLabel').text('수정');
                 $('#modifyPrdModal').modal('show');
 
             } else if (_id == 'deleteEvent') {
                 $('#deletePrdModal').find('.modal-body').empty();
                 $('#deletePrdModal').find('.modal-body').append(createDeleteLayout());
-                $('#deleteModalLabel').text('삭제하려면 비밀번호를 입력해주세요.');
+                $('#deleteModalLabel').text('삭제');
                 $('#deletePrdModal').modal('show');
             }
         });
@@ -33,7 +43,7 @@ function createComplaintLayout() {
     var complaintArr = [];
     complaintArr.push('<form id="complaintForm">') // todo: db(코드)에서 받아오고, 코드 개수만큼 div 반복, 위치는 legend 밑
     complaintArr.push('    <fieldset>')
-    // complaintArr.push('        <legend>신고 사유를 선택해주세요</legend>')
+    complaintArr.push('        <legend>신고 사유를 선택해주세요.</legend>')
     complaintArr.push('        <div className="form-check">')
     complaintArr.push('            <input className="form-check-input" type="radio" name="flexRadioDefault" id="REP01" checked/>')
     complaintArr.push('            <label className="form-check-label" htmlFor="REP01"> 스팸 </label>')
@@ -91,11 +101,12 @@ function createComplaintLayout() {
 function createModifyLayout() {
     var modifyArr = [];
     modifyArr.push('<form id="modifyPrdForm">')
+    modifyArr.push('    <h4> 수정하려면 비밀번호를 입력하세요. </h4>')
     modifyArr.push('    <div class="form-floating mb-2">')
     modifyArr.push('        <input type="password" class="form-control" id="floatingModifyPassword" placeholder="Password">')
     modifyArr.push('            <label for="floatingModifyPassword">Password</label>')
     modifyArr.push('    </div>')
-    modifyArr.push('    <div class="mb-5" style="display: flex; justify-content: center">')
+    modifyArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
     modifyArr.push('        <button type="submit" class="btn btn-danger mx-2" id="toModifyPrd" >확인</button>')
     modifyArr.push('    </div>')
     modifyArr.push('    <ul class="nav justify-content-center mb-2">')
@@ -110,11 +121,12 @@ function createModifyLayout() {
 function createDeleteLayout() {
     var deleteArr = [];
     deleteArr.push('<form id="deletePrdForm">')
+    deleteArr.push('    <h4> 삭제하려면 비밀번호를 입력하세요. </h4>')
     deleteArr.push('    <div class="form-floating mb-2">')
     deleteArr.push('        <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">')
     deleteArr.push('            <label for="floatingDeletePassword">Password</label>')
     deleteArr.push('    </div>')
-    deleteArr.push('    <div class="mb-5" style="display: flex; justify-content: center">')
+    deleteArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
     deleteArr.push('        <button type="submit" class="btn btn-danger mx-2" id="deletePrdComplete" >삭제</button>')
     deleteArr.push('    </div>')
     deleteArr.push('    <ul class="nav justify-content-center mb-2">')

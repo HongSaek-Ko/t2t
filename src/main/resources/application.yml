@@ -8,7 +8,7 @@ spring:
       enabled: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/project?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/t2t?serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: test1
     password: 1234
@@ -26,7 +26,7 @@ file.dir: E:\moon\framework\uploadt2t\
 HTTP_SESSION_USER: t2t_session_user
 
 mybatis:
-  mapper-locations: classpath:mapper/*.xml
+  mapper-locations: classpath:mapper/**/*.xml
   # MyBatis Settings
   type-aliases-package: org.t2t.mem.dto
 

@@ -22,17 +22,22 @@
           <div class="row">
             <div class="col">
               <div align="left">
+                  <input type="hidden" name="prdId" th:value="1">
                 <a href="#" data-bs-toggle="dropdown" aria-expanded="false">
                   <img src="https://cdn.eyesmag.com/content/uploads/sliderImages/2022/12/30/3-fb9fd982-6568-4662-8ed1-d16ceb53ada9.jpg" alt="mdo" width="72" height="72" class="rounded-circle">
-                <span>사용자 닉네임</span></a> <!-- th:value="${mem.name}"-->
+                <span>사용자 닉네임</span></a> <!-- th:value="${mem.name}"--> <!--타인의 게시글일 경우 표시-->
               </div>
               <!--<h1> 홈 / TtoT </h1> 내 게시글일 경우 표시 -->
               <div class="mx-auto">
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">제목</label>
+                  <input type="text" value="제목" class="form-control" id="exampleFormControlInput1" readonly>
+                </div>
                 <div class="card" style="width: 30rem;">
                   <img th:src="@{/common/img/default.png}" class="card-img-top" alt="기본이미지">
                   <div class="card-body">
                       <div align="center">
-                      <a type="button">
+                      <a type="button" id="goodEvent">
                         <i class="bi bi-heart-fill"></i>
                       </a>
                         <span>좋아요(숫자)</span>
@@ -64,10 +69,10 @@
                 <button type="button" class="btn btn-danger" id="deleteEvent" value="deleteEvent"> 삭제 </button> <!--내 게시글일 경우 표시-->
               </div>
               <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
-                <div class="mb-3">
-                  <label for="exampleFormControlTextarea1" class="form-label">제목</label>
-                  <input type="text" value="제목" class="form-control" id="exampleFormControlInput1" readonly>
-                </div>
+<!--                <div class="mb-3">-->
+<!--                  <label for="exampleFormControlTextarea1" class="form-label">제목</label>-->
+<!--                  <input type="text" value="제목" class="form-control" id="exampleFormControlInput1" readonly>-->
+<!--                </div>-->
                 <div class="mb-3">
                   <label for="exampleFormControlTextarea1" class="form-label">설명</label>
                   <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" readonly></textarea>
@@ -113,8 +118,8 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <img src="/common/img/t2t.png" width="40" height="40"/>
-                <h1 class="modal-title fs-5" id="complaintModalLabel"></h1>
+<!--                <img src="/common/img/t2t.png" width="40" height="40"/>-->
+                <h2 class="modal-title fs-5" id="complaintModalLabel">신고</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -128,8 +133,8 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <img src="/common/img/t2t.png" width="40" height="40"/>
-                <h1 class="modal-title fs-5" id="modifyPrdModalLabel"></h1>
+<!--                <img src="/common/img/t2t.png" width="40" height="40"/>-->
+                <h2 class="modal-title fs-5" id="modifyPrdModalLabel">수정</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -144,12 +149,11 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <img src="/common/img/t2t.png" width="40" height="40"/>
-                <h1 class="modal-title fs-5" id="deleteModalLabel"></h1>
+<!--                <img src="/common/img/t2t.png" width="40" height="40"/>-->
+                <h2 class="modal-title fs-5" id="deleteModalLabel">삭제</h2>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
-              <div class="modal-body">
-              </div>
+              <div class="modal-body"></div>
             </div>
           </div>
         </div>

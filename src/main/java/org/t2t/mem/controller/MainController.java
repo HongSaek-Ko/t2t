@@ -31,7 +31,6 @@ public class MainController {
     private final MainService mainService;
     private final MainMapper mainMapper;
 
-    /*
     @GetMapping("/testuser")
     public String getTestLogin(HttpServletRequest request) {
         MemberDTO dto = MemberDTO.builder()
@@ -40,10 +39,10 @@ public class MainController {
                 .build();
 
         HttpSession session = request.getSession();
-        session.setAttribute("user", dto);
+        session.setAttribute(HTTP_SESSION_USER, dto);
         return "redirect:/";
     }
-*/
+
     @GetMapping("/")
     public String getHome(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 

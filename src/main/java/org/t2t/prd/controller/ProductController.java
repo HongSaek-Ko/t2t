@@ -1,15 +1,26 @@
 package org.t2t.prd.controller;
 
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.t2t.mem.dto.MemberDTO;
+import org.t2t.prd.service.ProductService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/product")
+@RequiredArgsConstructor
 @Slf4j
 public class ProductController {
+    private final ProductService productService;
+    @Value("${HTTP_SESSION_USER}")
+    private String HTTP_SESSION_USER;
 
     @GetMapping("/add")
     public String productAdd() {
@@ -45,5 +56,16 @@ public class ProductController {
     public String productDelete() {
         log.info("제품 삭제?");
         return "product/delete";
+    }
+
+    @GetMapping("/good/{prdId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> updateGood(@PathVariable(name="prdId")Long prdId, HttpSession session) {
+        MemberDTO user = (MemberDTO) session.getAttribute(HTTP_SESSION_USER);
+
+        productService.updateGood(prdId, user.getUsrId());
+        Map<String, Object> map = new HashMap<>();
+        map.put("good", prdId);
+        return ResponseEntity.ok(map);
     }
 }
