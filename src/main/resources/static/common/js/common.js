@@ -31,6 +31,9 @@ $(document).ready(function () {
             , '#joinEvent': function () {
                 $('#joinModal').modal('show');
             }
+            , '#joinBtn': function () {
+                $('#joinModal').modal('show');
+            }
             , '#leaveEvent': function () {
                 $('#leaveModal').modal('show');
             }
