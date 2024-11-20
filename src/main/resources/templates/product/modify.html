@@ -18,6 +18,7 @@
                 <div class="container text-center">
                     <div class="row">
                         <div class="col">
+                            <h1> 홈 / TtoT / modify </h1>
                             <div class="mx-auto">
                                 <img th:src="@{/common/img/default.png}" class="img-fluid" alt="...">
                                 <p></p>
@@ -27,8 +28,8 @@
                             <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
 
                                 <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">제목</label>
-                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요...">
+                                    <label for="exampleFormControlInput1" class="form-label">제목</label>                                     <!--아래와 같은 형식으로 입력... -->
+                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요...">   <!--th:value="${prd.title}"-->
                                 </div>
                                 <div class="mb-3">
                                     <label for="exampleFormControlTextarea1" class="form-label">설명</label>
@@ -78,7 +79,7 @@
                             </div>  <!-- 종료 지점: 가로배치 우회 -->
                         </div>
                     </div>
-                    <button type="button" class="btn btn-danger"> 수정취소 </button>
+                    <button type="button" class="btn btn-danger" onclick="window.location='/product/detail'"> 수정취소 </button>
                     <button type="submit" class="btn btn-primary"> 수정완료 </button>
                 </div>
 

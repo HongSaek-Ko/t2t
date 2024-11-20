@@ -4,8 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller("/prd")
+@Controller
+@RequestMapping("/product")
 @Slf4j
 public class ProductController {
 
@@ -15,7 +17,13 @@ public class ProductController {
         return "product/add";
     }
 
-    @GetMapping("/detail")
+    @PostMapping("/add")
+    public String productAddPost(){
+        log.info("상품 등록 완료!");
+        return "redirect:/product/detail"; // detail에서 {prdId} 로 바꿔야함
+    }
+
+    @GetMapping("/detail") // detail에서 {prdId} 로 바꿔야함
     public String productDetail() {
         log.info("상품 상세 페이지!");
         return "product/detail";
