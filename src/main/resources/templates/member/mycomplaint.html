@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::header('회원정보보기')"></head>
+<body>
+<div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
+    <!-- Sidebar -->
+    <th:block th:fragment="searchbar">
+        <th:block th:replace="fragments/searchbar::searchbar"></th:block>
+    </th:block>
+
+    <!-- Sidebar -->
+
+    <th:block th:fragment="sidebar">
+        <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+            <th:block th:fragment="content">
+                <!--                여기서부터 시작-->
+                <table class="table">
+                    <thead>
+                    <tr>
+
+                        <th scope="col">번호</th>
+                        <th scope="col">신고번호</th>
+                        <th scope="col">신고일자</th>
+                        <th scope="col">신고항목</th>
+                        <th scope="col">신고대상자</th>
+                        <th scope="col">신고처리결과</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr th:each="cmp,cmpStat :${list}">
+                        <td th:text="${cmpStat.count}"></td>
+                        <td th:text="${cmp.cmpId}"></td>
+                        <td th:text="${cmp.regDt}"></td>
+                        <td th:text="${cmp.cmpCateCd}"></td>
+                        <td th:text="${cmp.usrId}"></td>
+                        <td th:text="${cmp.cRstCd}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+
+                <!--                여기서부터 종료-->
+            </th:block>
+        </th:block>
+    </th:block>
+    <!-- End of Sidebar -->
+</div>
+</body>
+</html>

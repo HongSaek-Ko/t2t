@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::header('회원정보보기')"></head>
+<body>
+<div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
+    <!-- Sidebar -->
+    <th:block th:fragment="searchbar">
+        <th:block th:replace="fragments/searchbar::searchbar"></th:block>
+    </th:block>
+
+    <!-- Sidebar -->
+
+    <th:block th:fragment="sidebar">
+        <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+            <th:block th:fragment="content">
+                <!--   마이페이지 목록 보여주기   -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                <!--                여기서부터 종료-->
+            </th:block>
+        </th:block>
+    </th:block>
+    <!-- End of Sidebar -->
+</div>
+</body>
+</html>

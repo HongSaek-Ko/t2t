@@ -1,10 +1,12 @@
 package org.t2t.mem.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @Data
+@Builder
 public class CmpDTO {
     private int cmpId;
     private String usrId;

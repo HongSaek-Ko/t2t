@@ -4,28 +4,53 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t2t.mem.repository.MemberMapper">
     <!-- 회원 1명 정보 조회 -->
-    <select id="findByID" resultType="MemberDTO">
+    <select id="findByID" resultType="org.t2t.mem.dto.MemberDTO">
         SELECT * FROM MEM WHERE USRID=#{USRID}
     </select>
     <!-- 회원 전체 조회 -->
-    <select id="findList" resultType="MemberDTO">
+    <select id="findList" resultType="org.t2t.mem.dto.MemberDTO">
         SELECT * FROM MEM
     </select>
     <update id="updateMem">
-        UPDATE MEM SET(NM, EMAIL, INTRO) WHERE USRID=#{USRID}
+        UPDATE MEM
+            SET NM=#{nm},
+            EMAIL=#{email},
+            INTRO=#{intro}
+        WHERE
+            USRID = #{usrId}
     </update>
     <!-- 회원 탈퇴 -->
-    <delete id="deelteMem">
-        DELETE FROM MEM WHERE USRID=#{USRID}
+    <delete id="deleteMem">
+        DELETE FROM MEM
+        WHERE
+            USRID = #{usrId}
     </delete>
-    <!-- 마일리지 충전 -->
-    <insert id="addMile">
-        INSERT INTO MILES VALUE POINT
+    <!-- 마일리지 충전 / 환전 -->
+    <insert id="updateMile" parameterType="org.t2t.mem.dto.MileDTO">
+        UPDATE MILES
+        SET POINT =
+        <choose>
+            <when test="option == 'TRD01'">
+                #{point} + POINT
+            </when>
+            <otherwise>
+                POINT - #{point}
+            </otherwise>
+        </choose>
+        WHERE
+        USRID = #{usrId}
     </insert>
-    <!-- 마일리지 환전 -->
-    <update id="minMIle">
-        UPDATE MILES SET POINT
-        WHERE USRID=#{USRID}
-    </update>
 
+    <select id="selectMileTotal" resultType="org.t2t.mem.dto.MileDTO" parameterType="string">
+        SELECT
+            MI.USRID
+            ,MI.POINT
+            ,MI.REGDT
+            ,MI.LASTDT
+        FROM
+            MEM M LEFT OUTER JOIN MILES MI
+            ON M.USRID = MI.USRID
+        WHERE
+            M.USRID =#{usrId}
+    </select>
 </mapper>
