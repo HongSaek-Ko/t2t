@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Builder
-public class CmpDTO {
+public class ComplaintDTO {
     private int cmpId;
     private String usrId;
     private int prdId;
