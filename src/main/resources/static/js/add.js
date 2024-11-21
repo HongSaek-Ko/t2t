@@ -26,8 +26,15 @@ function toggleTextBox(checkbox) {
 function fieldCheck() {
 
     let form = document.getElementById('form')
-    if((form.limitSwitch.value === 'Y') && (form.trgtSalQty.value === null)) {
-        alert("구매 제한 수량을 입력하세요.")
-        return false;
+    let trgtSalqty = document.getElementById('trgtSalQty');
+
+    if(form.limitSwitch.checked) {
+        if (trgtSalqty.value === ''){
+            alert("구매 제한 수량을 입력하세요.");
+            return false;
+        }
+    } else {
+        document.getElementById('islimit').value = 'N';
     }
+    return true;
 }
