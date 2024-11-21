@@ -10,7 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.t2t.mem.dto.CmpDTO;
+
+import org.t2t.mem.dto.ComplaintDTO;
 import org.t2t.mem.dto.MemberDTO;
 import org.t2t.mem.dto.Trade;
 import org.t2t.mem.service.MemberService;
@@ -32,12 +33,20 @@ public class MemberController {
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
 
+    //내 프로필 보기
     @GetMapping("/mypage")
     public String getMypage(HttpSession session, Model model) {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
         MemberDTO findUser = memberService.findByUserId("test1");
         model.addAttribute("myuser", findUser);
         return "member/mypage";
+    }
+
+    //마이페이지 수정요청
+    @PostMapping("/mypage/modify/{usrId}")
+    public String mypagemodify(@PathVariable("usrId") String usrId){
+        memberService.modifyMem(usrId);
+        return "/member/mypage";
     }
 
     //포인트 충전/ 환전
@@ -58,21 +67,13 @@ public class MemberController {
         Map<String, Object> map = new HashMap<>();
         map.put("success", true);
         map.put("mile", totalMile.getPoint());
-
         return ResponseEntity.ok(map);
     };
 
 
 
-    //마이페이지 수정
-    @GetMapping("/s")
-    public String mypagemodify(@PathVariable("usrID") String usrId){
-        memberService.modifyMem(usrId);
-        return "/member/mypage";
-    }
-
     //회원 탈퇴
-    @GetMapping("/mypagedelete")
+    @GetMapping("/mypage/delete")
     public String deletemember(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
@@ -85,17 +86,17 @@ public class MemberController {
     public String mypagelist(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-
+        memberService.selectTradeList(user.getUsrId());
         return "/member/purchaseList";
     }
 
 
-    //나의 신고내역
+    //나의 신고내역 !!
     @GetMapping("/mypage/complist")
     public String myComplaint(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        List<CmpDTO> cmpList = memberService.findComplaintListByUsrId(user.getUsrId());
+        List<ComplaintDTO> cmpList = memberService.findComplaintListByUsrId(user.getUsrId());
         model.addAttribute("cmpList", cmpList);
         return "member/mycomplaint";
     }

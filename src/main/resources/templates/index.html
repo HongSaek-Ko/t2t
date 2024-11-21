@@ -49,6 +49,7 @@
                 <div th:text="${session.t2t_session_user}"></div>
                 <ul class="dropdown-menu text-small shadow" style="">
                     <th:block th:if="${session.t2t_session_user != null}">
+                        <li><a class="dropdown-item" href="/member/mypage" id="modifyEvent">내 프로필보기 </a></li>
                         <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
                         <li><hr class="dropdown-divider" id="divider"></li>
                         <li><a class="dropdown-item" href="#" id="logoutEvent">Log out</a></li>

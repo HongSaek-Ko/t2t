@@ -22,9 +22,13 @@
     <!-- 회원 탈퇴 -->
     <delete id="deleteMem">
         DELETE FROM MEM
-        WHERE
-            USRID = #{usrId}
+        WHERE USRID = #{usrId}
     </delete>
+    <!-- id, pw 일치여부 확인 -->
+    <select id="idPwChecking" resultType="org.t2t.mem.dto.MemberDTO">
+        SELECT * FROM MEM
+        WHERE USRID=#{usrId} AND PASSPW=#{passwd}
+    </select>
     <!-- 마일리지 충전 / 환전 -->
     <insert id="updateMile" parameterType="org.t2t.mem.dto.MileDTO">
         UPDATE MILES
@@ -53,7 +57,7 @@
         WHERE
             M.USRID =#{usrId}
     </select>
-    <select id="selectComplaintList" parameterType="string" resultType="org.t2t.mem.dto.CmpDTO">
+    <select id="selectComplaintList" parameterType="string" resultType="org.t2t.mem.dto.ComplaintDTO">
         SELECT
             C.*
         FROM PRD R LEFT OUTER JOIN CMP C
@@ -61,4 +65,21 @@
         WHERE
             R.USRID = #{usrId}
     </select>
+    <!-- 나의 구매내역 -->
+    <select id="selectOrderList">
+        SELECT O.*
+        FROM ORD O JOIN PRD D ON O.prdId = D.prdId
+        LEFT OUTER JOIN MEM M ON O.usrId = M.usrId
+        WHERE O.USRID=#{USRID};
+    </select>
+    <!-- 나의 과거거래내역 (판매중지, 매진) -->
+    <select id="selectPastList" resultType="org.t2t.prd.dto.ProductDTO">
+
+    </select>
+    <!-- 나의 현재거래내역 -->
+    <select id="selectCurList">
+
+    </select>
+
+
 </mapper>
