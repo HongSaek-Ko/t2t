@@ -46,7 +46,7 @@
                    data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
-                <div th:text="${session.user}"></div>
+                <div th:text="${session.t2t_session_user}"></div>
                 <ul class="dropdown-menu text-small shadow" style="">
                     <th:block th:if="${session.t2t_session_user != null}">
                         <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
@@ -410,10 +410,18 @@
             alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
             return false;
         }
+
+        if($("#idCheck").data("success") == false) {
+            return false;
+        }
     }
 
     // Ajax를 이용한 중복 아이디 검사 jQuery by Moon
     $(document).ready(function () {
+        $("#logoutEvent").click(function() {
+            window.location.href = "/logout";
+        });
+
         // id값이 "floatingJoinInput"인 input 태그에 변경사항이 있으면 이벤트 발생
         $("#floatingJoinInput").change(function () {
             let usrId = $("#floatingJoinInput").val();
@@ -422,7 +430,15 @@
                 type: "post",
                 data: {usrId: usrId},
                 success: function (result) {
-                    $("#idCheck").val(result).css("color", "red");
+                    console.log(result);
+                    $("#idCheck").val(result.result);
+                    if(result.success == "false") {
+                        $("#idCheck").css("color","red");
+                        $("#idCheck").data("success", false);
+                    } else {
+                        $("#idCheck").css("color","blue");
+                        $("#idCheck").data("success", true);
+                    }
                 },
                 error: function (e) {
                     console.log("ajax 요청 실패!!");

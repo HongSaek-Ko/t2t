@@ -104,6 +104,7 @@ public class MainController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+        session.removeAttribute(HTTP_SESSION_USER);
         session.invalidate(); // 세션 속성 모두 삭제
         // 쿠키 삭제
         Cookie[] cookies = request.getCookies();
@@ -115,6 +116,8 @@ public class MainController {
                 }
             }
         }
+
+        log.info("session logout {} ", session);
         return "redirect:/";  // 홈으로 강제 이동
     }
 
@@ -131,11 +134,21 @@ public class MainController {
     // id 중복 확인 ajax 요청
     @PostMapping("/idAvailAjax")   // html 화면 결과가 아닌 데이터 응답
     @ResponseBody    // -> 보던 화면에 데이터를 body 부분에 담아서 응답
-    public String idAvailAjax(String usrId) {
+
+    public ResponseEntity<Map<String, String>> idAvailAjax(String usrId) {
         log.info("Ajax id: {}", usrId);
-        String result = "사용가능한 아이디 입니다";
+        Map<String, String> map = new HashMap<>();
+        String result = null;
         MainDTO mainDTO = mainMapper.selectOne(usrId);
-        if(mainDTO != null) { result = "사용중인 아이디입니다"; }
-        return result;
+        if(mainDTO != null) {
+            result = "사용중인 아이디입니다";
+            map.put("success", "false");
+        } else {
+            result = "사용가능한 아이디 입니다";
+            map.put("success", "true");
+        }
+        map.put("result", result);
+
+        return ResponseEntity.ok(map);
     }
 }
