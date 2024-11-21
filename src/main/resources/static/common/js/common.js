@@ -4,50 +4,37 @@ $(document).ready(function () {
             '#loginEvent': function () {
                 $('#loginModal').modal('show');
             },
-            '#loginBtn': function (){
-                var id = $("#userID").val();
-                var pw = $("#password").val();
-                console.log('아이디:', id);
-                console.log('비밀번호:', pw);
 
-                $.ajax({
-                    url: '/login',
-                    type: 'POST',
-                    data: {
-                        'username': id,
-                        'password': pw
-                    },
-                    success: function (response) {
-                        if(response.success) {
-                            $('#loginModal').hide();
-
-                            $('#logoutEvent').show();
-
-                        }
-                    }
-                });
-
-            }
-            , '#joinEvent': function () {
+            '#joinEvent': function () {
                 $('#joinModal').modal('show');
-            }
-            , '#joinBtn': function () {
+            },
+
+            '#joinBtn': function () {
                 $('#joinModal').modal('show');
-            }
-            , '#leaveEvent': function () {
+            },
+
+            '#leaveEvent': function () {
                 $('#leaveModal').modal('show');
-            }
-            , '#logoutEvent': function () {
-                console.log('logoutEvent');
-                $.ajax({
-                    url: '/logout',
-                    type: 'GET',
-                    success:function (){
-                        $('#loginEvent').show();
-                        $('#logoutEvent').hide();
-                    }
-                })
-            }
+            },
+
+            // '#loginSubmit': function (){
+            //     $('#loginEvent').hide();
+            //     $('#joinEvent').hide();
+            //     $('#logoutEvent').show();
+            //     $('#divider').show();
+            // },
+
+            // '#logoutEvent': function () {
+            //     console.log('logoutEvent');
+            //     $.ajax({
+            //         url: '/logout',
+            //         type: 'GET',
+            //         success:function (){
+            //             $('#loginEvent').show();
+            //             $('#logoutEvent').hide();
+            //         }
+            //     })
+            // }
         };
     console.log(_tag);
     register_event(_tag);

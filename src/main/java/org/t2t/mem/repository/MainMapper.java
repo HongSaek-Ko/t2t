@@ -14,6 +14,6 @@ public interface MainMapper {
     MainDTO selectOne(String usrId);
 
     // id, pw 일치 확인 (login)
-    MainDTO idPwCheck(@Param("id") String id, @Param("pw") String pw);
+    MainDTO idPwCheck(@Param("usrId") String usrId, @Param("passwd") String passwd);
 
 }

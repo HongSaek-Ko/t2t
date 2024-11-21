@@ -31,18 +31,6 @@ public class MainController {
     private final MainService mainService;
     private final MainMapper mainMapper;
 
-    @GetMapping("/testuser")
-    public String getTestLogin(HttpServletRequest request) {
-        MemberDTO dto = MemberDTO.builder()
-                .usrId("test1")
-                .logAtmCnt(1)
-                .build();
-
-        HttpSession session = request.getSession();
-        session.setAttribute(HTTP_SESSION_USER, dto);
-        return "redirect:/";
-    }
-
     @GetMapping("/")
     public String getHome(HttpServletRequest request, HttpServletResponse response, HttpSession session) {
 
@@ -74,7 +62,7 @@ public class MainController {
         return "index";
     }
 
-    // 쿠키 생성 메서드 분리
+    // 쿠키 생성 메서드
     private void createCookie(String id, String pw, String auto, HttpServletResponse response) {
         Cookie c1 = new Cookie("cid", id);  // 쿠키 객체 생성
         Cookie c2 = new Cookie("cpw", pw);
@@ -87,52 +75,26 @@ public class MainController {
         response.addCookie(c3);
     }
 
-//    @GetMapping("/testclose")
-//    public String getTestSessionClose(HttpSession session) {
-//        session.invalidate();
-//        return "redirect:/";
-//    }
-
-//    // 로그인 요청 처리
-//    @PostMapping("/login")
-//    @ResponseBody
-//    public ResponseEntity<Map<String, Object>> loginPost(@RequestParam(name="username") String username,
-//                                                         @RequestParam(name="password") String password, HttpServletRequest request) {
-//        // DB 무관하게 일단 로그인...
-//        Map<String, Object> response = new HashMap<>();
-//        MemberDTO dto = MemberDTO.builder()
-//                .usrId(username)
-//                .passwd(password)
-//                .logAtmCnt(1)
-//                .build();
-//        HttpSession session = request.getSession();
-//        session.setAttribute("user", dto);
-//
-//        // 로그인 성공 응답
-//        response.put("success", true);
-//        response.put("username", username);
-//        response.put("password", password);
-//
-//        return ResponseEntity.ok(response);
-//    }
-
     // 로그인 처리 요청
     @PostMapping("/login")
-    public String loginPro(String id, String pw, String auto, HttpServletResponse response, HttpSession session, Model model) {
+    public String loginPro(String usrId, String passwd, String auto, HttpServletResponse response, HttpSession session, Model model) {
         log.info("POST /login 로그인처리!!!");
-        log.info("id: {}", id);
-        log.info("pw: {}", pw);
+        log.info("id: {}", usrId);
+        log.info("pw: {}", passwd);
         log.info("auto: {}", auto); // 체크했으면 auto, 체크안했으면 null
         // 로그인 처리
         // DB에 사용자가 입력한 id와 pw가 일치하는 데이터가 있는지 확인
         boolean result = false;
-        MainDTO mainDTO = mainMapper.idPwCheck(id, pw);
+        MainDTO mainDTO = mainMapper.idPwCheck(usrId, passwd);
         if(mainDTO != null) {
             // 일치한다 -> 로그인 처리 -> 로그인 잘됐다는 결과 화면에 주기
             result = true; // 로그인결과 true로 지정
             session.setAttribute("sid", mainDTO.getUsrId()); // 사용자 id값 저장
+            session.setAttribute(HTTP_SESSION_USER, mainDTO); // 사용자 id값 저장
+
+
             if(auto != null) { // 자동로그인 체크 했다면,
-                createCookie(id, pw, auto, response);
+                createCookie(usrId, passwd, auto, response);
             }
         }
         // 일치X -> 일치하지 않다는 결과 화면에 주기
@@ -167,16 +129,13 @@ public class MainController {
     }
 
     // id 중복 확인 ajax 요청
-    @PostMapping("/idAvailAjax")
+    @PostMapping("/idAvailAjax")   // html 화면 결과가 아닌 데이터 응답
     @ResponseBody    // -> 보던 화면에 데이터를 body 부분에 담아서 응답
-    // html 화면 결과가 아닌 데이터 응답
     public String idAvailAjax(String usrId) {
         log.info("Ajax id: {}", usrId);
         String result = "사용가능한 아이디 입니다";
         MainDTO mainDTO = mainMapper.selectOne(usrId);
-        if(mainDTO != null) {
-            result = "사용중인 아이디입니다";
-        }
+        if(mainDTO != null) { result = "사용중인 아이디입니다"; }
         return result;
     }
 }
