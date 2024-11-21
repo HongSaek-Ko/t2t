@@ -8,9 +8,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 
 @Data
-//@Builder
-//@NoArgsConstructor
-//@AllArgsConstructor
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 
 public class MainFormDTO {
     private String usrId;
