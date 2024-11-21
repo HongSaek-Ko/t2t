@@ -137,7 +137,7 @@ public class MainController {
         }
         // 일치X -> 일치하지 않다는 결과 화면에 주기
         model.addAttribute("result", result); // 화면에 id,pw 검사결과 전달
-        return "redirect:/"; // 로그인 결과 페이지
+        return "loginPro"; // 로그인 결과 페이지
     }
 
     @GetMapping("/logout")

@@ -228,7 +228,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="loginForm">
+                <form action="/login" method="post" id="loginForm">
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" id="floatingInput" placeholder="userId">
                         <label for="floatingInput">ID</label>
@@ -255,7 +255,6 @@
                     <div class="my-1" style="display: flex; justify-content: center;">
                         <button type="button" class="btn btn-info" id="joinBtn" >회원가입</button>
                     </div>
-
                 </form>
             </div>
 
@@ -272,7 +271,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="joinForm">
+                <form action="/guest/signup" method="post" id="joinForm" enctype="multipart/form-data">
                     <div class="form-floating mb-2" style="display: flex; justify-content: center; border-radius: 50%">
                         <div>
                             <span class="border border-success">
@@ -281,38 +280,42 @@
                         </div>
                     </div>
                     <div class="form-floating mb-2" style="display: flex; justify-content: center; width: 350px;">
-                        <input type="file" class="form-control" id="floatingJoinProfileInput" placeholder="profile">
+                        <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile">
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingJoinInput" placeholder="userId">
+                        <input type="text" class="form-control" name="usrId" id="floatingJoinInput" placeholder="userId">
                         <label for="floatingJoinInput">ID</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="floatingJoinPassword" placeholder="Password">
+                        <input type="password" class="form-control" name="passwd" id="floatingJoinPassword" placeholder="Password">
                         <label for="floatingJoinPassword">Password</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="floatingJoinPasswordCheck" placeholder="passwordCheck">
+                        <input type="password" class="form-control" name="pwch" id="floatingJoinPasswordCheck" placeholder="passwordCheck">
                         <label for="floatingJoinPasswordCheck">Password 확인</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingJoinName" placeholder="name">
+                        <input type="text" class="form-control" name="nm" id="floatingJoinName" placeholder="name">
                         <label for="floatingJoinName">회원 실명</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="email" class="form-control" id="floatingJoinEmail" placeholder="email">
+                        <input type="email" class="form-control" name="email" id="floatingJoinEmail" placeholder="email">
                         <label for="floatingJoinEmail">email address</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingJoinBank" placeholder="bank">
+                        <input type="text" class="form-control" name="bankNm" id="floatingJoinBank" placeholder="bank">
                         <label for="floatingJoinBank">은행명 *카카오뱅크만 가능합니다.!!</label>
                     </div>
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingJoinBankAccount" placeholder="bankAccount">
+                        <input type="text" class="form-control" name="bankAcnt" id="floatingJoinBankAccount" placeholder="bankAccount">
                         <label for="floatingJoinBankAccount">계좌번호(- 없이 입력하세요)</label>
                     </div>
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" name="bankAcntOwr" id="floatingJoinBankAccountOwner" placeholder="bankAccountOwner">
+                        <label for="floatingJoinBankAccountOwner">예금주 명</label>
+                    </div>
                     <div class="form-floating">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <textarea class="form-control" placeholder="Leave a comment here" name="intro" id="floatingTextarea2" style="height: 100px"></textarea>
                         <label for="floatingTextarea2">자기소개</label>
                     </div>
 
@@ -320,8 +323,6 @@
                         <button type="submit" class="btn btn-primary mx-2" id="joinCompleteBtn" >회원가입완료</button>
                         <button type="button" class="btn btn-danger mx-2" id="cancelBtn" >취소</button>
                     </div>
-
-
                 </form>
             </div>
 
