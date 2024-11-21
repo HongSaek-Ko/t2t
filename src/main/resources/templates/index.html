@@ -48,15 +48,14 @@
                 </a>
                 <div th:text="${session.user}"></div>
                 <ul class="dropdown-menu text-small shadow" style="">
-                    <li th:if="${session.user == null}">
-                        <a class="dropdown-item" href="#" id="loginEvent">Login</a>
-                    </li>
-                    <li><a class="dropdown-item" href="#" id="joinEvent">회원가입</a></li>
-                    <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
-
-                    <th:block th:if="${session.user != null}">
-                    <li><hr class="dropdown-divider"></li>
+                    <th:block th:if="${session.t2t_session_user != null}">
+                        <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
+                        <li><hr class="dropdown-divider" id="divider"></li>
                         <li><a class="dropdown-item" href="#" id="logoutEvent">Log out</a></li>
+                    </th:block>
+                    <th:block th:if="${session.t2t_session_user == null}">
+                        <li><a class="dropdown-item" href="#" id="loginEvent">Login</a></li>
+                        <li><a class="dropdown-item" href="#" id="joinEvent">회원가입</a></li>
                     </th:block>
                 </ul>
             </div>
@@ -232,20 +231,21 @@
             <div class="modal-body">
                 <form action="/login" method="post" id="loginForm">
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" placeholder="userId">
+                        <input type="text" class="form-control" id="floatingInput" name="usrId" placeholder="userId">
                         <label for="floatingInput">ID</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <input type="password" class="form-control" id="floatingPassword" name="passwd" placeholder="Password">
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="form-check my-1" style="display: flex; justify-content: center;">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                        <input class="form-check-input" type="checkbox" id="flexCheckDefault" value="auto" name="auto">
                         <label class="form-check-label" for="flexCheckDefault">자동로그인</label>
                     </div>
                     <div class="mb-5" style="display: flex; justify-content: center;">
-                        <button type="submit" class="btn btn-primary" id="loginBtn" >로그인</button>
+                        <button type="submit" class="btn btn-primary" id="loginSubmit" >로그인</button>
                     </div>
+                </form>
                     <ul class="nav justify-content-center mb-2">
                         <li class="nav-item">
                             <a class="nav-link" href="#">아이디 찾기</a>
@@ -255,11 +255,9 @@
                         </li>
                     </ul>
                     <div class="my-1" style="display: flex; justify-content: center;">
-                        <button type="button" class="btn btn-info" id="joinBtn" >회원가입</button>
+                        <button type="button" class="btn btn-info" id="joinBtn">회원가입</button>
                     </div>
-                </form>
             </div>
-
         </div>
     </div>
 </div>
@@ -433,7 +431,6 @@
             });
         });
     });
-
 </script>
 
 </body>

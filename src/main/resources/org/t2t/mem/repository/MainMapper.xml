@@ -23,7 +23,7 @@
 
     <select id="idPwCheck" resultType="MainDTO">
         SELECT * FROM MEM
-        WHERE usrId=#{id} and passwd=#{pw}
+        WHERE usrId=#{usrId} and passwd=#{passwd}
     </select>
 
 
