@@ -58,14 +58,16 @@ public class ProductController {
         return "product/delete";
     }
 
+    // '좋아요'
     @GetMapping("/good/{prdId}")
-    @ResponseBody
+    @ResponseBody // Http 응답; Http 요청을 객체로 변환 or 객체를 응답으로 변환 (응답 본문에 데이터를 담아 변환)
     public ResponseEntity<Map<String, Object>> updateGood(@PathVariable(name="prdId")Long prdId, HttpSession session) {
-        MemberDTO user = (MemberDTO) session.getAttribute(HTTP_SESSION_USER);
+        MemberDTO user = (MemberDTO) session.getAttribute(HTTP_SESSION_USER); // HttpSession에 저장된 MemberDTO 객체(사용자 정보)를 가져옴;
+        // H_S_U: 세션에서 MemberDTO를 가져오는 키값. 상술했듯, usrId 등 보유.
+        productService.updateGood(prdId, user.getUsrId()); // MemberDTO 객체에서 usrId 추출.
 
-        productService.updateGood(prdId, user.getUsrId());
-        Map<String, Object> map = new HashMap<>();
-        map.put("good", prdId);
-        return ResponseEntity.ok(map);
+        Map<String, Object> map = new HashMap<>(); // 문자열을 key, object를 value로 갖는 객체 map 생성.
+        map.put("good", prdId); // 객체 map에 다음 값을 추가; key: 'good', value: prdId.
+        return ResponseEntity.ok(map); // map은 {"good" : prdId} 형태로 응답 (응답 본문에 map, 상태코드는 200(OK)로 설정) → 서비스로!
     }
 }
