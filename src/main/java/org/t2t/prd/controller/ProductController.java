@@ -6,8 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.t2t.mem.dto.MemberDTO;
+import org.t2t.prd.dto.ProductDTO;
 import org.t2t.prd.service.ProductService;
 
 import java.util.HashMap;
@@ -22,34 +24,48 @@ public class ProductController {
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
 
+    // 상픔 등록 페이지 요청
     @GetMapping("/add")
-    public String productAdd() {
+    public String productAdd(@ModelAttribute("product") ProductDTO product, Model model) {
         log.info("상품 등록 페이지!");
         return "product/add";
     }
 
+    // 상품 등록 처리
     @PostMapping("/add")
-    public String productAddPost(){
+    public String productAddPost(ProductDTO productDTO) {
+
         log.info("상품 등록 완료!");
-        return "redirect:/product/detail"; // detail에서 {prdId} 로 바꿔야함
+        log.info("productDTO: {}", productDTO);
+        productService.write(productDTO);
+
+        return "redirect:/product/" + productDTO.getPrdId();
     }
 
-    @GetMapping("/detail") // detail에서 {prdId} 로 바꿔야함
-    public String productDetail() {
-        log.info("상품 상세 페이지!");
+    @GetMapping("/{prdId}")
+    public String productDetail(@PathVariable("prdId") Long prdId, Model model) {
+        log.info("상품 상세 페이지! prdId: {}", prdId);
+        ProductDTO product = productService.getProduct(prdId);
+        model.addAttribute("product", product);
         return "product/detail";
     }
 
-    @GetMapping("/modify")
-    public String productModify() {
-        log.info("상품 수정 페이지!");
+    @GetMapping("/{prdId}/modify")
+    public String productModify(@PathVariable("prdId") Long prdId, Model model) {
+        log.info("상품 수정 페이지! prdId: {}", prdId);
+        ProductDTO product = productService.getProduct(prdId);
+        model.addAttribute("product", product);
         return "product/modify";
     }
 
-    @PostMapping("/modify")
-    public String productModifyPost() {
+    @PostMapping("/{prdId}/modify")
+    public String productModifyPost(@PathVariable("prdId") Long prdId, ProductDTO product, Model model) {
         log.info("상품 수정 처리!");
-        return "product/detail";
+        log.info("prdId: {}", prdId);
+        log.info("productDTO: {}", product);
+
+        productService.modify(product);
+        return "redirect:/product/{prdId}";
     }
 
     @GetMapping("/delete")

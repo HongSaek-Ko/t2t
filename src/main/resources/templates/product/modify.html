@@ -16,73 +16,73 @@
                 <!-- 컨텐츠 시작 지점 -->
 
                 <div class="container text-center">
-                    <div class="row">
-                        <div class="col">
-                            <h1> 홈 / TtoT / modify </h1>
-                            <div class="mx-auto">
-                                <img th:src="@{/common/img/default.png}" class="img-fluid" alt="...">
-                                <p></p>
+                    <form action="" th:action method="post">
+                        <div class="row">
+                            <div class="col">
+                                <h1> 홈 / TtoT / modify </h1>
+                                <div class="mx-auto">
+                                    <img th:src="@{/common/img/default.png}" class="img-fluid" alt="...">
+                                    <p></p>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
+
+                                    <div class="mb-3">
+                                        <label for="title" class="form-label">제목 변경</label>                                     <!--아래와 같은 형식으로 입력... -->
+                                        <input type="text" class="form-control" id="title" th:field="${product.title}">   <!--th:value="${prd.title}"-->
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="cont" class="form-label">설명 변경</label>
+                                        <textarea class="form-control" id="cont" rows="3" th:field="${product.cont}"></textarea>
+                                    </div> <!--제목/설명 끝-->
+
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="cate">카테고리 변경</label>
+                                        <select class="form-select" id="cate" th:field="${product.cate}">
+                                            <option selected value="">선택하세요...</option>
+                                            <option value="food">음식</option>
+                                            <option value="anima">동물</option>
+                                            <option value="vacat">여행</option>
+                                            <option value="human">인물</option>
+
+                                        </select>
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="hashTag" class="form-label">해시태그 추가(수정)</label>
+                                        <input type="text" class="form-control" id="hashTag" placeholder="해시태그 입력...">
+                                    </div>
+                                    <br/>
+                                    <div class="form-check form-switch" align="left">
+                                        <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
+                                        <input class="form-check-input" type="checkbox" id="limitSwitch" onclick="limitTextBox(this)">
+                                        <input type="hidden" id="islimit" th:field="${product.islimit}" th:value="${product.islimit}">
+                                    </div>
+                                    <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
+                                        <label for="trgtSalQty" class="form-label">판매 수량</label>
+                                        <input type="number" class="form-control" id="trgtSalQty" th:field="${product.trgtSalQty}" th:value="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
+                                    </div>
+                                    <br/>
+
+                                    <div class="form-check form-switch" align="left">
+                                        <label class="form-check-label" for="abortSwitch" >판매 중지 여부</label>
+                                        <input class="form-check-input" type="checkbox" id="abortSwitch" onclick="abortTextBox(this)">
+                                        <input type="hidden" id="salStat" th:field="${product.salStat}" value="PRD01">
+                                    </div>
+                                    <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
+                                        <label for="abtReas" class="form-label">판매 중지 사유</label>
+                                        <input type="text" class="form-control" id="abtReas" th:field="${product.abtReas}" placeholder="중지 사유 입력..." disabled>
+                                    </div>
+                                </div>  <!-- 종료 지점: 가로배치 우회 -->
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
-
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">제목</label>                                     <!--아래와 같은 형식으로 입력... -->
-                                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요...">   <!--th:value="${prd.title}"-->
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleFormControlTextarea1" class="form-label">설명</label>
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="설명을 입력하세요..."></textarea>
-                                </div> <!--제목/설명 끝-->
-
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected>선택하세요...</option>
-                                        <option value="1">음식</option>
-                                        <option value="2">동물</option>
-                                        <option value="3">여행</option>
-                                        <option value="4">인물</option>
-
-                                    </select>
-                                </div>
-
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">해시태그 추가</label>
-                                    <input type="text" class="form-control" id="hashTag" placeholder="해시태그 입력...">
-                                </div>
-
-
-                                <div class="mb-3">
-                                    <label for="exampleFormControlInput1" class="form-label">금액 입력</label>
-                                    <input type="text" class="form-control" id="price" placeholder="금액 입력...">
-                                </div>
-
-                                <div class="form-check form-switch form-check-reverse">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckReverse">
-                                    <label class="form-check-label" for="flexSwitchCheckReverse">판매수량 설정</label>
-                                </div>
-                                <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
-                                    <label for="exampleFormControlInput1" class="form-label">판매 수량</label>
-                                    <input type="text" class="form-control" id="quantity" placeholder="판매 수량 입력...">
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                                    <label class="form-check-label" for="inlineRadio1">판매 중</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                                    <label class="form-check-label" for="inlineRadio2">판매 중지</label>
-                                    <input type="text" placeholder="중지 사유를 입력하세요..."> <!--판매 중지 체크 시 활성화-->
-                                </div>
-                            </div>  <!-- 종료 지점: 가로배치 우회 -->
-                        </div>
-                    </div>
-                    <button type="button" class="btn btn-danger" onclick="window.location='/product/detail'"> 수정취소 </button>
+                    <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/product/{prdId}(prdId=${product.prdId})}'|"> 수정취소 </button>
                     <button type="submit" class="btn btn-primary"> 수정완료 </button>
+                </form>
                 </div>
 
+                <script type="text/javascript" th:src='@{/js/modify.js}'></script>
                 <!-- 컨텐츠 종료 지점 -->
             </th:block>
         </th:block>

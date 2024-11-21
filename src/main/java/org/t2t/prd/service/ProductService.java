@@ -1,12 +1,17 @@
 package org.t2t.prd.service;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.t2t.prd.dto.GoodDTO;
+import org.t2t.prd.dto.ProductDTO;
 import org.t2t.prd.repository.ProductMapper;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +21,11 @@ import java.util.Map;
 @Slf4j
 public class ProductService {
     private final ProductMapper productMapper;
+
+    public void write(ProductDTO product) {
+        productMapper.write(product);
+    }
+
 
     public void updateGood(Long prdId, String usrId) {
         Map<String, Object> map = new HashMap<>();
@@ -33,4 +43,25 @@ public class ProductService {
             productMapper.deleteGood(map); // deleteGood을 호출, 좋아요 기록 삭제.
         }
     }
+
+
+    public ProductDTO getProduct(Long prdId) {
+        ProductDTO findProduct = productMapper.findByPrdId(prdId);
+        return findProduct;
+    }
+
+    public void modify(ProductDTO product) {
+        // 수정시간 표기...
+        Date now = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String datetime = "-";
+        datetime = dateFormat.format(now.getTime());
+
+        // 수정 시간 메서드
+        product.setCont(product.getCont() + "\r\n 수정시간: " + datetime);
+
+        // 수정 메서드
+        productMapper.modify(product);
+    }
+
 }

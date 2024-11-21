@@ -3,6 +3,25 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t2t.prd.repository.ProductMapper">
+
+    <insert id="write"> <!--prdId, hit, datetime 자동부여 / 현재 판매량은 작성 후 증가 / 판매상태, 중단사유는 수정 시 부여-->
+        <selectKey resultType="long" keyProperty="prdId" order="AFTER">
+            SELECT MAX(PRDID) AS PRDID FROM PRD
+        </selectKey>
+        INSERT INTO PRD(TITLE, USRID, CONT, TRGTSALQTY, ISLIMIT, CATE, PRICE)
+        VALUES(#{title}, #{usrId}, #{cont}, #{trgtSalQty}, #{islimit}, #{cate}, #{price})
+    </insert>
+
+    <select id="findByPrdId" resultType="org.t2t.prd.dto.ProductDTO">
+        SELECT * FROM PRD
+        WHERE PRDID=#{prdId}
+    </select>
+
+    <update id="modify">
+        UPDATE PRD
+        SET TITLE=#{title}, CONT=#{cont}, CATE=#{cate}, SALSTAT=#{salStat}, ABTREAS=#{abtReas}
+        WHERE PRDID=#{prdId}
+    </update>
     <!--  서비스에서 넘어옴      HashMap 타입의 객체를 매개변수로 받았으므로... 쿼리 결과를 GoodDTO 타입으로 변환-->
     <select id="findGoodById" parameterType="hashmap" resultType="org.t2t.prd.dto.GoodDTO">
         SELECT G.* FROM
