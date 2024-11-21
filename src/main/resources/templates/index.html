@@ -10,6 +10,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 
 </head>
 <body>
@@ -266,51 +268,53 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <img src="/common/img/t2t.png" width="40" height="40"/>
+                <img id="defaultImg" src="/common/img/t2t.png" width="40" height="40"/>
                 <h1 class="modal-title fs-5" id="joinModalLabel">T2T 회원가입 페이지</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/guest/signup" method="post" id="joinForm" enctype="multipart/form-data">
-                    <div class="form-floating mb-2" style="display: flex; justify-content: center; border-radius: 50%">
+                <form action="/guest/signup" method="post" id="joinForm" enctype="multipart/form-data" onsubmit="return fieldCheck()">
+                    <div class="form-floating mb-1" style="display: flex; justify-content: center; border-radius: 50%">
                         <div>
-                            <span class="border border-success">
-                            <img src="/common/img/t2t.png" width="150" height="150"/>
-                            </span>
+                            <img src="/common/img/t2t.png" id="imgTag" width="150" height="150"/>
                         </div>
                     </div>
-                    <div class="form-floating mb-2" style="display: flex; justify-content: center; width: 350px;">
-                        <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile">
+                    <div class="form-floating mb-1" style="display: flex; justify-content: center; width: 350px;">
+                        <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile" onchange="loadFile(this)">
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="text" class="form-control" name="usrId" id="floatingJoinInput" placeholder="userId">
-                        <label for="floatingJoinInput">ID</label>
+                        <label for="floatingJoinInput">ID*</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div>
+                        <input type="text" id="idCheck" style="width: 250px; " disabled />
+                        <label for="idCheck">중복 아이디 체크</label>
+                    </div>
+                    <div class="form-floating mb-1">
                         <input type="password" class="form-control" name="passwd" id="floatingJoinPassword" placeholder="Password">
-                        <label for="floatingJoinPassword">Password</label>
+                        <label for="floatingJoinPassword">Password*</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="password" class="form-control" name="pwch" id="floatingJoinPasswordCheck" placeholder="passwordCheck">
-                        <label for="floatingJoinPasswordCheck">Password 확인</label>
+                        <label for="floatingJoinPasswordCheck">Password 확인*</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="text" class="form-control" name="nm" id="floatingJoinName" placeholder="name">
-                        <label for="floatingJoinName">회원 실명</label>
+                        <label for="floatingJoinName">회원 실명*</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="email" class="form-control" name="email" id="floatingJoinEmail" placeholder="email">
-                        <label for="floatingJoinEmail">email address</label>
+                        <label for="floatingJoinEmail">email address*</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="text" class="form-control" name="bankNm" id="floatingJoinBank" placeholder="bank">
                         <label for="floatingJoinBank">은행명 *카카오뱅크만 가능합니다.!!</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="text" class="form-control" name="bankAcnt" id="floatingJoinBankAccount" placeholder="bankAccount">
                         <label for="floatingJoinBankAccount">계좌번호(- 없이 입력하세요)</label>
                     </div>
-                    <div class="form-floating mb-2">
+                    <div class="form-floating mb-1">
                         <input type="text" class="form-control" name="bankAcntOwr" id="floatingJoinBankAccountOwner" placeholder="bankAccountOwner">
                         <label for="floatingJoinBankAccountOwner">예금주 명</label>
                     </div>
@@ -321,7 +325,7 @@
 
                     <div class="mb-5" style="display: flex; justify-content: center">
                         <button type="submit" class="btn btn-primary mx-2" id="joinCompleteBtn" >회원가입완료</button>
-                        <button type="button" class="btn btn-danger mx-2" id="cancelBtn" >취소</button>
+                        <button type="button" class="btn btn-danger mx-2" id="cancelBtn" onclick="window.location='/'">취소</button>
                     </div>
                 </form>
             </div>
@@ -363,5 +367,74 @@
 <!--ㅡModal 끝 부분 by Moon-->
 
 <script src="/common/js/common.js" type="text/javascript"></script>
+<script>
+    // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
+    function loadFile(input) {
+        console.log(input.files[0]);
+        let file = input.files[0];
+        $('#imgTag').attr("src", URL.createObjectURL(file));
+    }
+
+    // 유효성 검사(Not null 속성값이 다 입력 되었는지 확인) 함수 by Moon
+    function fieldCheck() {
+        let form = document.getElementById("joinForm")
+        console.log(form);
+        if(!form.usrId.value) {
+            alert("아이디를 입력하세요~~");
+            return false;
+        }
+        if(!form.passwd.value) {
+            alert("비밀번호를 입력하세요~~");
+            return false;
+        }
+        if(!form.pwch.value) {
+            alert("비밀번호 확인란를 입력하세요~~");
+            return false;
+        }
+        if(!form.nm.value) {
+            alert("이름을 입력하세요~~");
+            return false;
+        }
+        if(!form.bankNm.value) {
+            alert("은행이름을 입력하세요~~");
+            return false;
+        }
+        if(!form.bankAcnt.value) {
+            alert("은행 계좌번호를 입력하세요~~");
+            return false;
+        }
+        if(!form.bankAcntOwr.value) {
+            alert("예금주를 입력하세요~~");
+            return false;
+        }
+
+        if(form.passwd.value != form.pwch.value) {
+            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
+            return false;
+        }
+    }
+
+    // Ajax를 이용한 중복 아이디 검사 jQuery by Moon
+    $(document).ready(function () {
+        // id값이 "floatingJoinInput"인 input 태그에 변경사항이 있으면 이벤트 발생
+        $("#floatingJoinInput").change(function () {
+            let usrId = $("#floatingJoinInput").val();
+            $.ajax({
+                url:  "/idAvailAjax",
+                type: "post",
+                data: {usrId: usrId},
+                success: function (result) {
+                    $("#idCheck").val(result).css("color", "red");
+                },
+                error: function (e) {
+                    console.log("ajax 요청 실패!!");
+                    console.log(e);
+                }
+            });
+        });
+    });
+
+</script>
+
 </body>
 </html>

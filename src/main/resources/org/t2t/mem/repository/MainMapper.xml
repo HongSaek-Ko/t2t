@@ -15,6 +15,11 @@
             #{memStat}, #{intro}, #{logAtmCnt}, #{chgPassDt}, #{bankNm}, #{bankAcnt}, #{bankAcntOwr})
     </insert>
 
+    <select id="selectOne" resultType="MainDTO">
+        SELECT * from MEM
+        WHERE usrId=#{usrId}
+    </select>
+
 
     <select id="idPwCheck" resultType="MainDTO">
         SELECT * FROM MEM

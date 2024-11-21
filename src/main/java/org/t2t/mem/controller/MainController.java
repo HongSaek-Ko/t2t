@@ -165,4 +165,18 @@ public class MainController {
 
         return "redirect:/";
     }
+
+    // id 중복 확인 ajax 요청
+    @PostMapping("/idAvailAjax")
+    @ResponseBody    // -> 보던 화면에 데이터를 body 부분에 담아서 응답
+    // html 화면 결과가 아닌 데이터 응답
+    public String idAvailAjax(String usrId) {
+        log.info("Ajax id: {}", usrId);
+        String result = "사용가능한 아이디 입니다";
+        MainDTO mainDTO = mainMapper.selectOne(usrId);
+        if(mainDTO != null) {
+            result = "사용중인 아이디입니다";
+        }
+        return result;
+    }
 }
