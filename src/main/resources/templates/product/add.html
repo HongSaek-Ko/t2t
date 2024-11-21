@@ -15,11 +15,11 @@
       <th:block th:fragment="content">
         <!-- 컨텐츠 시작 지점 -->
         <div class="container text-center">
-          <form action="/product/add" method="post">
+          <form action="" th:action method="post" id="form" onsubmit="return fieldCheck()">
             <div class="row">
               <div class="col">
                 <div class="mx-auto">
-                  <img th:src="@{/common/img/default.png}" class="img-fluid" alt="..." id="임시로 깔아둠 ㅇㅇ"> <!--업로드한 사진으로 보여줌-->
+                  <img th:src="@{/common/img/default.png}" class="img-fluid" style="border-radius:10%;"alt="..." id="임시로 깔아둠"> <!--업로드한 사진으로 보여줌-->
                   <p></p>
                   <div>
                     <label for="prdImg"> <i class="bi bi-image"></i> 사진 올리기 </label>
@@ -32,52 +32,58 @@
                 <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
 
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">제목</label>
-                    <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력하세요...">
+                    <label for="title" class="form-label">제목</label>
+                    <input type="text" class="form-control" id="title" th:field="${product.title}" placeholder="제목을 입력하세요...">
                   </div>
                   <div class="mb-3">
-                    <label for="exampleFormControlTextarea1" class="form-label">설명</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="설명을 입력하세요..."></textarea>
+                    <label for="cont" class="form-label">설명</label>
+                    <textarea class="form-control" id="cont" th:field="${product.cont}" rows="3" placeholder="설명을 입력하세요..."></textarea>
                   </div> <!--제목/설명 끝-->
                   <br/>
+                  <div class="mb-3"> <!--todo: 임시로 입력, 나중에 ${session.usrId}로 변경-->
+                    <label for="usrId" class="form-label">사용자</label>
+                    <input type="text" class="form-control" id="usrId" th:field="${product.usrId}">
+                  </div>
 
                   <div class="input-group mb-3">
-                    <label class="input-group-text" for="inputGroupSelect01">카테고리</label>
-                    <select class="form-select" id="inputGroupSelect01">
-                      <option selected>선택하세요...</option>
-                      <option value="1">음식</option>
-                      <option value="2">동물</option>
-                      <option value="3">여행</option>
-                      <option value="4">인물</option>
+                    <label class="input-group-text" for="cate">카테고리 설정</label>
+                    <select class="form-select" id="cate" th:field="${product.cate}">
+                      <option selected value="">선택하세요...</option>
+                      <option value="food">음식</option>
+                      <option value="anima">동물</option>
+                      <option value="vacat">여행</option>
+                      <option value="human">인물</option>
 
                     </select>
                   </div>
                   <br/>
 
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">해시태그 추가</label>
+                    <label for="hashTag" class="form-label">해시태그 추가</label>
                     <input type="text" class="form-control" id="hashTag" placeholder="해시태그 입력...">
                   </div>
                   <br/>
 
                   <div class="mb-3">
-                    <label for="exampleFormControlInput1" class="form-label">금액 입력</label>
-                    <input type="text" class="form-control" id="price" placeholder="금액 입력...">
+                    <label for="price" class="form-label">금액 입력</label>
+                    <input type="number" class="form-control" id="price" placeholder="금액 입력..." th:field="${product.price}">
                   </div>
                   <br/>
 
                   <div class="form-check form-switch" align="left">
-                    <label class="form-check-label" for="flexSwitchCheck" >판매수량 설정</label>
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheck" onclick="toggleTextbox(this)">
+                    <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
+                    <input class="form-check-input" type="checkbox" id="limitSwitch" name="limitSwitch" onclick="toggleTextBox(this)">
+                    <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" value="N">
                   </div>
+
                   <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
-                    <label for="exampleFormControlInput1" class="form-label">판매 수량</label>
-                    <input type="text" class="form-control" id="quantity" placeholder="판매 수량 입력..." disabled>
+                    <label for="trgtSalQty" class="form-label">판매 수량</label>
+                    <input type="number" class="form-control" id="trgtSalQty" name="trgtSalQty" th:field="${product.trgtSalQty}" th:value="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
                   </div>
                 </div>  <!-- 종료 지점: 가로배치 우회 -->
               </div>
             </div>
-          <hr/>
+            <hr/>
             <button type="button" class="btn btn-warning" onclick="window.location='/'"> 작성취소 </button>
             <button type="submit" class="btn btn-primary"> 등록하기 </button> <!--컨트롤러에서 -->
           </form>

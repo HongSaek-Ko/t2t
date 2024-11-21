@@ -6,18 +6,18 @@ import java.time.LocalDateTime;
 
 @Data
 public class ProductDTO {
-    private String prdId;
+    private Long prdId;
     private String usrId;
     private String title;
     private String cont;
-    private String hit;
-    private String trgtSalQty;
-    private String curSalQty;
-    private String islimit;
+    private Long hit;
+    private Long trgtSalQty;
+    private Long curSalQty;
+    private char islimit;
     private String salStat;
     private String abtReas;
     private String cate;
-    private String price;
+    private Long price;
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
 }
