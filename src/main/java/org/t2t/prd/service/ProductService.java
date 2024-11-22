@@ -5,25 +5,46 @@ import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.t2t.prd.dto.FileDTO;
 import org.t2t.prd.dto.GoodDTO;
 import org.t2t.prd.dto.ProductDTO;
+import org.t2t.prd.dto.ProductFormDTO;
+import org.t2t.prd.repository.FileMapper;
 import org.t2t.prd.repository.ProductMapper;
 
+import java.io.File;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional
 public class ProductService {
     private final ProductMapper productMapper;
+    private final FileMapper fileMapper;
+    private final FileService fileService;
 
-    public void write(ProductDTO product) {
-        productMapper.write(product);
+    public void write(ProductFormDTO product) throws IOException {
+        FileDTO imgFile = fileService.uploadFile(product.getImgFile());
+        log.info("게시글 등록 - 이미지 파일: {}: ", imgFile);
+
+        ProductDTO productDTO = product.toProductDTO();
+        productMapper.write(productDTO);// 실행이후, productDTO 의 prdId값이 체워져있다
+        log.info("ProductService/write: productDTO: {}", productDTO);
+        product.setPrdId(productDTO.getPrdId());
+
+        imgFile.setPrdId(productDTO.getPrdId());
+        fileMapper.insertFile(imgFile);
+
+
     }
 
 
@@ -46,11 +67,18 @@ public class ProductService {
 
 
     public ProductDTO getProduct(Long prdId) {
+        // prdId에 해당하는 글 가져오기
         ProductDTO findProduct = productMapper.findByPrdId(prdId);
+        log.info("findProduct: {}", findProduct);
+
+        // prdId에 해당하는 이미지 가져오기
+        FileDTO imgFile = fileMapper.selectFile(prdId);
+        findProduct.setImgFile(imgFile);
+
         return findProduct;
     }
 
-    public void modify(ProductDTO product) {
+    public void modify(ProductFormDTO product) {
         // 수정시간 표기...
         Date now = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");

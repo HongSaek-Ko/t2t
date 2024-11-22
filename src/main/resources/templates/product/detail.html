@@ -38,7 +38,7 @@
                   <!--<h1> 홈 / TtoT </h1> 내 게시글일 경우 표시 -->
                   <div class="mx-auto">
                     <div class="card" style="width: 30rem;">
-                      <img th:src="@{/common/img/default.png}" class="card-img-top" alt="기본이미지">
+                      <img th:src="|/product/image/${product.getImgFile().getFileNm()}|" class="card-img-top">
 
                       <!--좋아요, 조회수, 구매량 표시 부분-->
                       <div class="card-body">

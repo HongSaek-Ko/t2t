@@ -2,6 +2,7 @@ package org.t2t.prd.repository;
 import org.apache.ibatis.annotations.Mapper;
 import org.t2t.prd.dto.GoodDTO;
 import org.t2t.prd.dto.ProductDTO;
+import org.t2t.prd.dto.ProductFormDTO;
 
 import java.util.Map;
 
@@ -11,7 +12,7 @@ public interface ProductMapper {
 
     ProductDTO findByPrdId(Long prdId);
 
-    void modify(ProductDTO product);
+    void modify(ProductFormDTO product);
 
     GoodDTO findGoodById(Map<String, Object> map);
 

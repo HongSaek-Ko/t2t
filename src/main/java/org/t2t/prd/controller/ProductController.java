@@ -4,14 +4,22 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.MemberDTO;
+import org.t2t.prd.dto.FileDTO;
 import org.t2t.prd.dto.ProductDTO;
+import org.t2t.prd.dto.ProductFormDTO;
+import org.t2t.prd.service.FileService;
 import org.t2t.prd.service.ProductService;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,25 +29,28 @@ import java.util.Map;
 @Slf4j
 public class ProductController {
     private final ProductService productService;
+    private final FileService fileService;
+
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
 
+
     // 상픔 등록 페이지 요청
     @GetMapping("/add")
-    public String productAdd(@ModelAttribute("product") ProductDTO product, Model model) {
+    public String productAdd(@ModelAttribute("product") ProductFormDTO product) {
         log.info("상품 등록 페이지!");
         return "product/add";
     }
 
     // 상품 등록 처리
     @PostMapping("/add")
-    public String productAddPost(ProductDTO productDTO) {
+    public String productAddPost(@ModelAttribute("product") ProductFormDTO product) throws IOException{
 
         log.info("상품 등록 완료!");
-        log.info("productDTO: {}", productDTO);
-        productService.write(productDTO);
+        log.info("productDTO: {}", product);
+        productService.write(product);
 
-        return "redirect:/product/" + productDTO.getPrdId();
+        return "redirect:/product/" + product.getPrdId();
     }
 
     @GetMapping("/{prdId}")
@@ -48,6 +59,14 @@ public class ProductController {
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
         return "product/detail";
+    }
+
+    // 이미지 요청
+    @ResponseBody // 데이터 리턴
+    @GetMapping("/image/{fileNm}") // PathVariable("") 지정해줘야 함 (매개변수 이름 인식 문제, -parameters 옵션 필요)
+    public Resource getImages(@PathVariable("fileNm") String fileNm) throws MalformedURLException {
+        log.info("GET /product/images - filename : {}", fileNm);
+        return new UrlResource("file:" + fileService.getFullPath(fileNm));
     }
 
     @GetMapping("/{prdId}/modify")
@@ -59,7 +78,7 @@ public class ProductController {
     }
 
     @PostMapping("/{prdId}/modify")
-    public String productModifyPost(@PathVariable("prdId") Long prdId, ProductDTO product, Model model) {
+    public String productModifyPost(@PathVariable("prdId") Long prdId, ProductFormDTO product, Model model) {
         log.info("상품 수정 처리!");
         log.info("prdId: {}", prdId);
         log.info("productDTO: {}", product);

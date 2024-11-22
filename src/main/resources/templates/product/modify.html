@@ -56,7 +56,7 @@
                                     <br/>
                                     <div class="form-check form-switch" align="left">
                                         <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
-                                        <input class="form-check-input" type="checkbox" id="limitSwitch" onclick="limitTextBox(this)">
+                                        <input class="form-check-input" type="checkbox" id="limitSwitch" load="checkHistory" onclick="limitTextBox(this)">
                                         <input type="hidden" id="islimit" th:field="${product.islimit}" th:value="${product.islimit}">
                                     </div>
                                     <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->

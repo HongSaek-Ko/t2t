@@ -14,16 +14,22 @@
     <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
       <th:block th:fragment="content">
         <!-- 컨텐츠 시작 지점 -->
+        <style>
+          .img_width_100 {
+            width:100%;
+            height:100%;
+          }
+        </style>
         <div class="container text-center">
-          <form action="" th:action method="post" id="form" onsubmit="return fieldCheck()">
+          <form action="" th:action method="post" id="form" onsubmit="return fieldCheck()" enctype="multipart/form-data">
             <div class="row">
               <div class="col">
                 <div class="mx-auto">
-                  <img th:src="@{/common/img/default.png}" class="img-fluid" style="border-radius:10%;"alt="..." id="임시로 깔아둠"> <!--업로드한 사진으로 보여줌-->
+                  <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg">
                   <p></p>
                   <div>
-                    <label for="prdImg"> <i class="bi bi-image"></i> 사진 올리기 </label>
-                    <input type="file" id="prdImg" name="file1" hidden="">
+                    <label for="imgFile"> <i class="bi bi-image"></i> 사진 올리기 </label>
+                    <input type="file" class="form-control" name="imgFile" id="imgFile" th:field="${product.imgFile}" onchange="loadFile(this)" hidden=""><!--업로드한 사진으로 보여줌-->
                   </div> <br/>
                   <p style="color: crimson"> ※ 작성 후에는 이미지를 수정할 수 없습니다! </p>
                 </div>
@@ -42,7 +48,7 @@
                   <br/>
                   <div class="mb-3"> <!--todo: 임시로 입력, 나중에 ${session.usrId}로 변경-->
                     <label for="usrId" class="form-label">사용자</label>
-                    <input type="text" class="form-control" id="usrId" th:field="${product.usrId}">
+                    <input type="text" class="form-control" id="usrId" name="usrId" th:value="test1">
                   </div>
 
                   <div class="input-group mb-3">
@@ -53,7 +59,6 @@
                       <option value="anima">동물</option>
                       <option value="vacat">여행</option>
                       <option value="human">인물</option>
-
                     </select>
                   </div>
                   <br/>

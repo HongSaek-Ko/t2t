@@ -7,7 +7,6 @@ function toggleTextBox(checkbox) {
     // 2-1. 체크박스 선택여부 체크
     // 2-2. 체크박스 선택여부에 따라 텍스트박스 활성화/비활성화
     textbox_elem.disabled = checkbox.checked ? false : true;
-    <!--todo: islimit 체크박스 누름과 동시에 수량 추가? 아니면 html 수준에서 작성 안하면 작성하라고 알림? 택1...-->
     if (textbox_elem.disabled === false) {
         islimit_elem.value = 'Y';
     } else { islimit_elem.value = 'N'; }
@@ -28,6 +27,9 @@ function fieldCheck() {
     let form = document.getElementById('form')
     let trgtSalqty = document.getElementById('trgtSalQty');
 
+    if(!form.limitSwitch.checked) {
+        return trgtSalqty.value
+    }
     if(form.limitSwitch.checked) {
         if (trgtSalqty.value === ''){
             alert("구매 제한 수량을 입력하세요.");
@@ -37,4 +39,10 @@ function fieldCheck() {
         document.getElementById('islimit').value = 'N';
     }
     return true;
+}
+// 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
+function loadFile(input) {
+    console.log(input.files[0]);
+    let file = input.files[0];
+    $('#defaultImg').attr("src", URL.createObjectURL(file));
 }

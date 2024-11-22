@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.t2t.prd.repository.FileMapper">
+    <insert id="insertFile">
+        <selectKey resultType="long" keyProperty="prdId" order="BEFORE">
+            SELECT MAX(PRDID) AS PRDID FROM PRD
+        </selectKey>
+        INSERT INTO FILE(PRDID, FILENM, FILEORGNM)
+        VALUES (#{prdId}, #{fileNm}, #{fileOrgNm})
+    </insert>
+
+    <select id="selectFile" resultType="org.t2t.prd.dto.FileDTO">
+        SELECT * FROM FILE
+        WHERE PRDID=#{prdId}
+    </select>
+</mapper>
