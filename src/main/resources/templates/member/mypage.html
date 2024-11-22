@@ -80,37 +80,49 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="email" class="form-label">Email address</label>
+                                        <label for="passwd" class="form-label">Password</label>
+                                        <input type="email" class="form-control" id="passwd" placeholder="passwod" readonly
+                                               th:value="${myuser.passwd}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <label for="email" class="form-label">Email</label>
                                         <input type="email" class="form-control" id="email" placeholder="Email"
                                                readonly th:value="${myuser.email}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="name" class="form-label">Name</label>
+                                        <label for="name" class="form-label">이름</label>
                                         <input type="email" class="form-control" id="name" placeholder="이름" readonly
                                                th:value="${myuser.nm}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="bkAcntName" class="form-label">Name</label>
+                                        <label for="bkAcntName" class="form-label">예금주 명</label>
                                         <input type="text" class="form-control" id="bkAcntName" placeholder="계좌주"
                                                readonly th:value="${myuser.bankAcntOwr}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="bkname" class="form-label">bkName</label>
+                                        <label for="bkname" class="form-label">은행명</label>
                                         <input type="text" class="form-control" id="bkname" placeholder="은행명" readonly
                                                th:value="${myuser.bankNm}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="bankAcnt" class="form-label">Bank name</label>
+                                        <label for="bankAcnt" class="form-label">계좌번호</label>
                                         <input type="text" class="form-control" id="bankAcnt" placeholder="계좌번호"
                                                th:value="${myuser.bankAcnt}">
+                                    </td>
+                                </tr>
+                                    <td colspan="2">
+                                        <button type="button" class="btn btn-primary" id="modifyinfo">수정하기</button>
+                                        <button type="button" class="btn btn-info" id="modifydone">수정완료</button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -130,6 +142,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- 충전 모달 -->
                 <div id="rechargeModel" style="display:none;">
                     <div class="modal-body">
                         <div class="form-check">
@@ -155,6 +168,7 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
+                <!-- 환전 모달 -->
                 <div id="exchangeModel" style="display:none;">
                     <div class="modal-body">
                         <table class="table">

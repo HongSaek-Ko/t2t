@@ -22,9 +22,9 @@ public interface MemberMapper {
     //나의 신고목록 가져오기
     List<ComplaintDTO> selectComplaintList(String usrId);
     //나의 구매(order)목록 가져오기
-    List<OrderDTO> selectOrderList(String usrId);
+    void selectOrderList(String usrId);
     //나의 거래목록 가져오기
-    List<ProductDTO> selectTradeList(String usrId);
+    void selectTradeList(String usrId);
     //id, pw 일치여부 확인
     MemberDTO idPwChecking(String usrId, String passwd);
 }

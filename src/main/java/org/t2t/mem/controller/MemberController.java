@@ -11,11 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import org.t2t.mem.dto.ComplaintDTO;
-import org.t2t.mem.dto.MemberDTO;
-import org.t2t.mem.dto.Trade;
+import org.t2t.mem.dto.*;
 import org.t2t.mem.service.MemberService;
-import org.t2t.mem.dto.MileDTO;
 
 import java.lang.reflect.Member;
 import java.util.HashMap;
@@ -42,11 +39,14 @@ public class MemberController {
         return "member/mypage";
     }
 
-    //마이페이지 수정요청
-    @PostMapping("/mypage/modify/{usrId}")
-    public String mypagemodify(@PathVariable("usrId") String usrId){
-        memberService.modifyMem(usrId);
-        return "/member/mypage";
+
+    //마이페이지 수정처리
+    @PostMapping("/mypage/modify")
+    @ResponseBody
+    public String mypagemodify(@RequestBody MemberDTO memberDTO){
+        log.info("mypate modify post - memberDTO : {}", memberDTO);
+        //memberService.modifyMem(user.getUsrId());
+        return "성공";
     }
 
     //포인트 충전/ 환전
@@ -81,13 +81,42 @@ public class MemberController {
         return "/index";
     }
 
-    //나의 판매/ 구매목록 리스트 보기
-    @GetMapping("/mypage/purchaseList")
-    public String mypagelist(HttpServletRequest request, Model model) {
+
+    //회원 탈퇴 처리 !!
+    @PostMapping("/idPwAvailAjax")
+    @ResponseBody
+    public ResponseEntity<Map<String, String>> idPwAvailAjax(String passwd, HttpServletRequest request,Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        memberService.selectTradeList(user.getUsrId());
-        return "/member/purchaseList";
+        Map<String, String> map = new HashMap<>();
+        MemberDTO memberDTO = memberService.idPwCheck(user.getUsrId(), passwd);
+        boolean result = false;
+        if(memberDTO != null){
+            result = true;
+            memberService.deleteMember(user.getUsrId());
+            session.invalidate(); //세션 아웃
+        }
+        model.addAttribute("result", result);
+        return ResponseEntity.ok(map);
+    }
+
+
+//나의 판매 리스트 보기
+    @GetMapping("/mypage/orderList")
+    public String mypageorderlist(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        memberService.selectOrderList(user.getUsrId());
+        return "/member/mypageList";
+    }
+
+    //나의 구매 리스트 보기
+    @GetMapping("/mypage/purchaseList")
+    public String mypagepurchaselist(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession();
+        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+       // memberService.selectTradeList(user.getUsrId());
+        return "/member/mypageList";
     }
 
 

@@ -1,11 +1,11 @@
 $(document).ready(function () {
     registerEvent(['#rechargeEvent', '#exchageEvent']);
+    registerTabEvent('#tabEvent');
 });
 
 function registerModalEvent() {
     $('.modal.fade #addMileBtn').on('click', function () {
-        $.ajax(
-    {
+        $.ajax({
             url: "/member/mypage/charge",
             type: 'POST',
             data: {
@@ -47,11 +47,12 @@ function registerEvent(_target) {
     });
 }
 
+/*
 window.addEventListener('DOMContentLoaded',function(){
     showContent('purchase');
 });
 
-/*
+
 // 마이페이지 프로필 수정
 function modifyProf(input) {
     console.log(input.files[0]);
@@ -90,4 +91,45 @@ $('#myinfotext').keyup(function(e){
     }
 
 })
+$('#modifydone').hide();
 
+// 수정모드로 변경하기
+$('#modifyinfo').on('click', function (){
+    //readonly 속성 제거
+    $('#email').removeAttr("readonly");
+    $('#bkAcntName').removeAttr("readonly");
+    $('#bankAcnt').removeAttr("readonly");
+    $('#modifyinfo').text("수정완료");
+    $('#modifyinfo').hide();
+    $('#modifydone').show();
+});
+
+
+
+//마이페이지 수정처리하기
+$('#modifydone').on('click', function(){
+    console.log("done!!!!!!!!!!!");
+    // 컨트롤러로 보내서 MemberDTO로 받을 예정 ->
+    // 여기서 보낼 데이터를 MemberDTO 구조에 맞게 JS 객체로 만들어 데이터 체우고
+    // Json 문자열로 변경해서 보내기
+    let updatedata = {
+        email: $('#email').val(),
+        bankAcnt: $('#bankAcnt').val(),
+        bankNm: $('#bkAcntName').val(),
+        usrId: $('#usrID').val()
+    }
+    $.ajax({
+        url: "/member/mypage/modify",
+        type: "POST",
+        data: JSON.stringify(updatedata),
+        contentType: 'application/json;charset=utf-8',
+        success: function(result){
+            console.log("ajax 요청 성공!!");
+            console.log(result);
+        },
+        error: function (e) {
+            console.log("ajax 요청 실패..");
+            console.log(e)
+        }
+    })
+});

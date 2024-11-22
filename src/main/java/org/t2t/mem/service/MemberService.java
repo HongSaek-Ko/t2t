@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 import org.t2t.mem.dto.*;
 import org.t2t.mem.repository.MemberMapper;
-import org.t2t.prd.dto.ProductDTO;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,9 +50,14 @@ public class MemberService {
         memberMapper.deleteMem(usrId);
     }
 
+    //나의 구매목록 불러오기(판매상태에 따른)
+    public void selectOrderList(String usrId){
+        memberMapper.selectOrderList(usrId);
+    }
+
     //나의 거래목록 불러오기(판매상태에 따른)
-    public List<ProductDTO> selectTradeList(String usrId){
-        return memberMapper.selectTradeList(usrId);
+    public void selectTradeList(String usrId){
+         memberMapper.selectTradeList(usrId);
     }
 }
 

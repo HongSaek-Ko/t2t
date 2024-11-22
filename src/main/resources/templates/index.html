@@ -344,7 +344,7 @@
             <div class="modal-body">
                 <form id="leaveForm">
                     <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="floatingLeavePassword" placeholder="Password">
+                        <input type="password" class="form-control" id="LeavePassword" name="LeavePassword" placeholder="Password">
                         <label for="floatingJoinPassword">Password</label>
                     </div>
                     <div class="mb-5" style="display: flex; justify-content: center">
@@ -417,6 +417,35 @@
             return false;
         }
     }
+
+
+
+    // Ajax를 이용한 회원탈퇴
+    $(document).ready(function() {
+        $("leaveCompleteBtn").click(function() {
+            let passwd = $('input[name=LeavePassword]').val()
+            $.ajax({
+                url:  "member/idPwAvailAjax",
+                type: "post",
+                data: {passwd : passwd},
+                success: function (result) {
+                    console.log(result);
+                    if(result === false) {
+                        alert("비밀번호가 틀렸습니다!");
+                    }
+                },
+                error: function (e) {
+                    console.log("ajax 요청 실패!!");
+                    console.log(e);
+                }
+
+        });
+
+        });
+    })
+
+
+
 
     // Ajax를 이용한 중복 아이디 검사 jQuery by Moon
     $(document).ready(function () {
