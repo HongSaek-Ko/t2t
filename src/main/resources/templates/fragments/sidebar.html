@@ -64,7 +64,7 @@
                 </li>
                 <li>
                     <div class="dropright">
-                        <a href="#" class="nav-link py-3 border-bottom rounded-0"
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" id="cateFilter"
                            data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60, -100">
                             <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
                         </a>
@@ -76,27 +76,27 @@
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateAnimalCheck">
+                                               id="cateAnimalCheck" value="MAN01">
                                         <label class="form-check-label" for="cateAnimalCheck">동물</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="catePersonCheck">
-                                        <label class="form-check-label" for="catePersonCheck">인물</label>
-                                    </div>
-                                    <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateTourCheck">
+                                               id="cateTourCheck" value="MAN02">
                                         <label class="form-check-label" for="cateTourCheck">여행</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateFoodCheck">
+                                               id="catePersonCheck" value="MAN03">
+                                        <label class="form-check-label" for="catePersonCheck">인물</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateFoodCheck" value="MAN04">
                                         <label class="form-check-label" for="cateFoodCheck">음식</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateAllCheck">
+                                               id="cateAllCheck" value="cateAll">
                                         <label class="form-check-label" for="cateAllCheck">전체</label>
                                     </div>
                                 </div>
@@ -105,38 +105,38 @@
                                         <label for="gradeTitle">등급별<span id="gradeTitle"></span></label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeACheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeACheck" value="GRD01">
                                         <label class="form-check-label" for="gradeACheck">A등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeBCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeBCheck" value="GRD02">
                                         <label class="form-check-label" for="gradeBCheck">B등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeCCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeCCheck" value="GRD03">
                                         <label class="form-check-label" for="gradeCCheck">C등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeDCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeDCheck" value="GRD04">
                                         <label class="form-check-label" for="gradeDCheck">D등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeECheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeECheck" value="GRD05">
                                         <label class="form-check-label" for="gradeECheck">E등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeAllCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeAllCheck" value="gradeAll">
                                         <label class="form-check-label" for="gradeAllCheck">전체</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-ch">
-                                    <button type="button"  class="btn btn-primary btn-sm">적용</button>
+                                    <button type="button" id="filterSaveEvent" class="btn btn-primary btn-sm">적용</button>
                                 </div>
                             </form>
                         </div>
@@ -189,7 +189,7 @@
                 </li>
                 <li>
                     <div class="dropright">
-                        <a href="#" class="nav-link py-3 border-bottom rounded-0"
+                        <a href="#" class="nav-link py-3 border-bottom rounded-0" id="cateFilter"
                            data-bs-toggle="dropdown" aria-expanded="false" data-bs-offset="60, -100">
                             <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
                         </a>
@@ -201,27 +201,27 @@
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateAnimalCheck">
-                                        <label class="form-check-label" for="cateAnimalCheck">동물</label>
+                                               id="cateAnimalCheck" value="MAN01">
+                                        <label class="form-check-label" for="cateAnimalCheck" >동물</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="catePersonCheck">
-                                        <label class="form-check-label" for="catePersonCheck">인물</label>
-                                    </div>
-                                    <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateTourCheck">
+                                               id="cateTourCheck" value="MAN02">
                                         <label class="form-check-label" for="cateTourCheck">여행</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateFoodCheck">
+                                               id="catePersonCheck" value="MAN03">
+                                        <label class="form-check-label" for="catePersonCheck">인물</label>
+                                    </div>
+                                    <div class="form-check form-switch form-check-inline">
+                                        <input name="categroy" type="checkbox" class="form-check-input"
+                                               id="cateFoodCheck" value="MAN04">
                                         <label class="form-check-label" for="cateFoodCheck">음식</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
                                         <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="cateAllCheck">
+                                               id="cateAllCheck" value="cateAll">
                                         <label class="form-check-label" for="cateAllCheck">전체</label>
                                     </div>
                                 </div>
@@ -230,38 +230,38 @@
                                         <label for="gradeTitle">등급별<span id="gradeTitle"></span></label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeACheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeACheck" value="GRD01">
                                         <label class="form-check-label" for="gradeACheck">A등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeBCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeBCheck" value="GRD02">
                                         <label class="form-check-label" for="gradeBCheck">B등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeCCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeCCheck" value="GRD03">
                                         <label class="form-check-label" for="gradeCCheck">C등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeDCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeDCheck" value="GRD04">
                                         <label class="form-check-label" for="gradeDCheck">D등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeECheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeECheck" value="GRD05">
                                         <label class="form-check-label" for="gradeECheck">E등급</label>
                                     </div>
                                     <div class="form-check form-switch form-check-inline">
-                                        <input name="categroy" type="checkbox" class="form-check-input"
-                                               id="gradeAllCheck">
+                                        <input name="gradeCate" type="checkbox" class="form-check-input"
+                                               id="gradeAllCheck" value="gradeAll">
                                         <label class="form-check-label" for="gradeAllCheck">전체</label>
                                     </div>
                                 </div>
                                 <div class="form-check form-ch">
-                                    <button type="button"  class="btn btn-primary btn-sm">적용</button>
+                                    <button type="button" id="filterSaveEvent" class="btn btn-primary btn-sm">적용</button>
                                 </div>
                             </form>
                         </div>
@@ -332,11 +332,11 @@
             </div>
         </div>
     </main>
-
+    <script th:src="@{/common/js/filter.js}"></script>
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/normalize/6.0.0/normalize.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-    <link rel="stylesheet" href="bundle-login.css">
+<!--    <link rel="stylesheet" href="bundle-login.css">-->
 </th:block>
 
 </html>

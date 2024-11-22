@@ -46,7 +46,7 @@
                    data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
-                <div th:text="${session.t2t_session_user}"></div>
+<!--                <div th:text="${session.t2t_session_user}"></div>-->
                 <ul class="dropdown-menu text-small shadow" style="">
                     <th:block th:if="${session.t2t_session_user != null}">
                         <li><a class="dropdown-item" href="/member/mypage" id="modifyEvent">내 프로필보기 </a></li>
@@ -413,6 +413,7 @@
         }
 
         if($("#idCheck").data("success") == false) {
+            alert("존재하는 아이디 입니다.")
             return false;
         }
     }
