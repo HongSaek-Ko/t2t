@@ -87,10 +87,11 @@ public class ProductController {
         return "redirect:/product/{prdId}";
     }
 
-    @GetMapping("/delete")
-    public String productDelete() {
+    @PostMapping("/{prdId}/delete")
+    public String productDelete(@PathVariable(name = "prdId") Long prdId) {
+        productService.productDelete(prdId);
         log.info("제품 삭제?");
-        return "product/delete";
+        return "redirect:/";
     }
 
     // '좋아요'

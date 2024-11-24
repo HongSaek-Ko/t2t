@@ -120,7 +120,7 @@ function createModifyLayout() {
 
 function createDeleteLayout() {
     var deleteArr = [];
-    deleteArr.push('<form id="deletePrdForm">')
+    deleteArr.push('<form id="deletePrdForm" th:action="@{/product/{prdId}/delete(prdId=${product.prdId})}" method="post">')
     deleteArr.push('    <h4> 삭제하려면 비밀번호를 입력하세요. </h4>')
     deleteArr.push('    <div class="form-floating mb-2">')
     deleteArr.push('        <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">')

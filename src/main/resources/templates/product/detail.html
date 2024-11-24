@@ -68,7 +68,7 @@
                 <div class="col">
                   <div align="right">
                     <button type="button" class="btn btn-danger" id="complaintEvent" value="complaintEvent"> 신고 </button> <!--타인의 게시글일 경우 표시-->
-                    <button type="button" class="btn btn-danger" id="modifyEvent" value="modifyEvent"> 수정 </button> <!--내 게시글일 경우 표시-->
+                    <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/product/{prdId}/modify(prdId=${product.prdId})}'|">수정</button> <!--내 게시글일 경우 표시-->
                     <button type="button" class="btn btn-danger" id="deleteEvent" value="deleteEvent"> 삭제 </button> <!--내 게시글일 경우 표시-->
                   </div>
                   <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
@@ -98,24 +98,23 @@
                         남은 수량: [[${product.trgtSalQty}]]개
                       </div>
                     </div>
-                    <p class="margin">
-                    <div style="text-align: left">
-                      <ul class="comment">
-                        <li class="comment-form">
-                          <form id="commentFrm">
-                            <h4>댓글쓰기 <span></span></h4>
-                            <span class="ps_box">
-                              <input type="text" placeholder="댓글 내용을 입력해주세요." class="int" name="content"/>
-                            </span>
-                            <input type="submit" class="comment-btn" value="등록"/>
-                          </form>
-                        </li>
-                        <li id="comment-list"></li>
-                      </ul>
-                    </div>
-                    <script src="/js/reply.js"></script>
+                    <p class="margin"></p>
+                      <div style="text-align: left">
+                          <ul class="comment">
+                              <li class="comment-form">
+                                  <form action="/replies/add" method="post" id="replyForm">
+                                      <h4>댓글쓰기 <span></span></h4>
+                                      <span class="ps_box">
+                                        <textarea placeholder="댓글 입력..." class="int" name="content"></textarea>
+                                      </span>
+                                      <input type="submit" class="comment-btn" value="등록"/>
+                                  </form>
+                              </li>
+                              <li id="reply-list"></li>
+                          </ul>
+                      </div>
+                      <script src="/js/reply.js"></script>
                   </div>  <!-- 종료 지점: 가로배치 우회 -->
-                  <!--댓글 시작 -->
                 </div>
               </div>
             </div>

@@ -20,4 +20,5 @@ public interface ProductMapper {
 
     void insertGood(Map<String, Object> map);
 
+    void deleteProduct(Long prdId);
 }

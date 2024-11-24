@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.t2t.prd.repository.ReplyMapper">
+    <insert id="addReply">
+        INSERT INTO REPLY(RPYID, PRTRPYID, PRDID, RPYCONT)
+        VALUES(#{rpyId}, #{prtRpyId}, #{prdId}, #{rpyCont})
+    </insert>
+
+    <select id="readById" resultType="org.t2t.prd.dto.ReplyDTO">
+        SELECT * FROM REPLY
+        WHERE RPYID=#{rpyId}
+    </select>
+
+    <update id="updateReply">
+        UPDATE REPLY
+        SET RPYCONT = #{rpyCont}
+        WHERE RPYID = #{rpyId}
+    </update>
+
+    <delete id="deleteReply">
+        DELETE FROM REPLY
+        WHERE RPYID = #{rpyId}
+    </delete>
+
+    <select id="getReplyByPrd" resultType="org.t2t.prd.dto.ReplyDTO">
+        SELECT * FROM REPLY
+        WHERE PRDID = #{prdId}
+        ORDER BY RPYID
+    </select>
+
+<!--    <select id="readAllWithPaging" resultType="org.t2t.prd.dto.ReplyDTO">-->
+<!--        SELECT * FROM REPLY-->
+<!--        WHERE PRDID = #{prdId} ORDER BY RPYID-->
+<!--        LIMIT #{pager.offset}, #{pager.size}-->
+<!--    </select>-->
+
+<!--    <select id="getReplyCount" resultType="int">-->
+<!--        SELECT COUNT(*) FROM REPLY-->
+<!--        WHERE PRDID = #{prdId}-->
+<!--    </select>-->
+
+</mapper>

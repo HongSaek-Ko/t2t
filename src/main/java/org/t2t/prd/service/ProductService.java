@@ -92,4 +92,10 @@ public class ProductService {
         productMapper.modify(product);
     }
 
+    public void productDelete(Long prdId) {
+        FileDTO file = fileMapper.selectFile(prdId);
+        fileService.deleteFile(file.getFileNm());
+        fileMapper.deleteFile(prdId);
+        productMapper.deleteProduct(prdId);
+    }
 }

@@ -46,4 +46,9 @@
         VALUES
         (#{prdId}, #{usrId})
     </insert>
+
+    <delete id="deleteProduct">
+        DELETE FROM PRD
+        WHERE PRDID=#{prdId}
+    </delete>
 </mapper>

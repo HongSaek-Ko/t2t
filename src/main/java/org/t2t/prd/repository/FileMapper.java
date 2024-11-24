@@ -10,4 +10,6 @@ public interface FileMapper {
     void insertFile(FileDTO fileDTO);
 
     FileDTO selectFile(Long prdId);
+
+    void deleteFile(Long prdId);
 }

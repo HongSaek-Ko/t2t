@@ -15,4 +15,9 @@
         SELECT * FROM FILE
         WHERE PRDID=#{prdId}
     </select>
+
+    <delete id="deleteFile">
+        DELETE FROM FILE
+        WHERE PRDID = #{prdId}
+    </delete>
 </mapper>
