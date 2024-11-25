@@ -27,15 +27,26 @@ function fieldCheck() {
     let form = document.getElementById('form')
     let trgtSalqty = document.getElementById('trgtSalQty');
 
+    if(form.hashTag.value === ''
+        || form.price.value === ''
+        || form.cate.value === ''
+        || form.cont.value === ''
+        || form.imgFile.value === ''
+        || form.title.value === '') {
+        alert("필수 입력사항을 입력해주세요.")
+        return false;
+    }
+
     if(!form.limitSwitch.checked) {
         return trgtSalqty.value
     }
-    if(form.limitSwitch.checked) {
-        if (trgtSalqty.value === ''){
+
+    if(form.trgtSalQty.value === '') {
+        if(form.limitSwitch.checked) {
             alert("구매 제한 수량을 입력하세요.");
             return false;
         }
-    } else {
+    }else{
         document.getElementById('islimit').value = 'N';
     }
     return true;

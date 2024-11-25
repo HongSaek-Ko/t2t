@@ -53,11 +53,13 @@ public class ProductController {
         return "redirect:/product/" + product.getPrdId();
     }
 
+    // 상품 상세 페이지
     @GetMapping("/{prdId}")
     public String productDetail(@PathVariable("prdId") Long prdId, Model model) {
         log.info("상품 상세 페이지! prdId: {}", prdId);
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
+        model.addAttribute("goodCount", productService.goodCount(prdId));
         return "product/detail";
     }
 
@@ -101,9 +103,11 @@ public class ProductController {
         MemberDTO user = (MemberDTO) session.getAttribute(HTTP_SESSION_USER); // HttpSession에 저장된 MemberDTO 객체(사용자 정보)를 가져옴;
         // H_S_U: 세션에서 MemberDTO를 가져오는 키값. 상술했듯, usrId 등 보유.
         productService.updateGood(prdId, user.getUsrId()); // MemberDTO 객체에서 usrId 추출.
-
         Map<String, Object> map = new HashMap<>(); // 문자열을 key, object를 value로 갖는 객체 map 생성.
         map.put("good", prdId); // 객체 map에 다음 값을 추가; key: 'good', value: prdId.
         return ResponseEntity.ok(map); // map은 {"good" : prdId} 형태로 응답 (응답 본문에 map, 상태코드는 200(OK)로 설정) → 서비스로!
     }
+
+
+
 }

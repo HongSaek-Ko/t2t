@@ -16,7 +16,7 @@ import java.util.UUID;
 public class FileService {
 
     // 파일 저장 경로
-    @Value("C:/framework/t2tPractice") // application.yml파일에 작성된 정보 가져오기
+    @Value("D:/bhs/1stpj/") // application.yml파일에 작성된 정보 가져오기
     private String fileDir;
 
     // 파일 저장

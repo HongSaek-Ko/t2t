@@ -22,6 +22,7 @@
         SET TITLE=#{title}, CONT=#{cont}, CATE=#{cate}, SALSTAT=#{salStat}, ABTREAS=#{abtReas}
         WHERE PRDID=#{prdId}
     </update>
+
     <!--  서비스에서 넘어옴      HashMap 타입의 객체를 매개변수로 받았으므로... 쿼리 결과를 GoodDTO 타입으로 변환-->
     <select id="findGoodById" parameterType="hashmap" resultType="org.t2t.prd.dto.GoodDTO">
         SELECT G.* FROM
@@ -41,14 +42,22 @@
 
     <!--'좋아요'를 눌렀다는 정보(데이터)를 저장-->
     <insert id="insertGood" parameterType="hashmap" >
-        INSERT INTO GOOD
-        (prdId, usrId)
-        VALUES
-        (#{prdId}, #{usrId})
+        INSERT INTO GOOD (prdId, usrId)
+        VALUES (#{prdId}, #{usrId})
     </insert>
 
     <delete id="deleteProduct">
         DELETE FROM PRD
         WHERE PRDID=#{prdId}
     </delete>
+
+    <select id="goodCount" resultType="int">
+        SELECT COUNT(*) FROM GOOD
+        WHERE PRDID=#{prdId}
+    </select>
+
+    <update id="updateProductHit">
+        UPDATE PRD SET HIT=HIT+1
+        WHERE PRDID=#{prdId}
+    </update>
 </mapper>

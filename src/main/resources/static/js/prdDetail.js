@@ -16,20 +16,28 @@ function registerEvent(_target) {
     $.each(_target, function (_i, _el) {
         $(_el).on('click', function (e) {
             var _id = e.target.value;
+            console.log($('#complaintEvent').data('prdid')); // prdId 가져오기, 다른 것들도 동일
+            console.log(_target);
+            console.log(_i);
+            console.log(_el);
             console.log(e);
-            if (_id == 'complaintEvent') {
+            console.log(e.target);
+
+
+
+            if (_id === 'complaintEvent') {
                 $('#complaintModal').find('.modal-body').empty(); // 모달 새로 열 때마다 기존 것 비워줘야하므로...
                 $('#complaintModal').find('.modal-body').append(createComplaintLayout()); // 모달에 이거 추가...
                 $('#complaintModalLabel').text('신고');
                 $('#complaintModal').modal('show');
 
-            } else if (_id =='modifyEvent') {
-                $('#modifyPrdModal').find('.modal-body').empty();
-                $('#modifyPrdModal').find('.modal-body').append(createModifyLayout());
-                $('#modifyPrdModalLabel').text('수정');
-                $('#modifyPrdModal').modal('show');
+            // } else if (_id === 'modifyEvent') {
+            //     $('#modifyPrdModal').find('.modal-body').empty();
+            //     $('#modifyPrdModal').find('.modal-body').append(createModifyLayout());
+            //     $('#modifyPrdModalLabel').text('수정');
+            //     $('#modifyPrdModal').modal('show');
 
-            } else if (_id == 'deleteEvent') {
+            } else if (_id === 'deleteEvent') {
                 $('#deletePrdModal').find('.modal-body').empty();
                 $('#deletePrdModal').find('.modal-body').append(createDeleteLayout());
                 $('#deleteModalLabel').text('삭제');
@@ -98,42 +106,44 @@ function createComplaintLayout() {
     return complaintArr.join('');
 }
 
-function createModifyLayout() {
-    var modifyArr = [];
-    modifyArr.push('<form id="modifyPrdForm">')
-    modifyArr.push('    <h4> 수정하려면 비밀번호를 입력하세요. </h4>')
-    modifyArr.push('    <div class="form-floating mb-2">')
-    modifyArr.push('        <input type="password" class="form-control" id="floatingModifyPassword" placeholder="Password">')
-    modifyArr.push('            <label for="floatingModifyPassword">Password</label>')
-    modifyArr.push('    </div>')
-    modifyArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
-    modifyArr.push('        <button type="submit" class="btn btn-danger mx-2" id="toModifyPrd" >확인</button>')
-    modifyArr.push('    </div>')
-    modifyArr.push('    <ul class="nav justify-content-center mb-2">')
-    modifyArr.push('        <li class="nav-item">')
-    modifyArr.push('            <a class="nav-link" href="#">비밀번호 찾기</a>')
-    modifyArr.push('        </li>')
-    modifyArr.push('    </ul>')
-    modifyArr.push('</form>')
-    return modifyArr.join('')
-}
+// function createModifyLayout() {
+//     var modifyArr = [];
+//     modifyArr.push('<form id="modifyPrdForm">')
+//     modifyArr.push('    <h4> 수정하려면 비밀번호를 입력하세요. </h4>')
+//     modifyArr.push('    <div class="form-floating mb-2">')
+//     modifyArr.push('        <input type="password" class="form-control" id="floatingModifyPassword" placeholder="Password">')
+//     modifyArr.push('            <label for="floatingModifyPassword">Password</label>')
+//     modifyArr.push('    </div>')
+//     modifyArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
+//     modifyArr.push('        <button type="submit" class="btn btn-danger mx-2" id="toModifyPrd" >확인</button>')
+//     modifyArr.push('    </div>')
+//     modifyArr.push('    <ul class="nav justify-content-center mb-2">')
+//     modifyArr.push('        <li class="nav-item">')
+//     modifyArr.push('            <a class="nav-link" href="#">비밀번호 찾기</a>')
+//     modifyArr.push('        </li>')
+//     modifyArr.push('    </ul>')
+//     modifyArr.push('</form>')
+//     return modifyArr.join('')
+// }
 
 function createDeleteLayout() {
     var deleteArr = [];
-    deleteArr.push('<form id="deletePrdForm" th:action="@{/product/{prdId}/delete(prdId=${product.prdId})}" method="post">')
-    deleteArr.push('    <h4> 삭제하려면 비밀번호를 입력하세요. </h4>')
-    deleteArr.push('    <div class="form-floating mb-2">')
-    deleteArr.push('        <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">')
-    deleteArr.push('            <label for="floatingDeletePassword">Password</label>')
+    deleteArr.push('<form id="deletePrdForm" action="/product/'+ $('#complaintEvent').data('prdid') +'/delete" method="post">') // <...action="/product/prdId/delete"...>
+    deleteArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
+    deleteArr.push('        <h4> 삭제하시겠습니까? </h4>')
     deleteArr.push('    </div>')
+    // deleteArr.push('    <div class="form-floating mb-2">')
+    // deleteArr.push('        <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">')
+    // deleteArr.push('            <label for="floatingDeletePassword">Password</label>')
+    // deleteArr.push('    </div>')
     deleteArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
     deleteArr.push('        <button type="submit" class="btn btn-danger mx-2" id="deletePrdComplete" >삭제</button>')
     deleteArr.push('    </div>')
-    deleteArr.push('    <ul class="nav justify-content-center mb-2">')
-    deleteArr.push('        <li class="nav-item">')
-    deleteArr.push('            <a class="nav-link" href="#">비밀번호 찾기</a>')
-    deleteArr.push('        </li>')
-    deleteArr.push('    </ul>')
+    // deleteArr.push('    <ul class="nav justify-content-center mb-2">')
+    // deleteArr.push('        <li class="nav-item">')
+    // deleteArr.push('            <a class="nav-link" href="#">비밀번호 찾기</a>')
+    // deleteArr.push('        </li>')
+    // deleteArr.push('    </ul>')
     deleteArr.push('</form>')
 
     return deleteArr.join('');
@@ -164,7 +174,7 @@ function clickGood() { todo: 좋아요 하트, 수 변경 제이쿼리
     // AJAX 요청을 사용하여 서버에 좋아요 상태를 전달
     $.ajax({
         url: '/good/' + prdId,  // 서버로 요청할 URL
-        type: 'GET',             // 요청 방식 (GET, POST 등)
+        type: 'GET',
         success: function(data) {
             // 좋아요 수 업데이트; 좋아요가 추가되었으면 카운트 증가, 삭제되었으면 감소
              누르면 현재값에서 1 추가, 이미 누른 유저가 한 번 더 누르면 1 감소

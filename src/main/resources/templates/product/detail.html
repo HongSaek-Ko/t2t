@@ -45,13 +45,13 @@
                           <div align="center">
                           <a type="button" id="goodEvent">
                             <i class="bi bi-heart"></i>
-                          </a><span id="goodCount">0</span> <!--줄바꿈 안하려고 span 씀, 문자열은 바꿔야 할 부분...-->
+                          </a><span id="goodCount" th:text="${goodCount}" style="margin-left: 3px"></span> <!--줄바꿈 안하려고 span 씀, 문자열은 바꿔야 할 부분...-->
                             <!--todo: 간격 벌리기 -->
-                          <a type="button">
+                          <a style="margin-left: 30px">
                             <i class="bi bi-eye"></i>
-                          </a><span>조회수(숫자)</span>
+                          </a><span>[[${product.hit}]]</span>
 
-                          <a type="button">
+                          <a style="margin-left: 30px">
                             <i class="bi bi-cash"></i>
                           </a><span>구매량(숫자)</span>
 
@@ -67,9 +67,9 @@
                 </div>
                 <div class="col">
                   <div align="right">
-                    <button type="button" class="btn btn-danger" id="complaintEvent" value="complaintEvent"> 신고 </button> <!--타인의 게시글일 경우 표시-->
-                    <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/product/{prdId}/modify(prdId=${product.prdId})}'|">수정</button> <!--내 게시글일 경우 표시-->
-                    <button type="button" class="btn btn-danger" id="deleteEvent" value="deleteEvent"> 삭제 </button> <!--내 게시글일 경우 표시-->
+                    <button type="button" class="btn btn-danger" id="complaintEvent" th:data-prdid="${product.prdId}" value="complaintEvent"> 신고 </button> <!--타인의 게시글일 경우 표시-->
+                    <button type="button" class="btn btn-danger" th:data-prdid="${product.prdId}" th:onclick="|location.href='@{/product/{prdId}/modify(prdId=${product.prdId})}'|">수정</button> <!--내 게시글일 경우 표시-->
+                    <button type="button" class="btn btn-danger" th:data-prdid="${product.prdId}" id="deleteEvent" value="deleteEvent"> 삭제 </button> <!--내 게시글일 경우 표시-->
                   </div>
                   <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
     <!--                <div class="mb-3">-->
@@ -102,13 +102,11 @@
                       <div style="text-align: left">
                           <ul class="comment">
                               <li class="comment-form">
-                                  <form action="/replies/add" method="post" id="replyForm">
                                       <h4>댓글쓰기 <span></span></h4>
                                       <span class="ps_box">
-                                        <textarea placeholder="댓글 입력..." class="int" name="content"></textarea>
+                                        <input type="text" placeholder="댓글 입력..." class="int" name="reply" />
                                       </span>
-                                      <input type="submit" class="comment-btn" value="등록"/>
-                                  </form>
+                                      <input type="button" class="comment-btn" id="replyBtn" value="등록"/>
                               </li>
                               <li id="reply-list"></li>
                           </ul>
@@ -159,7 +157,9 @@
                     <h2 class="modal-title fs-5" id="deleteModalLabel">삭제</h2>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
-                  <div class="modal-body"></div>
+                  <div class="modal-body">
+
+                  </div>
                 </div>
               </div>
             </div>

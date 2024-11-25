@@ -9,9 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.t2t.prd.dto.Pager;
-import org.t2t.prd.dto.ReplyDTO;
-import org.t2t.prd.dto.ReplyResponseDTO;
+import org.t2t.prd.dto.*;
 import org.t2t.prd.service.ReplyService;
 
 import java.util.List;
@@ -21,19 +19,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ReplyController {
-
-
     private final ReplyService replyService;
 
     // 댓글 작성
-    @PostMapping("/add")
+    @PostMapping(value = "/add", consumes = "application/json")
     public ResponseEntity<ReplyDTO> addReply(@RequestBody ReplyDTO replyDTO) {
+        log.info("add reply: {}", replyDTO);
         try {
-            // 댓글을 추가하고 저장된 댓글 DTO 객체 반환
+            // 댓글 추가하고 저장된 댓글 DTO 객체 반환
             ReplyDTO savedReply = replyService.addReply(replyDTO);
+            log.info("saved reply: {}", savedReply);
             return new ResponseEntity<>(savedReply, HttpStatus.CREATED); // 성공적인 응답 반환
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // 실패 시
+            log.info("댓글 에러에용: {}", e.getMessage());
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // 실패 시...
         }
     }
 

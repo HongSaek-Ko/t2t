@@ -66,7 +66,17 @@ public class ProductService {
     }
 
 
+
+//    // 좋아요 수
+//    public int getTotalGood(Long prdId) {
+//        return productMapper.goodCount(prdId);
+//    }
+
+    // 게시글 조회(상세보기)
     public ProductDTO getProduct(Long prdId) {
+        // 조회수 올리기
+        productMapper.updateProductHit(prdId);
+
         // prdId에 해당하는 글 가져오기
         ProductDTO findProduct = productMapper.findByPrdId(prdId);
         log.info("findProduct: {}", findProduct);
@@ -74,6 +84,12 @@ public class ProductService {
         // prdId에 해당하는 이미지 가져오기
         FileDTO imgFile = fileMapper.selectFile(prdId);
         findProduct.setImgFile(imgFile);
+
+        // prdId에 해당하는 좋아요 가져오기
+        productMapper.goodCount(prdId);
+
+
+
 
         return findProduct;
     }
@@ -97,5 +113,9 @@ public class ProductService {
         fileService.deleteFile(file.getFileNm());
         fileMapper.deleteFile(prdId);
         productMapper.deleteProduct(prdId);
+    }
+
+    public int goodCount(Long prdId) {
+        return productMapper.goodCount(prdId);
     }
 }

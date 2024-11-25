@@ -20,5 +20,10 @@ public interface ProductMapper {
 
     void insertGood(Map<String, Object> map);
 
+    int goodCount(Long prdId);
+
     void deleteProduct(Long prdId);
+
+    // 게시글 조회수 증가
+    void updateProductHit(Long prdId);
 }

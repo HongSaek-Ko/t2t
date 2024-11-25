@@ -43,17 +43,17 @@
                   </div>
                   <div class="mb-3">
                     <label for="cont" class="form-label">설명</label>
-                    <textarea class="form-control" id="cont" th:field="${product.cont}" rows="3" placeholder="설명을 입력하세요..."></textarea>
+                    <textarea class="form-control" id="cont" name="cont" th:field="${product.cont}" rows="3" placeholder="설명을 입력하세요..."></textarea>
                   </div> <!--제목/설명 끝-->
                   <br/>
-                  <div class="mb-3"> <!--todo: 임시로 입력, 나중에 ${session.usrId}로 변경-->
+                  <div class="mb-3" hidden=""> <!--todo: 임시로 입력, 나중에 ${session.usrId}로 변경-->
                     <label for="usrId" class="form-label">사용자</label>
                     <input type="text" class="form-control" id="usrId" name="usrId" th:value="test1">
                   </div>
 
                   <div class="input-group mb-3">
                     <label class="input-group-text" for="cate">카테고리 설정</label>
-                    <select class="form-select" id="cate" th:field="${product.cate}">
+                    <select class="form-select" id="cate" th:field="${product.cate}" name="cate">
                       <option selected value="">선택하세요...</option>
                       <option value="food">음식</option>
                       <option value="anima">동물</option>
@@ -65,20 +65,20 @@
 
                   <div class="mb-3">
                     <label for="hashTag" class="form-label">해시태그 추가</label>
-                    <input type="text" class="form-control" id="hashTag" placeholder="해시태그 입력...">
+                    <input type="text" class="form-control" id="hashTag" name="hashTag" placeholder="해시태그 입력...">
                   </div>
                   <br/>
 
                   <div class="mb-3">
                     <label for="price" class="form-label">금액 입력</label>
-                    <input type="number" class="form-control" id="price" placeholder="금액 입력..." th:field="${product.price}">
+                    <input type="number" class="form-control" name="price" id="price" placeholder="금액 입력..." th:field="${product.price}">
                   </div>
                   <br/>
 
                   <div class="form-check form-switch" align="left">
                     <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
                     <input class="form-check-input" type="checkbox" id="limitSwitch" name="limitSwitch" onclick="toggleTextBox(this)">
-                    <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" value="N">
+                    <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" th:value="N" >
                   </div>
 
                   <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->

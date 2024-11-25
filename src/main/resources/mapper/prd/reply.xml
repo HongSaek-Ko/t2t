@@ -5,8 +5,8 @@
 
 <mapper namespace="org.t2t.prd.repository.ReplyMapper">
     <insert id="addReply">
-        INSERT INTO REPLY(RPYID, PRTRPYID, PRDID, RPYCONT)
-        VALUES(#{rpyId}, #{prtRpyId}, #{prdId}, #{rpyCont})
+        INSERT INTO REPLY(PRTRPYID, PRDID, RPYCONT)
+        VALUES(#{prtRpyId}, #{prdId}, #{rpyCont})
     </insert>
 
     <select id="readById" resultType="org.t2t.prd.dto.ReplyDTO">
