@@ -46,14 +46,14 @@ li {
     width: 85px;
 }
 
-.comment-form > form {
+.comment-form > div {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 
-.comment-form > form > h4 {
+.comment-form > h4 {
     width: 100%;
     margin: 14px 0 14px 0;
 }

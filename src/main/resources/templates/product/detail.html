@@ -102,17 +102,21 @@
                       <div style="text-align: left">
                           <ul class="comment">
                               <li class="comment-form">
-                                      <h4>댓글쓰기 <span></span></h4>
+                                  <div id="comment-form">
+                                      <h4>댓글쓰기
+                                          <span></span>
+                                      </h4>
                                       <span class="ps_box">
-                                        <input type="text" placeholder="댓글 입력..." class="int" name="reply" />
+                                        <input type="text" placeholder="댓글 입력..." class="int" name="content"/>
                                       </span>
-                                      <input type="button" class="comment-btn" id="replyBtn" value="등록"/>
+                                      <input type="button" class="comment-btn" id="comment-btn" value="등록"/>
+                                  </div>
                               </li>
                               <li id="reply-list"></li>
                           </ul>
                       </div>
                       <script src="/js/reply.js"></script>
-                  </div>  <!-- 종료 지점: 가로배치 우회 -->
+                  </div>  <!-- 종료 지점: 가로배치 우회 --> <!--todo: 대댓글, 수정/삭제 기능 추가-->
                 </div>
               </div>
             </div>

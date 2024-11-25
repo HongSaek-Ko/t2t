@@ -5,10 +5,10 @@ $(document).ready(function() {
     loadReplies(prdId);
 
     // 댓글 작성 폼 제출 시 처리
-    $("#replyBtn").on("click", function(e) {
+    $("#comment-btn").on("click", function(e) {
         e.preventDefault();  // 폼 제출 기본 동작을 막음
 
-        const $input = $("input[name='reply']");  // 댓글 내용 가져오기
+        const $input = $("input[name='content']");  // 댓글 내용 가져오기
         const content = $input.val();  // 댓글 내용
 
         if (content.trim() === "") {
@@ -74,5 +74,6 @@ $(document).ready(function() {
         $ul.append($li1, $li2, $li3);
         return $ul;
     }
+
 }); // Jquery 끝
 

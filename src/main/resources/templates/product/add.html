@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head::header('회원정보보기')"></head>
+<head th:replace="fragments/head::header('T2T 작성')"></head>
 <body>
 <div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
   <!-- Sidebar -->
@@ -25,10 +25,14 @@
             <div class="row">
               <div class="col">
                 <div class="mx-auto">
-                  <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg">
+<!--                  <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg">-->
                   <p></p>
                   <div>
-                    <label for="imgFile"> <i class="bi bi-image"></i> 사진 올리기 </label>
+                    <label for="imgFile">
+                      <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg">
+                      <br/>
+                      <i class="bi bi-image"></i> 사진 업로드
+                    </label>
                     <input type="file" class="form-control" name="imgFile" id="imgFile" th:field="${product.imgFile}" onchange="loadFile(this)" hidden=""><!--업로드한 사진으로 보여줌-->
                   </div> <br/>
                   <p style="color: crimson"> ※ 작성 후에는 이미지를 수정할 수 없습니다! </p>
@@ -94,6 +98,22 @@
           </form>
         </div>
 
+          <!-- alert → Modal -->
+          <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header">
+                          <h5 class="modal-title" id="alertModalLabel">오류</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body" id="modalBody">
+                      </div>
+                      <div class="modal-footer">
+                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
 
 
 

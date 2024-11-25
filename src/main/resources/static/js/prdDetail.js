@@ -168,7 +168,7 @@ $(document).ready(function(){
 */
 
 /*
-function clickGood() { todo: 좋아요 하트, 수 변경 제이쿼리
+function clickGood() {
     // 하트 클릭 시 빈 하트 ↔ 채워진 하트 상태 변경
 
     // AJAX 요청을 사용하여 서버에 좋아요 상태를 전달
