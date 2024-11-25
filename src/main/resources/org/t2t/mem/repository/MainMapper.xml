@@ -2,7 +2,6 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
 <mapper namespace="org.t2t.mem.repository.MainMapper">
 
     <insert id="insertMember" parameterType="org.t2t.mem.dto.MainFormDTO">
@@ -20,11 +19,25 @@
         WHERE usrId=#{usrId}
     </select>
 
-
     <select id="idPwCheck" resultType="MainDTO">
         SELECT * FROM MEM
         WHERE usrId=#{usrId} and passwd=#{passwd}
     </select>
 
+    <select id="findMemberId" resultType="MainDTO">
+        SELECT * FROM MEM
+        WHERE nm=#{nm} and email=#{email}
+    </select>
+
+    <select id="pwdCheck" resultType="Integer">
+        SELECT COUNT(*) FROM MEM
+        WHERE usrId = #{usrId} AND nm = #{nm} AND email = #{email}
+    </select>
+
+<!--   새로운 임시 비밀번호로 저장하는 쿼리문-->
+    <update id="pwdUpdate" parameterType="org.t2t.mem.dto.MainFormDTO">
+        UPDATE MEM SET passwd = #{passwd}
+        WHERE usrId = #{usrId}
+    </update>
 
 </mapper>

@@ -220,7 +220,7 @@
 
 <!--Modal 시작 부분 by Moon-->
 <!--총 3개 Modal #1. loginModal(로그인)  #2. joinModal(회원가입)  #3. leaveModal(회원탈퇴)-->
-<!--loginModal-->
+<!--loginModal 로그인 화면 모달-->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -249,10 +249,10 @@
                 </form>
                     <ul class="nav justify-content-center mb-2">
                         <li class="nav-item">
-                            <a class="nav-link" href="#">아이디 찾기</a>
+                            <a class="nav-link" href="#" id="findIdEvent">아이디 찾기</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">비밀번호 찾기</a>
+                            <a class="nav-link" href="#" id="findPwdEvent">비밀번호 찾기</a>
                         </li>
                     </ul>
                     <div class="my-1" style="display: flex; justify-content: center;">
@@ -262,7 +262,7 @@
         </div>
     </div>
 </div>
-<!--joinModal-->
+<!--joinModal 회원가입 화면 모달-->
 <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -332,7 +332,7 @@
         </div>
     </div>
 </div>
-<!--leaveModal-->
+<!--leaveModal 회원탈퇴 화면 모달-->
 <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -359,6 +359,125 @@
                 </form>
             </div>
 
+        </div>
+    </div>
+</div>
+<!--id 찾기 화면 Modal findIdModal-->
+<div class="modal fade" id="findIdModal" tabindex="-1" aria-labelledby="finIdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/common/img/t2t.png" width="40" height="40"/>
+                <h1 class="modal-title fs-5" id="findIdModalLabel">아이디 찾기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="findIdNm" name="nm" placeholder="user_name">
+                    <label for="findIdNm">사용자 이름</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="findIdEmail" name="email" placeholder="Email">
+                    <label for="findIdEmail">email</label>
+                </div>
+                <div class="mb-5" style="display: flex; justify-content: center;">
+                    <button type="button" id="findIdSubmit" class="btn btn-info">아이디 찾기</button>
+                </div>
+                <ul class="nav justify-content-center mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginEvent1">로그인 하기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="findPwdEvent1">비밀번호 찾기</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--id 찾기 결과 화면 Modal findIdResultModal -->
+<div class="modal fade" id="findIdResultModal" tabindex="-1" aria-labelledby="finIdResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/common/img/t2t.png" width="40" height="40"/>
+                <h1 class="modal-title fs-5" id="findIdModalResultLabel">회원님의 아이디를 확인해 주세요</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="result-box">
+                    <p class="inquiry" id="findIdWrite">조회결과가 없습니다.</p>
+                </div>
+
+                <ul class="nav justify-content-center mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginEvent2">로그인 하기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="findPwdEvent2">비밀번호 찾기</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Password 찾기 화면 Modal findPwdModal-->
+<div class="modal fade" id="findPwdModal" tabindex="-1" aria-labelledby="finPwdModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/common/img/t2t.png" width="40" height="40"/>
+                <h1 class="modal-title fs-5" id="findPwdModalLabel">패스워드 찾기</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="findPwdUsrId" name="usrId" placeholder="usrId">
+                    <label for="findIdNm">사용자 아이디</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="findPwdNm" name="nm" placeholder="user_name">
+                    <label for="findIdNm">사용자 이름</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="findPwdEmail" name="email" placeholder="Email">
+                    <label for="findIdEmail">email</label>
+                </div>
+                <div class="mb-5" style="display: flex; justify-content: center;">
+                    <button type="button" id="findPwdSubmit" class="btn btn-info">비밀번호 찾기</button>
+                </div>
+                <ul class="nav justify-content-center mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginEvent3">로그인 하기</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--비밀번호 찾기 결과 화면 Modal findPwdResultModal -->
+<div class="modal fade" id="findPwdResultModal" tabindex="-1" aria-labelledby="finPwdResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <img src="/common/img/t2t.png" width="40" height="40"/>
+                <h2 class="modal-title fs-5" id="findPwdModalResultLabel">회원님의 비밀번호를 확인하세요</h2>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="result-box">
+                    <p class="inquiry" id="findPwdWrite">일치하는 회원 정보가 없습니다.</p>
+                </div>
+
+                <ul class="nav justify-content-center mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="loginEvent4">로그인 하기</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="findPwdEvent3">비밀번호 다시 찾기</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

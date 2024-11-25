@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -132,7 +133,6 @@ public class MainController {
             }
         }
 
-        log.info("session logout {} ", session);
         return "redirect:/";  // 홈으로 강제 이동
     }
 
@@ -166,4 +166,52 @@ public class MainController {
 
         return ResponseEntity.ok(map);
     }
+
+    // ID 찾기 기능 추가 by Moon
+    // ajax 요청(common.js에 ajax 코드 추가) : 데이터만 주고 받기
+    @PostMapping("/findIdCheck")
+    public ResponseEntity<String> searchId(@RequestBody MainDTO mainDTO) {
+        String result = "";
+        try {
+            MainDTO findIdDTO = mainService.findMemberId(mainDTO);
+            if(findIdDTO == null){ // DB에 없다
+                result = "조회결과가 없습니다.";
+            }else{
+                result = findIdDTO.getUsrId();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //return "index";
+        return ResponseEntity.ok(result);
+    }
+
+    // 비밀번호 찾기 기능 추가 by Moon
+    // 임시 비빌번호 발금으로 처리
+    // ajax 요청(common.js에 ajax 코드 추가) : 데이터만 주고 받기
+    @PostMapping("/findPwdResult")
+    public ResponseEntity<String> findPwdCheck(@RequestBody MainDTO mainDTO) {
+        String pwdResult = "";
+        try {
+            log.info(mainDTO.toString());
+            int search = mainService.pwdCheck(mainDTO);
+            log.info("search {}", search);
+            if(search == 0) {
+                pwdResult = "기입된 정보가 잘못되었습니다. 다시 입력해주세요.";
+            } else {
+                pwdResult = RandomStringUtils.randomAlphanumeric(10);
+                mainDTO.setPasswd(pwdResult);
+                log.info(mainDTO.getPasswd());
+                mainService.pwdUpdate(mainDTO);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.ok(pwdResult);
+//        return "member/findPwdResult";
+    }
+
+
+
 }

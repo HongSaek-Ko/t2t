@@ -44,5 +44,21 @@ public class MainService {
         }
     }
 
+    public MainDTO findMemberId(MainDTO mainDTO) throws IOException {
+        return  mainMapper.findMemberId(mainDTO);
+    }
+
+    public int pwdCheck(MainDTO mainDTO) {
+        return mainMapper.pwdCheck(mainDTO);
+    }
+
+    //새로운 비밀번호로 저장
+    public void pwdUpdate(MainDTO mainDTO) {
+//        String newUpdatePwd = pwEncoder.encode(mainDTO.getPasswd());
+//        mainDTO.setPwd(newUpdatePwd);
+        log.info(mainDTO.getPasswd());
+        mainMapper.pwdUpdate(mainDTO);
+    }
+
 }
 
