@@ -7,6 +7,7 @@ import org.t2t.mem.dto.*;
 import org.t2t.mem.repository.MemberMapper;
 
 
+import java.lang.reflect.Member;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -20,17 +21,16 @@ public class MemberService {
     }
     //회원 한명 찾기
     public MemberDTO findByUserId(String usrId) {
-        return MemberDTO_.findByUsrId(usrId);
+       return memberMapper.findByID(usrId);
     }
     //마일리지 충전/환전
     public void addMile(MileDTO mile) {
         memberMapper.updateMile(mile);
     }
     //회원정보 수정
-    public void modifyMem(String usrId){
-        memberMapper.updateMem(usrId);
+    public void modifyMem(MemberDTO memberDTO){
+        memberMapper.updateMem(memberDTO);
     }
-
     //회원 탈퇴
     public void deleteMember(String usrId){
         memberMapper.deleteMem(usrId);

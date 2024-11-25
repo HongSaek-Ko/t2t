@@ -81,8 +81,13 @@
                                 <tr>
                                     <td colspan="2">
                                         <label for="passwd" class="form-label">Password</label>
-                                        <input type="email" class="form-control" id="passwd" placeholder="passwod" readonly
+                                        <input type="password" class="form-control" name="password" id="passwd" placeholder="password" readonly
                                                th:value="${myuser.passwd}">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" id="pwcheck"> 비밀번호 변경</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -95,7 +100,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <label for="name" class="form-label">이름</label>
-                                        <input type="email" class="form-control" id="name" placeholder="이름" readonly
+                                        <input type="text" class="form-control" id="name" placeholder="이름" readonly
                                                th:value="${myuser.nm}">
                                     </td>
                                 </tr>
@@ -122,10 +127,10 @@
                                 </tr>
                                     <td colspan="2">
                                         <button type="button" class="btn btn-primary" id="modifyinfo">수정하기</button>
-                                        <button type="button" class="btn btn-info" id="modifydone">수정완료</button>
+                                        <button type="button" class="btn btn-primary" id="modifydone">수정완료</button>
+                                        <button type="button" class="btn btn-danger" id="modifycancel" th:onclick="|location.href='/member/mypage'|">취소</button>
                                     </td>
-                                </tr>
-                                </tbody>
+                                </form>
                             </table>
                         </div>
                     </div>
@@ -206,6 +211,33 @@
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
+                <!-- 비밀번호 확인 모달 -->
+                <div id="passwordcheckModal" style="display:none;">
+                    <div class="modal-body">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="addMile" value="5000">
+                            <label class="form-check-label" htmlfor="5000"> 5000 </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="addMile" value="10000" checked="">
+                            <label class="form-check-label" htmlfor="10000"> 10000 </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="addMile" value="20000" checked="">
+                            <label class="form-check-label" htmlfor="20000"> 20000 </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="addMile" value="30000" checked="">
+                            <label class="form-check-label" htmlfor="30000"> 30000 </label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="modifypassword">완료</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+
                 <script type="text/javascript" th:src='@{/js/third/jquery-3.7.1.js}'></script>
                 <script type="text/javascript" th:src='@{/js/mypage.js}'></script>
             </th:block>

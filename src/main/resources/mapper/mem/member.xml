@@ -3,6 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t2t.mem.repository.MemberMapper">
+
     <!-- 회원 1명 정보 조회 -->
     <select id="findByID" resultType="org.t2t.mem.dto.MemberDTO">
         SELECT * FROM MEM WHERE USRID=#{usrId}
@@ -11,11 +12,14 @@
     <select id="findList" resultType="org.t2t.mem.dto.MemberDTO">
         SELECT * FROM MEM
     </select>
+    <!-- 회원정보 수정 -->
     <update id="updateMem">
         UPDATE MEM
-            SET NM=#{nm},
+            SET BANKNM=#{bankNm},
             EMAIL=#{email},
-            INTRO=#{intro}
+            INTRO=#{intro},
+            PASSWD=#{passwd},
+            BANKACNT = #{bankAcnt}
         WHERE
             USRID = #{usrId}
     </update>
@@ -44,7 +48,7 @@
         WHERE
         USRID = #{usrId}
     </insert>
-
+    <!-- 나의 마일리지 포인트 -->
     <select id="selectMileTotal" resultType="org.t2t.mem.dto.MileDTO" parameterType="string">
         SELECT
             MI.USRID
@@ -57,6 +61,7 @@
         WHERE
             M.USRID =#{usrId}
     </select>
+    <!-- 나의 신고내역 -->
     <select id="selectComplaintList" parameterType="string" resultType="org.t2t.mem.dto.ComplaintDTO">
         SELECT
             C.*
@@ -76,7 +81,6 @@
         P.SALSTAT = 'PRD01' AND
         P.USRID != #{usrId};
     </select>
-
     <!-- 나의 거래내역(판매상태에 따른) -->
     <select id="selectTradeList" resultType="org.t2t.prd.dto.ProductDTO">
         SELECT P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE

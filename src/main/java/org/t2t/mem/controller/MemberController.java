@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.cache.CacheManagerCustomizers;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +16,7 @@ import org.t2t.mem.dto.*;
 import org.t2t.mem.service.MemberService;
 
 import java.lang.reflect.Member;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,19 +36,51 @@ public class MemberController {
     @GetMapping("/mypage")
     public String getMypage(HttpSession session, Model model) {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        log.info(user.toString());
+        //세션에 저장된 usrId 가져오기
+        //MemberDTO findUser = memberService.findByUserId(user.getUsrId());
         MemberDTO findUser = memberService.findByUserId("test1");
+        setTestData(findUser, "test1");
+        log.info(findUser.toString());
         model.addAttribute("myuser", findUser);
         return "member/mypage";
+    }
+
+    // mile, rank 가짜데이터 체워주는 임시 메서드
+    private void setTestData(MemberDTO findUser, String usrId) {
+        MileDTO mileDTO = MileDTO.builder()
+                .usrId(usrId)
+                .point(1000L)
+                .regDt(LocalDateTime.now())
+                .lastDt(LocalDateTime.now())
+                .build();
+
+        RankingDTO rankDTO = RankingDTO.builder()
+                .usrId(usrId)
+                .score(1000L)
+                .lastActDt(LocalDateTime.now())
+                .regDt(LocalDateTime.now())
+                .lastDt(LocalDateTime.now())
+                .build();
+        findUser.setMile(mileDTO);
+        findUser.setRank(rankDTO);
     }
 
 
     //마이페이지 수정처리
     @PostMapping("/mypage/modify")
     @ResponseBody
-    public String mypagemodify(@RequestBody MemberDTO memberDTO){
+    public ResponseEntity<Map<String, MemberDTO>> mypagemodify(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
+        Map<String, MemberDTO> map = new HashMap<>();
         log.info("mypate modify post - memberDTO : {}", memberDTO);
-        //memberService.modifyMem(user.getUsrId());
-        return "성공";
+        memberService.modifyMem(memberDTO);
+        // 세션정보 수정
+        HttpSession session = request.getSession();
+        MemberDTO findUser = memberService.findByUserId(memberDTO.getUsrId());
+        session.setAttribute(HTTP_SESSION_USER, findUser);
+        map.put("findUser", findUser);
+        //map.put("memberDTO", memberDTO.toString();
+        return ResponseEntity.ok(map);
     }
 
     //포인트 충전/ 환전
@@ -72,17 +106,7 @@ public class MemberController {
 
 
 
-    //회원 탈퇴
-    @GetMapping("/mypage/delete")
-    public String deletemember(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
-        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        memberService.deleteMem(user.getUsrId());
-        return "/index";
-    }
-
-
-    //회원 탈퇴 처리 !!
+    //비밀번호 확인 회원 탈퇴 처리 !!
     @PostMapping("/idPwAvailAjax")
     @ResponseBody
     public ResponseEntity<Map<String, String>> idPwAvailAjax(String passwd, HttpServletRequest request,Model model) {

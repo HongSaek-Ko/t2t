@@ -2,6 +2,7 @@ package org.t2t.mem.dto;
 
 import java.time.LocalDateTime;
 
+//가짜 데이터
 public class MemberDTO_ {
     public static MemberDTO findByUsrId (String usrId) {
         MileDTO mileDTO = MileDTO.builder()
