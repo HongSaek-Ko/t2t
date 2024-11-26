@@ -72,17 +72,17 @@ public class MainController {
             if(mainDTO != null) {
                 session.setAttribute("sid", cid);
                 // 쿠키 갱신(같은 쿠키 만들어 전송 )
-                createCookie(cid, cpw, cauto, response);
+                createCookie(cid, cpw, Boolean.valueOf(cauto), response);
             }
         }
         return "index";
     }
 
     // 쿠키 생성 메서드
-    private void createCookie(String id, String pw, String auto, HttpServletResponse response) {
+    private void createCookie(String id, String pw, boolean auto, HttpServletResponse response) {
         Cookie c1 = new Cookie("cid", id);  // 쿠키 객체 생성
         Cookie c2 = new Cookie("cpw", pw);
-        Cookie c3 = new Cookie("cauto", auto);
+        Cookie c3 = new Cookie("cauto", Boolean.toString(auto));
         c1.setMaxAge(60 * 60); // 유효기간 설정 (예제는 1시간)
         c2.setMaxAge(60 * 60);
         c3.setMaxAge(60 * 60);
@@ -93,7 +93,7 @@ public class MainController {
 
     // 로그인 처리 요청
     @PostMapping("/login")
-    public String loginPro(String usrId, String passwd, String auto, HttpServletResponse response, HttpSession session, Model model) {
+    public String loginPro(@RequestParam(name="usrId")String usrId, @RequestParam(name="passwd")String passwd, @RequestParam(name="auto") boolean auto, HttpServletResponse response, HttpSession session, Model model) {
         log.info("POST /login 로그인처리!!!");
         log.info("id: {}", usrId);
         log.info("pw: {}", passwd);
@@ -109,7 +109,7 @@ public class MainController {
             session.setAttribute(HTTP_SESSION_USER, mainDTO); // 사용자 id값 저장
 
 
-            if(auto != null) { // 자동로그인 체크 했다면,
+            if(auto) { // 자동로그인 체크 했다면,
                 createCookie(usrId, passwd, auto, response);
             }
         }
@@ -150,7 +150,7 @@ public class MainController {
     @PostMapping("/idAvailAjax")   // html 화면 결과가 아닌 데이터 응답
     @ResponseBody    // -> 보던 화면에 데이터를 body 부분에 담아서 응답
 
-    public ResponseEntity<Map<String, String>> idAvailAjax(String usrId) {
+    public ResponseEntity<Map<String, String>> idAvailAjax(@RequestParam(name="usrId") String usrId) {
         log.info("Ajax id: {}", usrId);
         Map<String, String> map = new HashMap<>();
         String result = null;
