@@ -19,6 +19,7 @@ import org.t2t.mem.repository.MainMapper;
 import org.t2t.mem.service.MainService;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -138,7 +139,7 @@ public class MainController {
 
     // 회원 가입 처리 요청 by moon
     @PostMapping("/guest/signup")
-    public String newMemberPro(@ModelAttribute MainFormDTO member) throws IOException {
+    public String newMemberPro(@ModelAttribute MainFormDTO member) throws IOException, NoSuchAlgorithmException {
         log.info("mainFormDTO: {}", member);
         // DB 저장
         mainService.insertMember(member);

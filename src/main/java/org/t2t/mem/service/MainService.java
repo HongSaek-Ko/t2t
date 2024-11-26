@@ -8,6 +8,9 @@ import org.t2t.mem.repository.MainMapper;
 import org.t2t.mem.repository.ProfileMapper;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -20,12 +23,13 @@ public class MainService {
     private final ProfileMapper profileMapper;
 
 
-    public void insertMember(MainFormDTO member) throws IOException {
+    public void insertMember(MainFormDTO member) throws IOException, NoSuchAlgorithmException {
         // 실제 파일 저장처리 -> ProfileService
         member.setRoleId(RoleId.MEMBER.name());
         member.setMemStat(MemberStatus.MEM01.getKey());
         member.setLogAtmCnt(0);
         member.setChgPassDt(LocalDateTime.now());
+        member.setPasswd(encode(member.getPasswd()));
         ProfileDTO imgProfile = profileService.saveFile(member.getImageProfile());// 이미지 실제 파일 저장
 
         // DB에 게시글 정보 저장(+파일정보 포함) -> MainService
@@ -60,5 +64,28 @@ public class MainService {
         mainMapper.pwdUpdate(mainDTO);
     }
 
+
+    private String encode(String passwd) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
+
+        // digest() method is called
+        // to calculate message digest of the input string
+        // returned as array of byte
+        byte[] messageDigest = md.digest(passwd.getBytes());
+
+        // Convert byte array into signum representation
+        BigInteger no = new BigInteger(1, messageDigest);
+
+        // Convert message digest into hex value
+        String hashtext = no.toString(16);
+
+        // Add preceding 0s to make it 32 bit
+        while (hashtext.length() < 32) {
+            hashtext = "0" + hashtext;
+        }
+
+
+        return hashtext;
+    }
 }
 
