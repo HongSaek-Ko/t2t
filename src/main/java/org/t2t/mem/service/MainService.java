@@ -3,6 +3,7 @@ package org.t2t.mem.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.t2t.mem.dto.*;
 import org.t2t.mem.repository.MainMapper;
 import org.t2t.mem.repository.ProfileMapper;
@@ -22,7 +23,9 @@ public class MainService {
     private final ProfileService profileService;
     private final ProfileMapper profileMapper;
 
+    private final MemberService memberService;
 
+    @Transactional // 2개 이상 CUD 시 필수 작성; 오류 발생 시 작업 취소(롤백)
     public void insertMember(MainFormDTO member) throws IOException, NoSuchAlgorithmException {
         // 실제 파일 저장처리 -> ProfileService
         member.setRoleId(RoleId.MEMBER.name());
@@ -30,15 +33,18 @@ public class MainService {
         member.setLogAtmCnt(0);
         member.setChgPassDt(LocalDateTime.now());
         member.setPasswd(encode(member.getPasswd()));
-        ProfileDTO imgProfile = profileService.saveFile(member.getImageProfile());// 이미지 실제 파일 저장
-
-        // DB에 게시글 정보 저장(+파일정보 포함) -> MainService
-        log.info("POST /guest/signup - imgProfile : {}", imgProfile);
-        // DB에 member 주면서 저장해라~
-        // MainFormDTO -> MainDTO로 변환해서 전달
         MainDTO mainDTO = member.toMainDTO();
         mainMapper.insertMember(mainDTO); // 저장 이후 id 생성
+        memberService.insertMile(makeEmptyMile(mainDTO));
+        memberService.insertRank(makeEmptyRank(mainDTO));
+
+        // DB에 member 주면서 저장해라~
+        // MainFormDTO -> MainDTO로 변환해서 전달
         log.info("MainService - write - mainDTO : {}", mainDTO);
+
+        ProfileDTO imgProfile = profileService.saveFile(member.getImageProfile());// 이미지 실제 파일 저장
+        // DB에 게시글 정보 저장(+파일정보 포함) -> MainService
+        log.info("POST /guest/signup - imgProfile : {}", imgProfile);
 
         // 파일 저장시 usrId 필요
         // 이미지 파일정보 있으면, DB에 저장
@@ -46,6 +52,20 @@ public class MainService {
             imgProfile.setUsrId(member.getUsrId());
             profileMapper.insertFile(imgProfile); // 저장
         }
+    }
+
+    private RankingDTO makeEmptyRank(MainDTO mainDTO) {
+        RankingDTO rankingDTO = new RankingDTO();
+        rankingDTO.setUsrId(mainDTO.getUsrId());
+        rankingDTO.setScore(0L);
+        return rankingDTO;
+    }
+
+    private MileDTO makeEmptyMile(MainDTO mainDTO) {
+        MileDTO mileDTO = new MileDTO();
+        mileDTO.setUsrId(mainDTO.getUsrId());
+        mileDTO.setPoint(0L);
+        return mileDTO;
     }
 
     public MainDTO findMemberId(MainDTO mainDTO) throws IOException {

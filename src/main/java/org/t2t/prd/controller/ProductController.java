@@ -53,6 +53,9 @@ public class ProductController {
         return "redirect:/product/" + product.getPrdId();
     }
 
+    // 상품 목록 페이지 todo: 임시, 실제로는 index...?
+
+
     // 상품 상세 페이지
     @GetMapping("/{prdId}")
     public String productDetail(@PathVariable("prdId") Long prdId, Model model) {

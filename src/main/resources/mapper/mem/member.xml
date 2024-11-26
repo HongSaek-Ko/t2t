@@ -15,11 +15,25 @@
     <!-- 회원정보 수정 -->
     <update id="updateMem">
         UPDATE MEM
-            SET BANKNM=#{bankNm},
-            EMAIL=#{email},
-            INTRO=#{intro},
-            PASSWD=#{passwd},
-            BANKACNT = #{bankAcnt}
+            SET
+            <choose>
+                <when test="{bankNm != null}">
+                    BANKNM = #{bankNm},
+                </when>
+                <when test="{email != null}">
+                    email = #{email},
+                </when>
+                <when test="{intro != null}">
+                    INTRO = #{intro},
+                </when>
+                <when test="{passwd != null}">
+                    PASSWD = #{passwd},
+                </when>
+                <when test="{bankAcnt != null}">
+                    BANKACNT = #{bankAcnt},
+                </when>
+            </choose>
+            LASTDT = now()
         WHERE
             USRID = #{usrId}
     </update>
@@ -109,4 +123,16 @@
         USRID = #{usrId}
     </select>
 
+    <insert id="insertMile" parameterType="org.t2t.mem.dto.MileDTO">
+        INSERT INTO MILES
+            (USRID, POINT)
+        VALUES
+            (#{usrId},  #{point})
+    </insert>
+    <insert id="insertRank" parameterType="org.t2t.mem.dto.RankingDTO">
+        INSERT INTO RANKING
+            (USRID, SCORE)
+        VALUES
+            (#{usrId},  #{score})
+    </insert>
 </mapper>

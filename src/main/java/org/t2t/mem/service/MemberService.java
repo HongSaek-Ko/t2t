@@ -64,5 +64,13 @@ public class MemberService {
     public void selectTradeList(String usrId){
          memberMapper.selectTradeList(usrId);
     }
+
+    public void insertMile(MileDTO mileDTO){
+        memberMapper.insertMile(mileDTO);
+    }
+
+    public void insertRank(RankingDTO Rank){
+        memberMapper.insertRank(Rank);
+    }
 }
 

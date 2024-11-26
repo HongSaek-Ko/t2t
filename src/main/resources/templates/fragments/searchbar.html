@@ -29,14 +29,20 @@
                     <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                     </a>
+
                     <ul class="dropdown-menu text-small shadow" style="">
-                        <li><a class="dropdown-item" href="#" id="loginEvent">login</a></li>
-                        <li><a class="dropdown-item" href="#">Settings</a></li>
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                        <th:block th:if="${session.t2t_session_user != null}">
+                            <th:block th:if="${!#strings.contains(session.http_session_current_url, 'mypage')}">
+                                <li><a class="dropdown-item" href="/member/mypage" id="modifyEvent">내 프로필보기 </a></li>
+                            </th:block>
+                            <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
+                            <li><hr class="dropdown-divider" id="divider"></li>
+                            <li><a class="dropdown-item" href="#" id="logoutEvent">Log out</a></li>
+                        </th:block>
+                        <th:block th:if="${session.t2t_session_user == null}">
+                            <li><a class="dropdown-item" href="#" id="loginEvent">Login</a></li>
+                            <li><a class="dropdown-item" href="#" id="joinEvent">회원가입</a></li>
+                        </th:block>
                     </ul>
                 </div>
             </div>

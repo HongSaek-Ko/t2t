@@ -37,4 +37,8 @@ public interface MemberMapper {
     MileDTO selectMileByUsrId(MemberDTO memberDTO);
 
     RankingDTO selectRankByUsrId(MemberDTO memberDTO);
+
+    void insertMile(MileDTO mileDTO);
+
+    void insertRank(RankingDTO rank);
 }
