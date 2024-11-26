@@ -19,6 +19,8 @@ import org.t2t.mem.repository.MainMapper;
 import org.t2t.mem.service.MainService;
 
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
@@ -94,15 +96,21 @@ public class MainController {
 
     // 로그인 처리 요청
     @PostMapping("/login")
-    public String loginPro(@RequestParam(name="usrId")String usrId, @RequestParam(name="passwd")String passwd, @RequestParam(name="auto") boolean auto, HttpServletResponse response, HttpSession session, Model model) {
+    public String loginPro(@RequestParam(name="usrId")String usrId, @RequestParam(name="passwd")String passwd, @RequestParam(name="auto") boolean auto,
+                           HttpServletResponse response, HttpSession session, Model model) throws NoSuchAlgorithmException {
         log.info("POST /login 로그인처리!!!");
         log.info("id: {}", usrId);
         log.info("pw: {}", passwd);
         log.info("auto: {}", auto); // 체크했으면 auto, 체크안했으면 null
         // 로그인 처리
         // DB에 사용자가 입력한 id와 pw가 일치하는 데이터가 있는지 확인
+
         boolean result = false;
-        MainDTO mainDTO = mainMapper.idPwCheck(usrId, passwd);
+
+        MainDTO mainDTO = mainMapper.idPwCheck(usrId, encode(passwd));
+        // 가입시 "SHA-512"방식으로 비밀번호가 hashtext로 encoding 되었기 때문에
+        // 로그인할 때도 비밀번호를 한번 encoding 해줘야 함 by Moon
+
         if(mainDTO != null) {
             // 일치한다 -> 로그인 처리 -> 로그인 잘됐다는 결과 화면에 주기
             result = true; // 로그인결과 true로 지정
@@ -213,6 +221,23 @@ public class MainController {
 //        return "member/findPwdResult";
     }
 
-
+    // 비밀번호를 "SHA-512"방식을 이용하여 hashtext로 인코딩하는 메서드
+    private String encode(String passwd) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
+        // digest() method is called
+        // to calculate message digest of the input string
+        // returned as array of byte
+        byte[] messageDigest = md.digest(passwd.getBytes());
+        // Convert byte array into signum representation
+        BigInteger no = new BigInteger(1, messageDigest);
+        // Convert message digest into hex value
+        String hashtext = no.toString(16);
+        log.info(hashtext);
+        // Add preceding 0s to make it 32 bit
+        while (hashtext.length() < 32) {
+            hashtext = "0" + hashtext;
+        }
+        return hashtext;
+    }
 
 }

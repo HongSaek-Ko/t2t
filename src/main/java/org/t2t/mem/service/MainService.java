@@ -26,12 +26,14 @@ public class MainService {
     private final MemberService memberService;
 
     @Transactional // 2개 이상 CUD 시 필수 작성; 오류 발생 시 작업 취소(롤백)
+    // 회원 가입
     public void insertMember(MainFormDTO member) throws IOException, NoSuchAlgorithmException {
         // 실제 파일 저장처리 -> ProfileService
         member.setRoleId(RoleId.MEMBER.name());
         member.setMemStat(MemberStatus.MEM01.getKey());
         member.setLogAtmCnt(0);
         member.setChgPassDt(LocalDateTime.now());
+        // Password 인코딩("SHA512")
         member.setPasswd(encode(member.getPasswd()));
         MainDTO mainDTO = member.toMainDTO();
         mainMapper.insertMember(mainDTO); // 저장 이후 id 생성
@@ -72,7 +74,9 @@ public class MainService {
         return  mainMapper.findMemberId(mainDTO);
     }
 
-    public int pwdCheck(MainDTO mainDTO) {
+    public int pwdCheck(MainDTO mainDTO) throws NoSuchAlgorithmException {
+        mainDTO.setPasswd(encode(mainDTO.getPasswd()));
+        log.info("MainService - pwdCheck - mainDTO PW : {}", mainDTO.getPasswd());
         return mainMapper.pwdCheck(mainDTO);
     }
 
@@ -87,24 +91,18 @@ public class MainService {
 
     private String encode(String passwd) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-512");
-
         // digest() method is called
         // to calculate message digest of the input string
         // returned as array of byte
         byte[] messageDigest = md.digest(passwd.getBytes());
-
         // Convert byte array into signum representation
         BigInteger no = new BigInteger(1, messageDigest);
-
         // Convert message digest into hex value
         String hashtext = no.toString(16);
-
         // Add preceding 0s to make it 32 bit
         while (hashtext.length() < 32) {
             hashtext = "0" + hashtext;
         }
-
-
         return hashtext;
     }
 }

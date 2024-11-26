@@ -230,8 +230,8 @@
             </div>
             <div class="modal-body">
                 <form action="/login" method="post" id="loginForm">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="floatingInput" name="usrId" placeholder="userId">
+                    <div class="form-floating mb-2">
+                        <input type="text" class="form-control" id="floatingInput" name="usrId" placeholder="User Id"  />
                         <label for="floatingInput">ID</label>
                     </div>
                     <div class="form-floating">
@@ -491,7 +491,6 @@
         let file = input.files[0];
         $('#imgTag').attr("src", URL.createObjectURL(file));
     }
-
     // 유효성 검사(Not null 속성값이 다 입력 되었는지 확인) 함수 by Moon
     function fieldCheck() {
         let form = document.getElementById("joinForm")
@@ -536,7 +535,7 @@
         }
     }
 
-    // 탈퇴
+    // Ajax를 이용한 회원탈퇴
     function withdrawEvent () {
         $("leaveCompleteBtn").click(function() {
             let passwd = $('input[name=LeavePassword]').val()
@@ -614,7 +613,6 @@
         });
     }
 
-    // Ajax를 이용한 회원탈퇴
     $(document).ready(function() {
         withdrawEvent ();
         logoutEvent();
