@@ -21,7 +21,12 @@ public class MemberService {
     }
     //회원 한명 찾기
     public MemberDTO findByUserId(String usrId) {
-       return memberMapper.findByID(usrId);
+        MemberDTO memberDTO = memberMapper.findByID(usrId);
+        MileDTO mileDTO = memberMapper.selectMileByUsrId(memberDTO);
+        RankingDTO rankingDTO = memberMapper.selectRankByUsrId(memberDTO);
+        memberDTO.setMile(mileDTO);
+        memberDTO.setRank(rankingDTO);
+       return memberDTO;
     }
     //마일리지 충전/환전
     public void addMile(MileDTO mile) {

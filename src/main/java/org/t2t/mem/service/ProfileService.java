@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ProfileService {
 
     // 파일 저장 경로
-    @Value("${file.dir}") // application.yml파일에 작성된 정보 가져오기
+    @Value("${file.profile.path}") // application.yml파일에 작성된 정보 가져오기
     private String fileDir;
 
     public ProfileDTO saveFile(MultipartFile file) throws IOException {

@@ -32,6 +32,9 @@ public class MemberController {
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
 
+    @Value("${LOGGEDIN_MYUSER}")
+    private String LOGGEDIN_MYUSER;
+
     //내 프로필 보기
     @GetMapping("/mypage")
     public String getMypage(HttpSession session, Model model) {
@@ -39,10 +42,9 @@ public class MemberController {
         log.info(user.toString());
         //세션에 저장된 usrId 가져오기
         //MemberDTO findUser = memberService.findByUserId(user.getUsrId());
-        MemberDTO findUser = memberService.findByUserId("test1");
-        setTestData(findUser, "test1");
+        MemberDTO findUser = memberService.findByUserId(user.getUsrId());
         log.info(findUser.toString());
-        model.addAttribute("myuser", findUser);
+        model.addAttribute(LOGGEDIN_MYUSER, findUser);
         return "member/mypage";
     }
 

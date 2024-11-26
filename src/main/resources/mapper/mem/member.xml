@@ -6,7 +6,7 @@
 
     <!-- 회원 1명 정보 조회 -->
     <select id="findByID" resultType="org.t2t.mem.dto.MemberDTO">
-        SELECT * FROM MEM WHERE USRID=#{usrId}
+        SELECT * FROM MEM WHERE USRID = #{usrId}
     </select>
     <!-- 회원 전체 조회 -->
     <select id="findList" resultType="org.t2t.mem.dto.MemberDTO">
@@ -91,5 +91,22 @@
         M.USRID != #{usrId};
     </select>
 
+    <select id="selectMileByUsrId" resultType="org.t2t.mem.dto.MileDTO">
+        SELECT * FROM MILES
+        WHERE
+            USRID = #{usrId}
+    </select>
+
+    <select id="selectRankByUsrId" resultType="org.t2t.mem.dto.RankingDTO">
+        SELECT
+            USRID,
+            SCORE,
+            LASTACTDT,
+            REGDT,
+            LASTDT
+        FROM RANKING
+        WHERE
+        USRID = #{usrId}
+    </select>
 
 </mapper>

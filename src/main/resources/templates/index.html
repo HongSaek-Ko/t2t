@@ -177,7 +177,6 @@
                         <rect width="100%" height="100%" fill="#868e96"></rect>
                         <text x="50%" y="50%" fill="#dee2e6" dy=".3em">Card image</text>
                     </svg>
-
                 </div>
             </div>
             <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 0%; top: 824.8px;">
@@ -537,10 +536,8 @@
         }
     }
 
-
-
-    // Ajax를 이용한 회원탈퇴
-    $(document).ready(function() {
+    // 탈퇴
+    function withdrawEvent () {
         $("leaveCompleteBtn").click(function() {
             let passwd = $('input[name=LeavePassword]').val()
             $.ajax({
@@ -558,20 +555,17 @@
                     console.log(e);
                 }
 
+            });
         });
+    }
 
-        });
-    })
-
-
-
-
-    // Ajax를 이용한 중복 아이디 검사 jQuery by Moon
-    $(document).ready(function () {
+    function logoutEvent() {
         $("#logoutEvent").click(function() {
             window.location.href = "/logout";
         });
+    }
 
+    function duplicateId() {
         // id값이 "floatingJoinInput"인 input 태그에 변경사항이 있으면 이벤트 발생
         $("#floatingJoinInput").change(function () {
             let usrId = $("#floatingJoinInput").val();
@@ -596,8 +590,10 @@
                 }
             });
         });
+    }
 
-        $('#loginSubmit').click(function() {
+    function loginEvent() {
+        function loginSubmit() {
             if(!$('#flexCheckDefault').is(':checked')) {
                 $('#flexCheckDefault').prop("checked", true);
                 $('#flexCheckDefault').val(false);
@@ -605,7 +601,25 @@
                 $('#flexCheckDefault').val(true);
             }
             $('#loginForm').submit();
+        }
+
+        $('#loginSubmit').click(function() {
+            loginSubmit();
         });
+
+        $('#floatingPassword').keyup(function(e){
+            if(e.keyCode == 13) {
+                loginSubmit();
+            }
+        });
+    }
+
+    // Ajax를 이용한 회원탈퇴
+    $(document).ready(function() {
+        withdrawEvent ();
+        logoutEvent();
+        duplicateId();
+        loginEvent();
     });
 </script>
 

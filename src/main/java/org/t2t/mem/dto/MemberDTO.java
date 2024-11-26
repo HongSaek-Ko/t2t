@@ -24,7 +24,7 @@ public class MemberDTO {
     private LocalDateTime chgPassDt;
     private String bankNm;
     private String bankAcnt;
-       private String bankAcntOwr;
+    private String bankAcntOwr;
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
 

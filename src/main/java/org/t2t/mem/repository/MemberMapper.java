@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.t2t.mem.dto.ComplaintDTO;
 import org.t2t.mem.dto.MemberDTO;
 import org.t2t.mem.dto.MileDTO;
+import org.t2t.mem.dto.RankingDTO;
 import org.t2t.prd.dto.OrderDTO;
 import org.t2t.prd.dto.ProductDTO;
 
@@ -32,4 +33,8 @@ public interface MemberMapper {
     MemberDTO idPwChecking(String usrId, String passwd);
     //회원정보 한명 가져오기
     MemberDTO findByID(String usrId);
+
+    MileDTO selectMileByUsrId(MemberDTO memberDTO);
+
+    RankingDTO selectRankByUsrId(MemberDTO memberDTO);
 }

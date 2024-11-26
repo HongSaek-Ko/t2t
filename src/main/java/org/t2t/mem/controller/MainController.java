@@ -106,7 +106,7 @@ public class MainController {
             // 일치한다 -> 로그인 처리 -> 로그인 잘됐다는 결과 화면에 주기
             result = true; // 로그인결과 true로 지정
             session.setAttribute("sid", mainDTO.getUsrId()); // 사용자 id값 저장
-            session.setAttribute(HTTP_SESSION_USER, mainDTO); // 사용자 id값 저장
+            session.setAttribute(HTTP_SESSION_USER, mainDTO.toEntity()); // 사용자 id값 저장
 
 
             if(auto) { // 자동로그인 체크 했다면,

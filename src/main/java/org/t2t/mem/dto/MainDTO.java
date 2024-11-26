@@ -29,4 +29,16 @@ public class MainDTO {
 
     // 프로필 파일 정보 by moon
     private ProfileDTO imageProfile;  // 이미지 1개 파일
+
+    public MemberDTO toEntity() {
+        return MemberDTO.builder()
+                .usrId(usrId)
+                .nm(nm)
+                .email(email)
+                .roleId(roleId)
+                .memStat(memStat)
+                .intro(intro)
+                .build();
+    }
+
 }
