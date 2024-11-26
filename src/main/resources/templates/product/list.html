@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Bootstrap Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+
+</head>
+<body>
+<header class="py-3 mb-3 border-bottom">
+    <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
+        <div class="dropdown">
+            <a href="#"
+               class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none dropdown-toggle"
+               data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="/common/img/t2t.png" width="40" height="40"/>
+            </a>
+            <ul class="dropdown-menu text-small shadow" style="">
+                <li><a class="dropdown-item active" href="#" aria-current="page">Overview</a></li>
+                <li><a class="dropdown-item" href="#">Inventory</a></li>
+                <li><a class="dropdown-item" href="#">Customers</a></li>
+                <li><a class="dropdown-item" href="#">Products</a></li>
+                <li>
+                    <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Reports</a></li>
+                <li><a class="dropdown-item" href="#">Analytics</a></li>
+            </ul>
+        </div>
+
+        <div class="d-flex align-items-center">
+            <form class="w-100 me-3" role="search">
+                <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            </form>
+
+            <div class="flex-shrink-0 dropdown">
+                <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <!--                <div th:text="${session.t2t_session_user}"></div>-->
+                <ul class="dropdown-menu text-small shadow" style="">
+                    <th:block th:if="${session.t2t_session_user != null}">
+                        <li><a class="dropdown-item" href="/member/mypage" id="modifyEvent">내 프로필보기 </a></li>
+                        <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
+                        <li><hr class="dropdown-divider" id="divider"></li>
+                        <li><a class="dropdown-item" href="#" id="logoutEvent">Log out</a></li>
+                    </th:block>
+                    <th:block th:if="${session.t2t_session_user == null}">
+                        <li><a class="dropdown-item" href="#" id="loginEvent">Login</a></li>
+                        <li><a class="dropdown-item" href="#" id="joinEvent">회원가입</a></li>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="b-example-divider b-example-vr"></div>
+<main class="d-flex flex-nowrap">
+    <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="margin:5px;">
+        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
+            <li class="nav-item">
+                <a href="#" class="nav-link active py-3 border-bottom rounded-0" aria-current="page"
+                   data-bs-toggle="tooltip" data-bs-placement="right" aria-label="Home" data-bs-original-title="Home">
+                    <i class="bi bi-house-door" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Dashboard" data-bs-original-title="Dashboard">
+                    <i class="bi bi-file-earmark-plus" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Orders" data-bs-original-title="Orders">
+                    <i class="bi bi-search-heart" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Products" data-bs-original-title="Products">
+                    <i class="bi bi-chat-text" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="nav-link py-3 border-bottom rounded-0" data-bs-toggle="tooltip"
+                   data-bs-placement="right" aria-label="Customers" data-bs-original-title="Customers">
+                    <i class="bi bi-question-square" style="font-size: 24px; text-align: center;"></i>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="b-example-divider b-example-vr" style="width:20px;"></div>
+    <div class="d-flex flex-column flex-shrink-0 bg-body-tertiary" style="width: 95%;">
+        <div class="row" data-masonry="{&quot;percentPosition&quot;: true }"
+             style="position: relative; height: 1188.4px;">
+
+            <!--todo: 게시글 목록 편집 부분 -->
+                <div class="scroller" style="position: absolute; left: 50%; top: 251.6px; display: flex; flex-wrap: wrap; margin: 30px; justify-content: space-between" >
+                    <div class="card" th:each="product : ${productList}" >
+                        <a th:href="@{/product/{prdId}(prdId=${product.prdId})}" style="text-decoration: none; color: black">
+                            <img src="" class="bd-placeholder-img card-img-top thumbnail" width="100%" height="200"
+                                 xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
+                                 preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                                <rect width="100%" height="100%" fill="#868e96"></rect> <!--없어도 될듯?-->
+                            </img>
+                            <div class="card-body" >
+                                <h5 class="card-title middle" th:text="${product.title}"><a th:href="@{/}">제목</a></h5>
+                                <p class="card-text bottom" th:text="${product.cont}">내용</p>
+                                <p class="card-text date" th:text="${#temporals.format(product.regDt, 'yyyy-MM-dd HH:mm')}"><small class="text-muted">작성시간</small></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            <!--게시글 편집 부분 끝-->
+        </div>
+    </div>
+</main>
+<script type="text/javascript">
+    (() => {
+        'use strict'
+        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(tooltipTriggerEl => {
+            new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    })()
+</script>
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<!-- or -->
+<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
+
+<script src="/common/js/common.js" type="text/javascript"></script>
+<script type="text/javascript" th:src='@{/js/list.js}' th:inline="javascript"></script>
+
+
+
+
+</body>
+</html>

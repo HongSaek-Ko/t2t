@@ -46,18 +46,38 @@
         VALUES (#{prdId}, #{usrId})
     </insert>
 
+    <!--게시글 삭제-->
     <delete id="deleteProduct">
         DELETE FROM PRD
         WHERE PRDID=#{prdId}
     </delete>
 
+    <!--좋아요 수 계산, 동일한 PRDID의 칼럼수로 계산-->
     <select id="goodCount" resultType="int">
         SELECT COUNT(*) FROM GOOD
         WHERE PRDID=#{prdId}
     </select>
 
+    <!--게시글 조회수 증가-->
     <update id="updateProductHit">
         UPDATE PRD SET HIT=HIT+1
         WHERE PRDID=#{prdId}
     </update>
+
+<!--    &lt;!&ndash;게시글 목록 조회&ndash;&gt;-->
+<!--    <select id="getProductList" resultType="org.t2t.prd.dto.ProductDTO">-->
+<!--        SELECT * FROM PRD-->
+<!--    </select>-->
+
+    <!--게시글 목록 + 페이징 처리--> <!--검색도 추가 해야함..-->
+    <select id="getPrdListWithPaging" resultType="org.t2t.prd.dto.ProductDTO">
+        SELECT * FROM PRD
+        ORDER BY PRDID DESC LIMIT #{offset}, #{size}
+    </select>
+
+    <select id="countAllProduct" resultType="long">
+        SELECT COUNT(*) FROM PRD
+    </select>
+
+
 </mapper>

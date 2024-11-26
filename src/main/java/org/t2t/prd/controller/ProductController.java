@@ -12,15 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.MemberDTO;
-import org.t2t.prd.dto.FileDTO;
-import org.t2t.prd.dto.ProductDTO;
-import org.t2t.prd.dto.ProductFormDTO;
+import org.t2t.prd.dto.*;
 import org.t2t.prd.service.FileService;
 import org.t2t.prd.service.ProductService;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -53,8 +52,23 @@ public class ProductController {
         return "redirect:/product/" + product.getPrdId();
     }
 
-    // 상품 목록 페이지 todo: 임시, 실제로는 index...?
+    // 상품 목록 페이지 todo: 임시로 list, 실제로는 index...?
+    @GetMapping("/list")
+//    public String productList(Pager pager, Model model) {
+    public String productList(Pager pager, Model model) {
+//        List<ProductDTO> list = productService.getProductList();
+        List<ProductDTO> productList = productService.getProductListWithPaging(pager);
+        model.addAttribute("productList", productList);
+        model.addAttribute("pageDTO", new PageDTO(pager, productService.getProductCount(pager)));
+        return "product/list";
+    }
 
+    @ResponseBody
+    @GetMapping("/more/{page}")
+    public ResponseEntity<List<ProductDTO>> moreProductList(@PathVariable("page") Pager pager, Model model) {
+        List<ProductDTO> productList = productService.getProductListWithPaging(pager);
+        return ResponseEntity.ok(productList);
+    }
 
     // 상품 상세 페이지
     @GetMapping("/{prdId}")

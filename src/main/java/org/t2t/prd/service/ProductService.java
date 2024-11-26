@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.t2t.prd.dto.FileDTO;
-import org.t2t.prd.dto.GoodDTO;
-import org.t2t.prd.dto.ProductDTO;
-import org.t2t.prd.dto.ProductFormDTO;
+import org.t2t.prd.dto.*;
 import org.t2t.prd.repository.FileMapper;
 import org.t2t.prd.repository.ProductMapper;
 
@@ -117,5 +114,23 @@ public class ProductService {
 
     public int goodCount(Long prdId) {
         return productMapper.goodCount(prdId);
+    }
+
+//    // 게시글 목록 전체 가져오기
+//    public List<ProductDTO> getProductList() {
+//        List<ProductDTO> list = productMapper.getProductList();
+//        return list;
+//    }
+
+    // 게시글 목록 + 페이징 처리
+    public List<ProductDTO> getProductListWithPaging(Pager pager) {
+        List<ProductDTO> productList = productMapper.getPrdListWithPaging(pager);
+        return productList;
+    }
+
+    // 글 전체 개수 조회
+    public int getProductCount(Pager pager) {
+        Long count = productMapper.countAllProduct(pager);
+        return count.intValue(); // intvalue: 객체의 값을 정수로 변환
     }
 }

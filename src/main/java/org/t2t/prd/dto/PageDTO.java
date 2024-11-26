@@ -42,7 +42,5 @@ public class PageDTO {
         for(int i = startPage; i <= endPage; i++) {
             this.pageNumbers.add(i);
         }
-
-
     }
 }

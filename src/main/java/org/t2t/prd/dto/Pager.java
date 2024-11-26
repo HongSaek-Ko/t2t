@@ -27,8 +27,4 @@ public class Pager {
         return searchType == null? new String[] {} : searchType.split("");
     }
 
-
-
-
-
 }
