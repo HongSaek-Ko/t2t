@@ -33,12 +33,12 @@ public interface MemberMapper {
     MemberDTO idPwChecking(String usrId, String passwd);
     //회원정보 한명 가져오기
     MemberDTO findByID(String usrId);
-
+    //회원 1명의 마일리지정보 가져오기
     MileDTO selectMileByUsrId(MemberDTO memberDTO);
-
+    //회원 1명의 랭킹정보 가져오기
     RankingDTO selectRankByUsrId(MemberDTO memberDTO);
-
+    //마일리지 테이블 추가
     void insertMile(MileDTO mileDTO);
-
+    //랭킹 테이블 추가
     void insertRank(RankingDTO rank);
 }

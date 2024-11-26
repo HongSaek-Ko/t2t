@@ -30,7 +30,7 @@
                                             <label for="myinfotext" class="form-label">자기소개</label>
                                             <textarea class="form-control" id="myinfotext" rows="3"
                                                       style="height:250px;resize:none;"
-                                                      th:text="${myuser.intro}"></textarea>
+                                                      th:text="${myuser.intro}" readonly></textarea>
                                             <span id="lengthCheck"> (0/ 최대 200자 ) </span>
                                         </div>
                                     </td>
@@ -44,9 +44,9 @@
                                 <tr>
                                     <td colspan="2">
                                         <div class="input-group mb-3">
-                                            <span class="input-group-text" id="mile">보유 마일리지</span>
+                                            <span class="input-group-text" >보유 마일리지</span>
                                             <input type="text" class="form-control" placeholder="Username"
-                                                   aria-label="Username" aria-describedby="mile" readonly
+                                                   aria-label="Username" aria-describedby="mile" id="mile" readonly
                                                    th:value="${myuser.mile.point}">
                                         </div>
                                     </td>
@@ -136,7 +136,7 @@
                     </div>
                 </div>
 
-                <div class="modal fade" id="commonModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade " id="commonModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -181,60 +181,68 @@
                             <tr>
                                 <td colspan="2">
                                     <div class="input-group mb-3">
-                                        <span class="input-group-text" id="mile">보유 마일리지</span>
-                                        <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="mile" readonly th:value="${myuser.mile.point}">
+                                        <span class="input-group-text" >보유 마일리지</span>
+                                        <input type="text" class="form-control" id="mileModal" placeholder="Username" aria-label="Username" aria-describedby="mile" readonly th:value="${myuser.mile.point}">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <div class="input-group mb-3"><span class="input-group-text" id="grade">출금할 마일리지</span>
-                                        <input type="text" class="form-control" aria-label="Username" aria-describedby="grade">
+                                    <div class="input-group mb-3"><span class="input-group-text" id="">출금할 마일리지</span>
+                                        <input type="text" name="exchange" class="form-control" aria-label="Username" aria-describedby="grade">
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2"><label htmlfor="bkname" class="form-label">bkName</label>
-                                    <input type="text" class="form-control" id="bkname" readonly th:value="${myuser.bankNm}">
+                                <td colspan="2"><label htmlfor="bkname" class="form-label">예금주 명</label>
+                                    <input type="text" class="form-control" id="bankAcntOwr" readonly th:value="${myuser.bankAcntOwr}">
                                 </td>
                             </tr>
                             <tr>
-                                <td colspan="2"><label htmlfor="bankAcnt" classname="form-label">Bank name</label>
-                                    <input type="text" class="form-control" id="bankAcnt" th:value="${myuser.bankAcnt}">
+                                <td colspan="2"><label htmlfor="bankAcnt" classname="form-label">출금할 은행명</label>
+                                    <input type="text" class="form-control" id="bankAcnt" th:value="${myuser.bankNm}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2"><label htmlfor="bankAcnt" classname="form-label">출금할 계좌번호</label>
+                                    <input type="text" class="form-control" id="bankNm" th:value="${myuser.bankAcnt}">
                                 </td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="addMileBtn">환전</button>
+                        <button type="button" class="btn btn-primary" id="exchangeMileBtn">환전</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
+
                 <!-- 비밀번호 확인 모달 -->
-                <div id="passwordcheckModal" style="display:none;">
+                <div id="passwordcheckModel" style="display:none;">
                     <div class="modal-body">
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="addMile" value="5000">
-                            <label class="form-check-label" htmlfor="5000"> 5000 </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="addMile" value="10000" checked="">
-                            <label class="form-check-label" htmlfor="10000"> 10000 </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="addMile" value="20000" checked="">
-                            <label class="form-check-label" htmlfor="20000"> 20000 </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="addMile" value="30000" checked="">
-                            <label class="form-check-label" htmlfor="30000"> 30000 </label>
-                        </div>
+                        <form action="" method="post">
+                        <tbody>
+                        <tr>
+                            <td colspan="2">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="passwd">비밀번호 변경</span>
+                                    <input type="password" class="form-control" placeholder="비밀번호 변경" aria-label="Username" aria-describedby="mile">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <div class="input-group mb-3"><span class="input-group-text" id="passwdcheck">비밀번호 재확인</span>
+                                    <input type="password" class="form-control" placeholder="비밀번호 재확인" aria-label="Username" aria-describedby="grade">
+                                </div>
+                            </td>
+                        </tr>
+                        </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="modifypassword">완료</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary" id="modifypassword" onclick="/member/mypage">비밀번호 변경하기</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
                 </div>
 

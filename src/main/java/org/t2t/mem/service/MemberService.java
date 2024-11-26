@@ -29,7 +29,7 @@ public class MemberService {
        return memberDTO;
     }
     //마일리지 충전/환전
-    public void addMile(MileDTO mile) {
+    public void updownMile(MileDTO mile) {
         memberMapper.updateMile(mile);
     }
     //회원정보 수정
@@ -40,16 +40,15 @@ public class MemberService {
     public void deleteMember(String usrId){
         memberMapper.deleteMem(usrId);
     }
-
     //회원 탈퇴 시 id,pw 일치여부 확인
     public MemberDTO idPwCheck(@Param("usrId") String usrId, @Param("passwd") String passwd){
        return memberMapper.idPwChecking(usrId,passwd);
     }
-
     //마일리지 전체 목록 불러오기
     public List<MileDTO> selectMileTotal(String usrId) {
         return memberMapper.selectMileTotal(usrId);
     }
+
     //회원 탈퇴
     public void deleteMem(String usrId){
         memberMapper.deleteMem(usrId);
@@ -65,10 +64,12 @@ public class MemberService {
          memberMapper.selectTradeList(usrId);
     }
 
+    //나의 마일리지 정보 마일리지 테이블에 넣기
     public void insertMile(MileDTO mileDTO){
         memberMapper.insertMile(mileDTO);
     }
 
+    //나의 등급 정보 랭킹 테이블에 넣기
     public void insertRank(RankingDTO Rank){
         memberMapper.insertRank(Rank);
     }

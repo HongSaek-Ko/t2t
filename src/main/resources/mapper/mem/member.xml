@@ -104,13 +104,13 @@
         P.USRID='test2'  AND
         M.USRID != #{usrId};
     </select>
-
+    <!-- 회원 1명의 마일리지 테이블 정보 가져오기 -->
     <select id="selectMileByUsrId" resultType="org.t2t.mem.dto.MileDTO">
         SELECT * FROM MILES
         WHERE
             USRID = #{usrId}
     </select>
-
+    <!-- 회원 1명의 랭킹 테이블 정보 가져오기 -->
     <select id="selectRankByUsrId" resultType="org.t2t.mem.dto.RankingDTO">
         SELECT
             USRID,
@@ -122,13 +122,14 @@
         WHERE
         USRID = #{usrId}
     </select>
-
+    <!-- 마일리지 테이블에 회원 포인트 추가 -->
     <insert id="insertMile" parameterType="org.t2t.mem.dto.MileDTO">
         INSERT INTO MILES
             (USRID, POINT)
         VALUES
             (#{usrId},  #{point})
     </insert>
+    <!-- 랭킹 테이블에 회원 점수 추가 -->
     <insert id="insertRank" parameterType="org.t2t.mem.dto.RankingDTO">
         INSERT INTO RANKING
             (USRID, SCORE)

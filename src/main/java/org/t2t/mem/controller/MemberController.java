@@ -82,22 +82,26 @@ public class MemberController {
         session.setAttribute(HTTP_SESSION_USER, findUser);
         map.put("findUser", findUser);
         //map.put("memberDTO", memberDTO.toString();
+
         return ResponseEntity.ok(map);
     }
 
-    //포인트 충전/ 환전
+    //포인트 충전
     @PostMapping("/mypage/charge")
     @ResponseBody
     public ResponseEntity<Map<String, Object>> addPoint(@RequestParam(name="point") Long point, HttpServletRequest request) {
+        log.info("1");
+        log.info(point.toString());
+
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
 
-        memberService.addMile(MileDTO.builder()
+        memberService.updownMile(MileDTO.builder()
                         .usrId(user.getUsrId())
                         .point(point)
                         .option(Trade.TRD01.getKey())
                         .build());
-
+        log.info("충전서비스");
         MileDTO totalMile = memberService.selectMileTotal(user.getUsrId()).get(0);
         // 로그인 성공 응답
         Map<String, Object> map = new HashMap<>();
@@ -106,7 +110,26 @@ public class MemberController {
         return ResponseEntity.ok(map);
     };
 
+    //포인트 환전
+    @PostMapping("/mypage/excharge")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> minPoint(@RequestParam(name="point") Long point, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
 
+        memberService.updownMile(MileDTO.builder()
+                .usrId(user.getUsrId())
+                .point(point)
+                .option(Trade.TRD02.getKey())
+                .build());
+
+        MileDTO totalMile = memberService.selectMileTotal(user.getUsrId()).get(0);
+        // 로그인 성공 응답
+        Map<String, Object> map = new HashMap<>();
+        map.put("success", true);
+        map.put("mile", totalMile.getPoint());
+        return ResponseEntity.ok(map);
+    };
 
     //비밀번호 확인 회원 탈퇴 처리 !!
     @PostMapping("/idPwAvailAjax")

@@ -5,6 +5,7 @@ $(document).ready(function () {
     registerEvent(['#rechargeEvent', '#exchageEvent']);
     registerTabEvent('#tabEvent');
     passwordcheckEvent();
+
 });
 
 //Ajax 충전버튼 클릭시 이벤트
@@ -18,13 +19,47 @@ function registerModalEvent() {
             },
             datatype: 'json'}
         ).done(function (data, textStatus, xhr) {
-            if(data.success == true)
-                $('#mile').val(data.mile)
+            console.log(data.success);
+            if(data.success) {
+                $('#mile').val(data.mile);
+                $('#mileModal').val(data.mile);
+                console.log( data.mile);
+                $('#commonModal').modal('hide');
+            }
             else
                 alert('충전 할수 없습니다.');
         });
+
     });
+
 }
+
+//Ajax 환전버튼 클릭시 이벤트
+function exchangeModalEvent() {
+    $('.modal.fade #exchangeMileBtn').on('click', function () {
+        console.log("1");
+        $.ajax({
+            url: "/member/mypage/excharge",
+            type: 'POST',
+            data: {
+                "point": $('.modal.fade.show .modal-body input[name=exchange]').val(),
+            },
+            datatype: 'json'}
+        ).done(function (data, textStatus, xhr) {
+            if(data.success == true) {
+                $('#mile').val(data.mile);
+
+            }
+            else
+                alert('환전 할수 없습니다.');
+        });
+    });
+
+}
+
+
+
+
 
 //충전, 환전 모달환면 전환 이벤트
 // _i : index
@@ -53,6 +88,7 @@ function registerEvent(_target) {
                 $('#commonModalLabel').text('환전');
                 $('#commonModal').find('.modal-content').append($(element));
                 $('#commonModal').modal('show');
+                exchangeModalEvent();
             }
         });
     });
@@ -87,14 +123,20 @@ function registerTabEvent(root) {
     });
 }
 
-console.log("1");
+//비밀번호 수정하기 모달
 function passwordcheckEvent(){
     //비밀번호 수정하기 버튼 클릭시
     $('#pwcheck').on('click', function(){
-        console.log("2. 비밀번호 수정 클릭 선택 ");
-        $('#passwordcheckModal').modal('show');
-        console.log($('#passwordcheckModal'));
-        console.log("3");
+        let element = $($('#passwordcheckModel').html()).clone();
+        $('#commonModal').find('.modal-body').detach();
+        $('#commonModal').find('.modal-footer').detach();
+        $('#commonModalLabel').text('수정완료');
+
+        $('#commonModal').find('.modal-content').append($(element));
+        $('#commonModal').modal('show');
+        registerModalEvent();
+        $('#passwordcheckModel').modal('show');
+
     });
 }
 
@@ -125,6 +167,7 @@ $('#modifyinfo').on('click', function (){
     $('#email').removeAttr("readonly");   // readonly 속성 제거
     $('#bkAcntName').removeAttr("readonly");
     $('#bankAcnt').removeAttr("readonly");
+    $('#myinfotext').removeAttr("readonly");
     $('#pwcheck').show();
     $('#modifyinfo').text("수정완료");
     $('#modifyinfo').hide();
@@ -177,13 +220,11 @@ $('#modifydone').on('click', function(){
 });
 
 
-/*
+
 //비밀번호 일치 여부 확인
 $(function() {
     let pwd1 = $('#passwd').val();
-    console.log(pwd1);
     let pwd2 = $('#passwdcheck').val();
-    console.log(pwd2);
     if (pwd1 != "" || pwd2 != "") {
         if (pwd1 == pwd2) {
             $('#alert-success').show();
@@ -194,4 +235,3 @@ $(function() {
         }
     }
 });
-*/
