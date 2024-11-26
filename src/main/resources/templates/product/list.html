@@ -105,18 +105,17 @@
              style="position: relative; height: 1188.4px;">
 
             <!--todo: 게시글 목록 편집 부분 -->
-                <div class="scroller" style="position: absolute; left: 50%; top: 251.6px; display: flex; flex-wrap: wrap; margin: 30px; justify-content: space-between" >
-                    <div class="card" th:each="product : ${productList}" >
-                        <a th:href="@{/product/{prdId}(prdId=${product.prdId})}" style="text-decoration: none; color: black">
+                <div class="col-sm-6 col-lg-4 mb-4" style="position: absolute; left: 50%; top: 251.6px;" id="scroller">
+                    <div class="card" th:each="product : ${productList}" th:data-product="${product}" th:data-productList="${productList}" id="repeat">
+                        <a th:href="@{/product/{prdId}(prdId=${product.prdId})}" th:data-prdid="${product.prdId}" id="prdid" style="text-decoration: none; color: black">
                             <img src="" class="bd-placeholder-img card-img-top thumbnail" width="100%" height="200"
                                  xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap"
                                  preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                                <rect width="100%" height="100%" fill="#868e96"></rect> <!--없어도 될듯?-->
                             </img>
                             <div class="card-body" >
-                                <h5 class="card-title middle" th:text="${product.title}"><a th:href="@{/}">제목</a></h5>
-                                <p class="card-text bottom" th:text="${product.cont}">내용</p>
-                                <p class="card-text date" th:text="${#temporals.format(product.regDt, 'yyyy-MM-dd HH:mm')}"><small class="text-muted">작성시간</small></p>
+                                <h5 class="card-title" id="prdTitle" th:data-title="${product.title}" th:text="${product.title}"><a th:href="@{/}">제목</a></h5>
+                                <p class="card-text" id="prdCont" th:data-cont="${product.cont}" th:text="${product.cont}">내용</p>
+                                <p class="card-text" id="prdReg" th:data-reg="${product.regDt}" th:text="${#temporals.format(product.regDt, 'yyyy-MM-dd HH:mm')}"><small class="text-muted">작성시간</small></p>
                             </div>
                         </a>
                     </div>
@@ -140,8 +139,6 @@
 
 <script src="/common/js/common.js" type="text/javascript"></script>
 <script type="text/javascript" th:src='@{/js/list.js}' th:inline="javascript"></script>
-
-
 
 
 </body>

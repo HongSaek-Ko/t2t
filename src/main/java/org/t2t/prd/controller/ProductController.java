@@ -16,6 +16,7 @@ import org.t2t.prd.dto.*;
 import org.t2t.prd.service.FileService;
 import org.t2t.prd.service.ProductService;
 
+import java.awt.print.Pageable;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;
@@ -54,7 +55,6 @@ public class ProductController {
 
     // 상품 목록 페이지 todo: 임시로 list, 실제로는 index...?
     @GetMapping("/list")
-//    public String productList(Pager pager, Model model) {
     public String productList(Pager pager, Model model) {
 //        List<ProductDTO> list = productService.getProductList();
         List<ProductDTO> productList = productService.getProductListWithPaging(pager);
@@ -63,10 +63,10 @@ public class ProductController {
         return "product/list";
     }
 
-    @ResponseBody
-    @GetMapping("/more/{page}")
-    public ResponseEntity<List<ProductDTO>> moreProductList(@PathVariable("page") Pager pager, Model model) {
+    @GetMapping("/list/{page}")
+    public ResponseEntity<List<ProductDTO>> moreProductList(Pager pager) {
         List<ProductDTO> productList = productService.getProductListWithPaging(pager);
+
         return ResponseEntity.ok(productList);
     }
 

@@ -12,7 +12,7 @@ public class InsertProduct {
                 "ISLIMIT, SALSTAT, ABTREAS, CATE, PRICE, REGDT, LASTDT) VALUES " +
                 "(?, ?, ?, ?, ? ,? ,? ,? ,? ,? ,? ,?, ?, ?)");
 
-        for(int i = 2; i < 30; i++) {
+        for(int i = 20; i < 30; i++) {
             pstmt.setInt(1, i);
             pstmt.setString(2, "test"+i);  // usrId: test2 ~ test29
             pstmt.setString(3, "title"+i);     // title: title2 ~ title29

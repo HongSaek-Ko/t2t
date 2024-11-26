@@ -35,6 +35,7 @@ public interface ProductMapper {
     // 게시글 목록 + 페이징
     List<ProductDTO> getPrdListWithPaging(Pager pager);
 
+
     // 게시글 전체 개수
     Long countAllProduct(Pager pager);
 }
