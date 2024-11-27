@@ -23,4 +23,13 @@ public class ProductDTO {
 
     // 파일 정보
     private FileDTO imgFile;
+
+    // 댓글 정보
+    private ReplyDTO replies;
+
+    // 좋아요 정보
+    private GoodDTO likes;
+
+    // 좋아요 개수 정보
+    private int goodCount;
 }

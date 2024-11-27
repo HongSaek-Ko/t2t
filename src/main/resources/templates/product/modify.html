@@ -59,14 +59,17 @@
                                         <input type="number" class="form-control" name="price" id="price" th:field="${product.price}" disabled>
                                     </div>
                                     <br/>
-                                    <div class="form-check form-switch" align="left"> <!--todo: 판매수량 설정값에 따라 체크 여부 변경-->
-                                        <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
-                                        <input class="form-check-input" type="checkbox" id="limitSwitch" th:checked="${product.islimit == 'Y'}" onclick="limitTextBox(this)">
-                                        <input hidden="" id="islimit" th:field="${product.islimit}" th:value="${product.islimit}">
+                                    <div class="form-check form-switch" align="left">
+                                        <label class="form-check-label" for="islimit" >판매수량 설정</label>
+                                        <th:block th:if="${#strings.contains(product.islimit, 'Y')}">
+                                            <input class="form-check-input" type="checkbox" id="islimit" name="islimit" onclick="acceptTrgtSalQty(this)" value="Y" checked="checked">
+                                        </th:block>
+                                        <th:block th:if="${!#strings.contains(product.islimit, 'Y')}">
+                                            <input class="form-check-input" type="checkbox" id="islimit" name="islimit" onclick="acceptTrgtSalQty(this)" value="N" >
+                                        </th:block>
                                     </div>
-                                    <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
-                                        <label for="trgtSalQty" class="form-label">판매 수량</label>
-                                        <input type="number" class="form-control" id="trgtSalQty" th:field="${product.trgtSalQty}" th:value="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
+                                    <div class="mb-3" > <!--판매수량 설정 활성화 시 활성화-->
+                                        <input type="number" class="form-control" id="trgtSalQty" th:field="${product.trgtSalQty}" placeholder="판매 수량 입력..." >
                                     </div>
                                     <br/>
 

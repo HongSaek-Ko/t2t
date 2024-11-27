@@ -92,7 +92,7 @@ public class ProductService {
     }
 
     public void modify(ProductFormDTO product) {
-        // 수정시간 표기... todo: 내용에 포함 X
+        // 수정시간 표기... todo: 게시글 본문에 해당시키지 말아야 함...
         Date now = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String datetime = "-";
@@ -125,9 +125,11 @@ public class ProductService {
     // 게시글 목록 + 페이징 처리
     public List<ProductDTO> getProductListWithPaging(Pager pager) {
         List<ProductDTO> productList = productMapper.getPrdListWithPaging(pager);
-        for(ProductDTO productDTO : productList) {
-            FileDTO productImage = fileMapper.selectFile(productDTO.getPrdId());
+        for(ProductDTO productDTO : productList) { // 게시글 갯수만큼 반복
+            FileDTO productImage = fileMapper.selectFile(productDTO.getPrdId()); // 게시글 이미지 담아줄 객체 (이미지 정보 필요)
+            int goodCount = productMapper.goodCount(productDTO.getPrdId()); // 게시글 좋아요 담아줄 객체 (숫자만 있으면 됨)
             productDTO.setImgFile(productImage);
+            productDTO.setGoodCount(goodCount);
         }
         return productList;
     }

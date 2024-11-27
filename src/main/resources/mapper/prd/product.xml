@@ -19,7 +19,7 @@
 
     <update id="modify">
         UPDATE PRD
-        SET TITLE=#{title}, CONT=#{cont}, CATE=#{cate}, SALSTAT=#{salStat}, ABTREAS=#{abtReas}
+        SET TITLE=#{title}, CONT=#{cont}, CATE=#{cate}, TRGTSALQTY=#{trgtSalQty}, ISLIMIT=#{islimit}, SALSTAT=#{salStat}, ABTREAS=#{abtReas}
         WHERE PRDID=#{prdId}
     </update>
 

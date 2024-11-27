@@ -20,22 +20,30 @@ function moreProducts() { // 추가 게시글 로드
             let _arr2 =  [];
 
             $.each(data, function (_i, _el) {
-                console.log(_el);
-                console.log(_el.imgFile);
+                // console.log(_el);
+                // console.log(_el.imgFile);
+                // console.log(_el.lastDt);
+                // console.log(_el.goodCount);
+                // console.log(_el.hit);
 
                 const html =
                     `<div class="row">
                         <div class="col">
-                            <a href="/product/${_el.prdId}">
+                            <a href="/product/${_el.prdId}" style="text-decoration: none; color: black">
                                 <div class="card">
                                     <img
                                         src="${_el.imgFile != null ? '/product/image/' + _el.imgFile.fileNm : '/upload/profile/profile1.jpg'}"
-                                        class="bd-placeholder-img card-img-top thumbnail" width="100%" height="200"/>
+                                        class="img-fluid" style="border-radius: 5px;" />
                                     <div class="card-body">
                                         <h5 class="card-title">${_el.title}</h5>\n
                                         <p class="card-text">${_el.cont}</p>\n
-                                        <p class="card-text"><small class="text-muted">${_el.lastDt}</small></p>\n
+                                        <p class="card-text"><small class="text-muted">게시(수정)일: ${_el.lastDt}</small></p>\n
                                     </div>
+                                        <span> 
+                                            <i class="bi bi-eye"><span style="margin-left: 3px"> ${_el.hit}</span></i>
+                                            <i class="bi bi-heart-fill" style="margin-left: 3px"><span style="margin-left: 3px"> ${_el.goodCount}</span></i>
+                                            <i class="bi bi-cash"><span style="margin-left: 3px"> ${_el.price}(KRW)</span></i>
+                                        </span>
                                 </div>
                             </a>
                         </div>

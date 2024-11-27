@@ -1,12 +1,17 @@
+$(document).ready(function (){
+    toggleTextBox(['#trgtSalQty', '#islimit']);
+});
+
+
 function toggleTextBox(checkbox) {
 
     const textbox_elem = document.getElementById('trgtSalQty');
     const islimit_elem = document.getElementById('islimit');
 
-    textbox_elem.disabled = checkbox.checked ? false : true;
-    if (textbox_elem.disabled === false) {
-        islimit_elem.value = 'Y';
-    } else { islimit_elem.value = 'N'; }
+    textbox_elem.disabled = !checkbox.checked; // 입력칸 활성화 = 체크박스 체크
+    if (textbox_elem.disabled === false) { // 입력칸 비활성화가 아님 = 활성화됨
+        islimit_elem.value = 'Y'; // 활성화될 경우 '제한여부' 값 'Y'
+    } else { islimit_elem.value = 'N'; } // 아니라면 N
 
     if(textbox_elem.disabled) {
         textbox_elem.value = null;
@@ -45,6 +50,9 @@ function fieldCheck() {
     }
     return true;
 }
+
+
+
 // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
 function loadFile(input) {
     console.log(input.files[0]);

@@ -82,12 +82,12 @@
                   <div class="form-check form-switch" align="left">
                     <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
                     <input class="form-check-input" type="checkbox" id="limitSwitch" name="limitSwitch" onclick="toggleTextBox(this)">
-                    <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" th:value="N" >
+                    <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" >
                   </div>
 
                   <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
                     <label for="trgtSalQty" class="form-label">판매 수량</label>
-                    <input type="number" class="form-control" id="trgtSalQty" name="trgtSalQty" th:field="${product.trgtSalQty}" th:value="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
+                    <input type="number" class="form-control" id="trgtSalQty" name="trgtSalQty" th:field="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
                   </div>
                 </div>  <!-- 종료 지점: 가로배치 우회 -->
               </div>
