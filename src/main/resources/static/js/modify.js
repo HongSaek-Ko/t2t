@@ -1,22 +1,19 @@
 $(document).ready(function () {
+    // registerEvent(['#modifyEvent']);
 });
 
 function acceptTrgtSalQty(el) {
-    if($(el).is(':checked')) {
-        $('#islimit').val('Y');
-        $('#trgtSalQty').show();
-        console.log( $('#islimit').val());
-
+    if($(el).prop('checked')) { // is(':checked') 쓰면 N 안 넘어감 (왜인지는 잘 모르겠음)
+        $('#islimit').val('Y'); // islimit 값에 Y 부여
+        $('#trgtSalQty').show(); // 입력창 나타내기
+        console.log( $('#islimit').val()); // Y
     } else {
-        $('#islimit').val('N');
-        $('#trgtSalQty').val('');
-        $('#trgtSalQty').hide();
-
-        console.log( $('#islimit').val());
+        $('#islimit').val('N'); // islimit 값에 N 부여
+        $('#trgtSalQty').val(''); // 입력창 빈칸으로 초기화 (null로 하면 오류 날 수 있음)
+        $('#trgtSalQty').hide(); // 입력창 숨기기
+        console.log( $('#islimit').val()); // N
     }
 }
-
-
 //     // 텍스트 박스 선택
 //     var textbox_elem = $('#trgtSalQty');
 //     var islimit_elem = $('#islimit');
@@ -31,11 +28,9 @@ function acceptTrgtSalQty(el) {
 //         textbox_elem.focus(); // 활성화되면 포커스
 //     }
 // }
-
 function abortTextBox(checkbox) {
-
-    var abtReas_elem = $('#abtReas');
-    var salStat_elem = $('#salStat');
+    var salStat_elem = $('#salStat'); // 판매 상태 (중지 여부)
+    var abtReas_elem = $('#abtReas'); // 중지 사유
 
     abtReas_elem.prop('disabled', !checkbox.checked);
     salStat_elem.val(abtReas_elem.prop('disabled') ? 'PRD01' : 'PRD02'); // 취소사유 비활성화 시 판매상태 '판매중'...
@@ -43,11 +38,44 @@ function abortTextBox(checkbox) {
     // if (abtReas_elem.disabled === false) { // 판매 중지 사유 입력 불가가 FALSE = 활성화 시
     //     salStat_elem.value = 'PRD02'; // 판매상태 PRD02(판매 중지)로 설정
     // } else { salStat_elem.value = 'PRD01'; } // 아니라면 PRD01(판매 중)으로 설정
-
     if (abtReas_elem.prop('disabled')) {
         abtReas_elem.val('');
     } else {
         abtReas_elem.focus();
     }
 }
+function call_confirm(){
 
+    if(confirm("수정하시겠습니까?")){
+        alert("수정 완료!");
+    }else{
+        alert("제출실패");
+    }
+
+}
+// function registerEvent(_target) {
+//     $.each(_target, function (_i, _el) {
+//         $(_el).on('click', function (e) {
+//             var _id = e.target.value;
+//             if(_id === 'modifyEvent') {
+//                 $('#modifyPrdModal').find('.modal-body').empty(); // 모달 새로 열 때마다 기존 것 비워줘야하므로...
+//                 $('#modifyPrdModal').find('.modal-body').append(createModifyLayout()); // 모달에 이거 추가...
+//                 $('#modifyPrdModalLabel').text('수정');
+//                 $('#modifyPrdModal').modal('show');
+//             }
+//         });
+//     });
+// }
+// function createModifyLayout() {
+//     var modifyArr = [];
+//     modifyArr.push('<form id="modifyPrdForm" action="/product/'+ $('#modifyEvent').data('prdid') +'/modify" method="post">') // <...action="/product/prdId/delete"...>
+//     modifyArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
+//     modifyArr.push('        <h4> 수정하시겠습니까? </h4>')
+//     modifyArr.push('    </div>')
+//     modifyArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
+//     modifyArr.push('        <button type="submit" class="btn btn-danger mx-2" id="modifyPrdComplete" >수정</button>')
+//     modifyArr.push('    </div>')
+//     modifyArr.push('</form>')
+//
+//     return modifyArr.join('');
+// }

@@ -15,17 +15,14 @@ function toggleTextBox(checkbox) {
 
     if(textbox_elem.disabled) {
         textbox_elem.value = null;
-    }
-    else {
+    } else {
+        textbox_elem.value = '';
         textbox_elem.focus();
     }
 }
-
 function fieldCheck() {
 
     let form = document.getElementById('form')
-    let trgtSalqty = document.getElementById('trgtSalQty');
-
     if(form.hashTag.value === ''
         || form.price.value === ''
         || form.cate.value === ''
@@ -35,11 +32,6 @@ function fieldCheck() {
         alert("필수 입력사항을 입력해주세요.")
         return false;
     }
-
-    if(!form.limitSwitch.checked) {
-        return trgtSalqty.value
-    }
-
     if(form.trgtSalQty.value === '') {
         if(form.limitSwitch.checked) {
             alert("구매 제한 수량을 입력하세요.");
@@ -51,6 +43,15 @@ function fieldCheck() {
     return true;
 }
 
+function call_confirm(){
+
+    if(confirm("등록하시겠습니까?")){
+        alert("등록 완료!");
+    }else{
+        alert("제출실패");
+    }
+
+}
 
 
 // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon

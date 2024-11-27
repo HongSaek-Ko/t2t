@@ -106,31 +106,11 @@ function createComplaintLayout() {
     return complaintArr.join('');
 }
 
-// function createModifyLayout() {
-//     var modifyArr = [];
-//     modifyArr.push('<form id="modifyPrdForm">')
-//     modifyArr.push('    <h4> 수정하려면 비밀번호를 입력하세요. </h4>')
-//     modifyArr.push('    <div class="form-floating mb-2">')
-//     modifyArr.push('        <input type="password" class="form-control" id="floatingModifyPassword" placeholder="Password">')
-//     modifyArr.push('            <label for="floatingModifyPassword">Password</label>')
-//     modifyArr.push('    </div>')
-//     modifyArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
-//     modifyArr.push('        <button type="submit" class="btn btn-danger mx-2" id="toModifyPrd" >확인</button>')
-//     modifyArr.push('    </div>')
-//     modifyArr.push('    <ul class="nav justify-content-center mb-2">')
-//     modifyArr.push('        <li class="nav-item">')
-//     modifyArr.push('            <a class="nav-link" href="#">비밀번호 찾기</a>')
-//     modifyArr.push('        </li>')
-//     modifyArr.push('    </ul>')
-//     modifyArr.push('</form>')
-//     return modifyArr.join('')
-// }
-
 function createDeleteLayout() {
     var deleteArr = [];
     deleteArr.push('<form id="deletePrdForm" action="/product/'+ $('#complaintEvent').data('prdid') +'/delete" method="post">') // <...action="/product/prdId/delete"...>
     deleteArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
-    deleteArr.push('        <h4> 삭제하시겠습니까? </h4>')
+    deleteArr.push('        <h4> 정말 삭제하시겠습니까? </h4>')
     deleteArr.push('    </div>')
     // deleteArr.push('    <div class="form-floating mb-2">')
     // deleteArr.push('        <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">')

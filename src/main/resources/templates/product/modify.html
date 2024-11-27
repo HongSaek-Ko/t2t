@@ -79,15 +79,30 @@
                                         <input type="hidden" id="salStat" th:field="${product.salStat}" value="PRD01">
                                     </div>
                                     <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
-                                        <label for="abtReas" class="form-label">판매 중지 사유</label>
                                         <input type="text" class="form-control" id="abtReas" th:field="${product.abtReas}" placeholder="중지 사유 입력..." disabled>
                                     </div>
                                 </div>  <!-- 종료 지점: 가로배치 우회 -->
                             </div>
                         </div>
                     <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/product/{prdId}(prdId=${product.prdId})}'|"> 수정취소 </button>
-                    <button type="submit" class="btn btn-primary"> 수정완료 </button>
+                    <button type="submit" onclick="call_confirm()" th:data-prdid="${product.prdId}" class="btn btn-primary"> 수정완료 </button>
                 </form>
+                </div>
+
+                <!-- 수정 확인 mooal-->
+                <div class="modal fade" id="modifyPrdModal" tabindex="-1" aria-labelledby="modifyPrdModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <!--                <img src="/common/img/t2t.png" width="40" height="40"/>-->
+                                <h2 class="modal-title fs-5" id="modifyPrdModalLabel">수정</h2>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <script type="text/javascript" th:src='@{/js/modify.js}'></script>
