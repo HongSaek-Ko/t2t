@@ -21,7 +21,6 @@ public class ProductDTO {
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
 
-
     // 파일 정보
     private FileDTO imgFile;
 }

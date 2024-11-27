@@ -55,18 +55,19 @@ public class ProductController {
 
     // 상품 목록 페이지 todo: 임시로 list, 실제로는 index...?
     @GetMapping("/list")
-    public String productList(Pager pager, Model model) {
+    public String productList() {
 //        List<ProductDTO> list = productService.getProductList();
-        List<ProductDTO> productList = productService.getProductListWithPaging(pager);
-        model.addAttribute("productList", productList);
-        model.addAttribute("pageDTO", new PageDTO(pager, productService.getProductCount(pager)));
+//        List<ProductDTO> productList = productService.getProductListWithPaging(pager);
+//        model.addAttribute("productList", productList);
+//        model.addAttribute("pageDTO", new PageDTO(pager, productService.getProductCount(pager)));
         return "product/list";
     }
 
     @GetMapping("/list/{page}")
     public ResponseEntity<List<ProductDTO>> moreProductList(Pager pager) {
         List<ProductDTO> productList = productService.getProductListWithPaging(pager);
-
+//        model.addAttribute("productList", productList);
+//        model.addAttribute("pageDTO", new PageDTO(pager, productService.getProductCount(pager)));
         return ResponseEntity.ok(productList);
     }
 

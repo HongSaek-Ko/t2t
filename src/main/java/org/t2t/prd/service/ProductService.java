@@ -92,7 +92,7 @@ public class ProductService {
     }
 
     public void modify(ProductFormDTO product) {
-        // 수정시간 표기...
+        // 수정시간 표기... todo: 내용에 포함 X
         Date now = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String datetime = "-";
@@ -125,6 +125,10 @@ public class ProductService {
     // 게시글 목록 + 페이징 처리
     public List<ProductDTO> getProductListWithPaging(Pager pager) {
         List<ProductDTO> productList = productMapper.getPrdListWithPaging(pager);
+        for(ProductDTO productDTO : productList) {
+            FileDTO productImage = fileMapper.selectFile(productDTO.getPrdId());
+            productDTO.setImgFile(productImage);
+        }
         return productList;
     }
 
