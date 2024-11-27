@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     // bootstrap modal에는 일반적인 방법으로는 autofocus가 되지 않는다
     // 이때 첫번째 input tag에 cursor를 위치하게 하는 jQuery by 쌤
     $('.modal').on('shown.bs.modal', function () {

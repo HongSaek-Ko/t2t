@@ -19,6 +19,7 @@ import org.t2t.mem.repository.MainMapper;
 import org.t2t.mem.service.MainService;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -96,8 +97,8 @@ public class MainController {
 
     // 로그인 처리 요청
     @PostMapping("/login")
-    public String loginPro(@RequestParam(name="usrId")String usrId, @RequestParam(name="passwd")String passwd, @RequestParam(name="auto") boolean auto,
-                           HttpServletResponse response, HttpSession session, Model model) throws NoSuchAlgorithmException {
+    public String loginPro(@RequestParam(name="usrId") String usrId, @RequestParam(name="passwd") String passwd, @RequestParam(name="auto") boolean auto,
+                           HttpServletResponse response, HttpSession session, Model model) throws NoSuchAlgorithmException, IOException {
         log.info("POST /login 로그인처리!!!");
         log.info("id: {}", usrId);
         log.info("pw: {}", passwd);
@@ -112,14 +113,42 @@ public class MainController {
         // 로그인할 때도 비밀번호를 한번 encoding 해줘야 함 by Moon
 
         if(mainDTO != null) {
-            // 일치한다 -> 로그인 처리 -> 로그인 잘됐다는 결과 화면에 주기
-            result = true; // 로그인결과 true로 지정
-            session.setAttribute("sid", mainDTO.getUsrId()); // 사용자 id값 저장
-            session.setAttribute(HTTP_SESSION_USER, mainDTO.toEntity()); // 사용자 id값 저장
+            if(mainDTO.getMemStat().equals("MEM01")) {
+                result = true; // 로그인결과 true로 지정
+                log.info("21322413243");
+                session.setAttribute("sid", mainDTO.getUsrId()); // 사용자 id값 저장
+                session.setAttribute(HTTP_SESSION_USER, mainDTO.toEntity());
 
-
-            if(auto) { // 자동로그인 체크 했다면,
-                createCookie(usrId, passwd, auto, response);
+                if(auto) { // 자동로그인 체크 했다면,
+                    createCookie(usrId, passwd, auto, response);
+                }
+            }
+            else if(mainDTO.getMemStat().equals("MEM04")) {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('탈퇴한 회원입니다 !!!'); history.go(-1);</script>");
+                out.flush();
+                response.flushBuffer();
+                out.close();
+                return "redirect:/login";
+            }
+            else if(mainDTO.getMemStat().equals("MEM03")) {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('활동정지 회원입니다 !!!'); history.go(-1);</script>");
+                out.flush();
+                response.flushBuffer();
+                out.close();
+                return "redirect:/login";
+            }
+            else if(mainDTO.getMemStat().equals("MEM02")) {
+                response.setContentType("text/html; charset=UTF-8");
+                PrintWriter out = response.getWriter();
+                out.println("<script>alert('휴면상태 회원입니다 !!!'); history.go(-1);</script>");
+                out.flush();
+                response.flushBuffer();
+                out.close();
+                return "redirect:/login";
             }
         }
         // 일치X -> 일치하지 않다는 결과 화면에 주기
@@ -238,6 +267,34 @@ public class MainController {
             hashtext = "0" + hashtext;
         }
         return hashtext;
+    }
+
+//    // 회원 탈퇴 폼 요청
+//    @GetMapping("/member/{id}/delete")
+//    public String deleteMember(@PathVariable("id") String usrId) {
+//        log.info("deleteForm id: {}", usrId);
+//        return "/members/delete";
+//    }
+
+    // 회원 탈퇴 처리 요청
+    @PostMapping("/member/{usrId}/delete")
+    public String deleteMemberPro(@PathVariable("usrId") String usrId, @RequestParam(name="passwd") String passwd, Model model, HttpSession session) throws NoSuchAlgorithmException {
+        log.info("deletePro id: {}", usrId);
+        log.info("deletePro pw: {}", passwd);
+
+        // id와 비번 맞는지 확인
+        MainDTO mainDTO = mainMapper.idPwCheck(usrId, encode(passwd));
+        boolean result = false;
+        if (mainDTO != null) {
+            // 맞으면 탈퇴처리 -> 결과 출력
+            result = true;
+            mainMapper.deleteMember(usrId);   // 탈퇴
+            session.invalidate();      // 로그아웃 처리
+        }
+
+        // 틀리면 결과 출력
+        model.addAttribute("result", result);
+        return "/deletePro";
     }
 
 }

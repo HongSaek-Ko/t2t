@@ -26,7 +26,9 @@ public interface MainMapper {
     // 임시 비밀번호로 DB update
     void pwdUpdate(MainDTO mainDTO);
 
-    // Password 찾기
+    // 회원 탈퇴(상태값만 MEM04로 변경)
+    void deleteMember(String usrId);
+
 
 
 }

@@ -220,9 +220,13 @@
 <!-- or -->
 <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 
-<!--Modal 시작 부분 by Moon-->
-<!--총 3개 Modal #1. loginModal(로그인)  #2. joinModal(회원가입)  #3. leaveModal(회원탈퇴)-->
-<!--loginModal 로그인 화면 모달-->
+<!--   Modal 시작 부분 by Moon  -->
+<!--   총 7개 Modal  -->
+<!--   #1. loginModal(로그인)  #2. joinModal(회원가입)  #3. leaveModal(회원탈퇴)  -->
+<!--   #4. findIdModal(아이디 찾기 입력)  #5. findIdResultModal(아이디 찾기 결과 출력)  -->
+<!--   #6 findPwdModal(비밀번호 찾기 입력)  #5. findPwdResultModal(비밀번호 찾기 결과 출력)  -->
+
+<!--   loginModal 로그인 모달  -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -264,7 +268,7 @@
         </div>
     </div>
 </div>
-<!--joinModal-->
+<!--   joinModal 회원 가입 모달  -->
 <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -334,7 +338,7 @@
         </div>
     </div>
 </div>
-<!--leaveModal-->
+<!--   leaveModal  회원 탈퇴  -->
 <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -344,13 +348,13 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="leaveForm">
+                <form th:action="@{/member/{usrId}/delete(usrId=${session.sid})}" method="post" id="leaveForm" >
                     <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="LeavePassword" name="LeavePassword" placeholder="Password">
-                        <label for="floatingJoinPassword">Password</label>
+                        <input type="password" class="form-control" id="LeavePassword" name="passwd" placeholder="Password">
+                        <label for="LeavePassword">Password</label>
                     </div>
                     <div class="mb-5" style="display: flex; justify-content: center">
-                        <button type="submit" class="btn btn-danger mx-2" id="leaveCompleteBtn" >회원탈퇴</button>
+                        <button type="button" class="btn btn-danger mx-2" id="leaveCompleteBtn">회원탈퇴</button>
                     </div>
                     <ul class="nav justify-content-center mb-2">
                         <li class="nav-item">
@@ -364,7 +368,7 @@
         </div>
     </div>
 </div>
-<!--id 찾기 화면 Modal findIdModal-->
+<!--   id 찾기 입력 Modal findIdModal  -->
 <div class="modal fade" id="findIdModal" tabindex="-1" aria-labelledby="finIdModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -397,7 +401,7 @@
         </div>
     </div>
 </div>
-<!--id 찾기 결과 화면 Modal findIdResultModal -->
+<!--   id 찾기 결과 출력 Modal findIdResultModal  -->
 <div class="modal fade" id="findIdResultModal" tabindex="-1" aria-labelledby="finIdResultModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -423,7 +427,7 @@
         </div>
     </div>
 </div>
-<!--Password 찾기 화면 Modal findPwdModal-->
+<!--   비밀번호 찾기 입력 Modal findPwdModal  -->
 <div class="modal fade" id="findPwdModal" tabindex="-1" aria-labelledby="finPwdModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -457,7 +461,7 @@
         </div>
     </div>
 </div>
-<!--비밀번호 찾기 결과 화면 Modal findPwdResultModal -->
+<!--   비밀번호 찾기 결과 출력 Modal findPwdResultModal  -->
 <div class="modal fade" id="findPwdResultModal" tabindex="-1" aria-labelledby="finPwdResultModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -483,8 +487,8 @@
         </div>
     </div>
 </div>
-<!-------------------------->
-<!--ㅡModal 끝 부분 by Moon-->
+
+<!--   Modal 끝 부분 by Moon  -->
 
 <script src="/common/js/common.js" type="text/javascript"></script>
 <script>
@@ -538,28 +542,28 @@
         }
     }
 
-    // Ajax를 이용한 회원탈퇴
-    function withdrawEvent () {
-        $("leaveCompleteBtn").click(function() {
-            let passwd = $('input[name=LeavePassword]').val()
-            $.ajax({
-                url:  "member/idPwAvailAjax",
-                type: "post",
-                data: {passwd : passwd},
-                success: function (result) {
-                    console.log(result);
-                    if(result === false) {
-                        alert("비밀번호가 틀렸습니다!");
-                    }
-                },
-                error: function (e) {
-                    console.log("ajax 요청 실패!!");
-                    console.log(e);
-                }
-
-            });
-        });
-    }
+    // // Ajax를 이용한 회원탈퇴
+    // function withdrawEvent () {
+    //     $("leaveCompleteBtn").click(function() {
+    //         let passwd = $('input[name=LeavePassword]').val()
+    //         $.ajax({
+    //             url:  "member/idPwAvailAjax",
+    //             type: "post",
+    //             data: {passwd : passwd},
+    //             success: function (result) {
+    //                 console.log(result);
+    //                 if(result === false) {
+    //                     alert("비밀번호가 틀렸습니다!");
+    //                 }
+    //             },
+    //             error: function (e) {
+    //                 console.log("ajax 요청 실패!!");
+    //                 console.log(e);
+    //             }
+    //
+    //         });
+    //     });
+    // }
 
     function logoutEvent() {
         $("#logoutEvent").click(function() {
@@ -616,8 +620,24 @@
         });
     }
 
+    function leaveEvent() {
+        function leaveSubmit() {
+            $('#leaveForm').submit();
+        }
+
+        $('#leaveCompleteBtn').click(function() {
+            leaveSubmit();
+        });
+
+        $('#LeavePassword').keyup(function(e){
+            if(e.keyCode == 13) {
+                leaveSubmit();
+            }
+        });
+    }
+
     $(document).ready(function() {
-        withdrawEvent ();
+        leaveEvent();
         logoutEvent();
         duplicateId();
         loginEvent();

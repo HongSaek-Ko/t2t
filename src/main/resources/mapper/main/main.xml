@@ -4,6 +4,7 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t2t.mem.repository.MainMapper">
 
+<!--    회원 가입  -->
     <insert id="insertMember" parameterType="org.t2t.mem.dto.MainFormDTO">
         INSERT INTO MEM
             (USRID, PASSWD, NM, EMAIL, ROLEID,
@@ -14,30 +15,44 @@
             #{memStat}, #{intro}, #{logAtmCnt}, #{chgPassDt}, #{bankNm}, #{bankAcnt}, #{bankAcntOwr})
     </insert>
 
+<!--    회원 1명 조회  -->
     <select id="selectOne" resultType="MainDTO">
         SELECT * from MEM
         WHERE usrId=#{usrId}
     </select>
 
+<!--    id와 비밀번호 확인  -->
     <select id="idPwCheck" resultType="MainDTO">
         SELECT * FROM MEM
-        WHERE usrId=#{usrId} and passwd=#{passwd}
+        WHERE usrId=#{usrId} AND passwd=#{passwd}
     </select>
 
+<!--    이름과 이메일이 동시에 일치하는 회원의 ID 찾기   -->
     <select id="findMemberId" resultType="MainDTO">
         SELECT * FROM MEM
         WHERE nm=#{nm} and email=#{email}
     </select>
 
+<!--    아이디와 이름 그리고 이메일이 동시에 일치하는 회원의 숫자 조회   -->
     <select id="pwdCheck" resultType="Integer">
         SELECT COUNT(*) FROM MEM
         WHERE usrId = #{usrId} AND nm = #{nm} AND email = #{email}
     </select>
 
 <!--   새로운 임시 비밀번호로 저장하는 쿼리문-->
-    <update id="pwdUpdate" parameterType="org.t2t.mem.dto.MainFormDTO">
+    <update id="pwdUpdate" parameterType="org.t2t.mem.dto.MainDTO">
         UPDATE MEM SET passwd = #{passwd}
         WHERE usrId = #{usrId} AND nm = #{nm} AND email = #{email}
     </update>
+
+<!--  회원 탈퇴 : MEM 테이블에서 memStat 값을 MEM04(탈퇴)로 변경  -->
+    <delete id="deleteMember" parameterType="org.t2t.mem.dto.MainDTO">
+<!--        DELETE * FROM MEM WHERE usrId=#{usrId} : FK로 묶여서 삭제 불가 함-->
+        UPDATE MEM SET memStat = "MEM04"
+        WHERE usrId = #{usrId}
+    </delete>
+
+
+
 
 </mapper>
