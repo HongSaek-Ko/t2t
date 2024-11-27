@@ -36,13 +36,14 @@ $(document).ready(function () {
                 // url, type, data(name, email), f:success, f:error
                 // 요청할때 보내줄 데이터 가져오기
                 let _name = $('#findIdNm').val();
+                console.log(_name);
                 let _email = $('#findIdEmail').val();
                 // 보내줄 데이터 MemberDTO 형태에 맞는 JS 객체로 만들기 -> JSON으로 변환해서 데이터 전송
                 let _data = {
                     nm: _name,
                     email: _email
                 };
-
+                console.log(_data);
                 $.ajax({
                     url: '/findIdCheck',
                     type: 'POST',

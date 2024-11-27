@@ -37,7 +37,7 @@
 <!--   새로운 임시 비밀번호로 저장하는 쿼리문-->
     <update id="pwdUpdate" parameterType="org.t2t.mem.dto.MainFormDTO">
         UPDATE MEM SET passwd = #{passwd}
-        WHERE usrId = #{usrId}
+        WHERE usrId = #{usrId} AND nm = #{nm} AND email = #{email}
     </update>
 
 </mapper>

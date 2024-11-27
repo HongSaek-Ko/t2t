@@ -22,30 +22,26 @@ public class MainService {
     private final MainMapper mainMapper;
     private final ProfileService profileService;
     private final ProfileMapper profileMapper;
-
     private final MemberService memberService;
 
     @Transactional // 2개 이상 CUD 시 필수 작성; 오류 발생 시 작업 취소(롤백)
     // 회원 가입
     public void insertMember(MainFormDTO member) throws IOException, NoSuchAlgorithmException {
-        // 실제 파일 저장처리 -> ProfileService
-        member.setRoleId(RoleId.MEMBER.name());
-        member.setMemStat(MemberStatus.MEM01.getKey());
-        member.setLogAtmCnt(0);
-        member.setChgPassDt(LocalDateTime.now());
+        // 회원 가입 창에서 입력 받지는 않지만 not null property 기본값 주기
+        member.setRoleId(RoleId.MEMBER.name());   // 기본값 MEMBER
+        member.setMemStat(MemberStatus.MEM01.getKey());   // 기본값 MEM01
+        member.setLogAtmCnt(0);         // 기본값 0
+        member.setChgPassDt(LocalDateTime.now());    // 기본값 now()
         // Password 인코딩("SHA512")
         member.setPasswd(encode(member.getPasswd()));
+        // MainFormDTO -> MainDTO로 변환해서 전달
         MainDTO mainDTO = member.toMainDTO();
+        // DB에 member 주면서 저장해라~
         mainMapper.insertMember(mainDTO); // 저장 이후 id 생성
         memberService.insertMile(makeEmptyMile(mainDTO));
         memberService.insertRank(makeEmptyRank(mainDTO));
-
-        // DB에 member 주면서 저장해라~
-        // MainFormDTO -> MainDTO로 변환해서 전달
-        log.info("MainService - write - mainDTO : {}", mainDTO);
-
+        // 실제 파일 저장처리 -> ProfileService
         ProfileDTO imgProfile = profileService.saveFile(member.getImageProfile());// 이미지 실제 파일 저장
-        // DB에 게시글 정보 저장(+파일정보 포함) -> MainService
         log.info("POST /guest/signup - imgProfile : {}", imgProfile);
 
         // 파일 저장시 usrId 필요
@@ -75,16 +71,17 @@ public class MainService {
     }
 
     public int pwdCheck(MainDTO mainDTO) throws NoSuchAlgorithmException {
-        mainDTO.setPasswd(encode(mainDTO.getPasswd()));
-        log.info("MainService - pwdCheck - mainDTO PW : {}", mainDTO.getPasswd());
+//        mainDTO.setPasswd(encode(mainDTO.getPasswd()));
+//        log.info("MainService - pwdCheck - mainDTO PW : {}", mainDTO.getPasswd());
         return mainMapper.pwdCheck(mainDTO);
     }
 
     //새로운 비밀번호로 저장
-    public void pwdUpdate(MainDTO mainDTO) {
+    public void pwdUpdate(MainDTO mainDTO) throws NoSuchAlgorithmException {
 //        String newUpdatePwd = pwEncoder.encode(mainDTO.getPasswd());
 //        mainDTO.setPwd(newUpdatePwd);
         log.info(mainDTO.getPasswd());
+        mainDTO.setPasswd(encode(mainDTO.getPasswd()));
         mainMapper.pwdUpdate(mainDTO);
     }
 
