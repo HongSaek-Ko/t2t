@@ -45,11 +45,9 @@ public class ProductController {
     // 상품 등록 처리
     @PostMapping("/add")
     public String productAddPost(@ModelAttribute("product") ProductFormDTO product) throws IOException{
-
         log.info("상품 등록 완료!");
         log.info("productDTO: {}", product);
         productService.write(product);
-
         return "redirect:/product/" + product.getPrdId();
     }
 

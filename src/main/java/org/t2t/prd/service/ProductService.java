@@ -30,17 +30,23 @@ public class ProductService {
     private final FileService fileService;
 
     public void write(ProductFormDTO product) throws IOException {
-        FileDTO imgFile = fileService.uploadFile(product.getImgFile());
-        log.info("게시글 등록 - 이미지 파일: {}: ", imgFile);
 
+        // ProductFormDTO에 저장된 값 productDTO에 전달
         ProductDTO productDTO = product.toProductDTO();
+
+        // 게시글 정보 저장
         productMapper.write(productDTO);// 실행이후, productDTO 의 prdId값이 체워져있다
         log.info("ProductService/write: productDTO: {}", productDTO);
-        product.setPrdId(productDTO.getPrdId());
+        product.setPrdId(productDTO.getPrdId()); // formDTO의 prdId값을 일반prdId을 가져와서 설정
 
-        imgFile.setPrdId(productDTO.getPrdId());
-        fileMapper.insertFile(imgFile);
+        // 파일 저장
+        FileDTO imgFile = fileService.uploadFile(product.getImgFile());
+        log.info("게시글 등록 - 이미지 파일: {}: ", imgFile);
+        imgFile.setPrdId(productDTO.getPrdId()); // 이미지 prdId 값도...
+        fileMapper.insertFile(imgFile); // File에 저장
 
+        // 해시태그 저장
+//        PrdHashDTO prdHash = hashService.uploadHash(product.getHash());
 
     }
 

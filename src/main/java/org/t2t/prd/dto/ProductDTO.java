@@ -32,4 +32,7 @@ public class ProductDTO {
 
     // 좋아요 개수 정보
     private int goodCount;
+
+    // 해시태그 정보
+    private PrdHashDTO prdHash;
 }

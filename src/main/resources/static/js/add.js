@@ -2,6 +2,29 @@ $(document).ready(function (){
     toggleTextBox(['#trgtSalQty', '#islimit']);
 });
 
+// 태그 넣는 코드 시작
+const input = document.querySelector('input[name=tags]');
+const tagify = new Tagify(input);
+
+tagify.on('add', function (e) {
+    console.log('Tag added:', e.detail.data.value);
+});
+
+tagify.on('remove', function (e) {
+    console.log('Tag removed:', e.detail.data.value);
+});
+
+function changingStatus() {
+    let curatorStatus = $('#curatorStatus').val();
+    if (curatorStatus) {
+        const currentUrl = window.location.href;
+        location.href = updateUrlParameter(currentUrl, 'curatorStatus', curatorStatus);
+    } else {
+        const urlObject = new URL(window.location.href);
+        urlObject.searchParams.delete('curatorStatus');
+        location.href = urlObject.toString();
+    }
+}
 
 function toggleTextBox(checkbox) {
 
@@ -43,15 +66,6 @@ function fieldCheck() {
     return true;
 }
 
-function call_confirm(){
-
-    if(confirm("등록하시겠습니까?")){
-        alert("등록 완료!");
-    }else{
-        alert("제출실패");
-    }
-
-}
 
 
 // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
