@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.21.0/dist/jquery.validate.min.js"></script>
 
 </head>
 <body>
@@ -238,11 +238,11 @@
             <div class="modal-body">
                 <form action="/login" method="post" id="loginForm">
                     <div class="form-floating mb-2">
-                        <input type="text" class="form-control" id="floatingInput" name="usrId" placeholder="User Id"  />
+                        <input type="text" class="form-control" id="floatingInput" name="usrId" placeholder="User Id" required />
                         <label for="floatingInput">ID</label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control" id="floatingPassword" name="passwd" placeholder="Password">
+                        <input type="password" class="form-control" id="floatingPassword" name="passwd" placeholder="Password" required>
                         <label for="floatingPassword">Password</label>
                     </div>
                     <div class="form-check my-1" style="display: flex; justify-content: center;">
@@ -278,17 +278,17 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="/guest/signup" method="post" id="joinForm" enctype="multipart/form-data" onsubmit="return fieldCheck()">
+                <form action="/guest/signup" method="post" id="joinForm" enctype="multipart/form-data">
                     <div class="form-floating mb-1" style="display: flex; justify-content: center; border-radius: 50%">
                         <div>
                             <img src="/common/img/t2t.png" id="imgTag" width="150" height="150"/>
                         </div>
                     </div>
                     <div class="form-floating mb-1" style="display: flex; justify-content: center; width: 350px;">
-                        <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile" onchange="loadFile(this)">
+                        <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile" onchange="loadFile(this)" />
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" name="usrId" id="floatingJoinInput" placeholder="userId">
+                        <input type="text" class="form-control" name="usrId" id="floatingJoinInput" placeholder="userId" required>
                         <label for="floatingJoinInput">ID*</label>
                     </div>
                     <div>
@@ -296,31 +296,31 @@
                         <label for="idCheck">중복 아이디 체크</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="password" class="form-control" name="passwd" id="floatingJoinPassword" placeholder="Password">
+                        <input type="password" class="form-control" name="passwd" id="floatingJoinPassword" placeholder="Password" required>
                         <label for="floatingJoinPassword">Password*</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="password" class="form-control" name="pwch" id="floatingJoinPasswordCheck" placeholder="passwordCheck">
+                        <input type="password" class="form-control" name="pwch" id="floatingJoinPasswordCheck" placeholder="passwordCheck" required>
                         <label for="floatingJoinPasswordCheck">Password 확인*</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" name="nm" id="floatingJoinName" placeholder="name">
+                        <input type="text" class="form-control" name="nm" id="floatingJoinName" placeholder="name" required>
                         <label for="floatingJoinName">회원 실명*</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="email" class="form-control" name="email" id="floatingJoinEmail" placeholder="email">
+                        <input type="email" class="form-control" name="email" id="floatingJoinEmail" placeholder="email" required>
                         <label for="floatingJoinEmail">email address*</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" name="bankNm" id="floatingJoinBank" placeholder="bank">
+                        <input type="text" class="form-control" name="bankNm" id="floatingJoinBank" placeholder="bank" required>
                         <label for="floatingJoinBank">은행명 *카카오뱅크만 가능합니다.!!</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" name="bankAcnt" id="floatingJoinBankAccount" placeholder="bankAccount">
+                        <input type="text" class="form-control" name="bankAcnt" id="floatingJoinBankAccount" placeholder="bankAccount" required>
                         <label for="floatingJoinBankAccount">계좌번호(- 없이 입력하세요)</label>
                     </div>
                     <div class="form-floating mb-1">
-                        <input type="text" class="form-control" name="bankAcntOwr" id="floatingJoinBankAccountOwner" placeholder="bankAccountOwner">
+                        <input type="text" class="form-control" name="bankAcntOwr" id="floatingJoinBankAccountOwner" placeholder="bankAccountOwner" required>
                         <label for="floatingJoinBankAccountOwner">예금주 명</label>
                     </div>
                     <div class="form-floating">
@@ -329,7 +329,7 @@
                     </div>
 
                     <div class="mb-5" style="display: flex; justify-content: center">
-                        <button type="submit" class="btn btn-primary mx-2" id="joinCompleteBtn" >회원가입완료</button>
+                        <button type="button" class="btn btn-primary mx-2" id="joinCompleteBtn" >회원가입완료</button>
                         <button type="button" class="btn btn-danger mx-2" id="cancelBtn" onclick="window.location='/'">취소</button>
                     </div>
                 </form>
@@ -350,7 +350,7 @@
             <div class="modal-body">
                 <form th:action="@{/member/{usrId}/delete(usrId=${session.sid})}" method="post" id="leaveForm" >
                     <div class="form-floating mb-2">
-                        <input type="password" class="form-control" id="LeavePassword" name="passwd" placeholder="Password">
+                        <input type="password" class="form-control" id="LeavePassword" name="passwd" placeholder="Password" required>
                         <label for="LeavePassword">Password</label>
                     </div>
                     <div class="mb-5" style="display: flex; justify-content: center">
@@ -378,17 +378,19 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="findIdNm" name="nm" placeholder="user_name">
-                    <label for="findIdNm">사용자 이름</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="findIdEmail" name="email" placeholder="Email">
-                    <label for="findIdEmail">email</label>
-                </div>
-                <div class="mb-5" style="display: flex; justify-content: center;">
-                    <button type="button" id="findIdSubmit" class="btn btn-info">아이디 찾기</button>
-                </div>
+                <form id="findIdForm">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="findIdNm" name="nm" placeholder="user_name" required>
+                        <label for="findIdNm">사용자 이름</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="findIdEmail" name="email" placeholder="Email" required>
+                        <label for="findIdEmail">email</label>
+                    </div>
+                    <div class="mb-5" style="display: flex; justify-content: center;">
+                        <button type="button" id="findIdSubmit" class="btn btn-info" >아이디 찾기</button>
+                    </div>
+                </form>
                 <ul class="nav justify-content-center mb-2">
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="loginEvent1">로그인 하기</a>
@@ -499,48 +501,48 @@
         $('#imgTag').attr("src", URL.createObjectURL(file));
     }
     // 유효성 검사(Not null 속성값이 다 입력 되었는지 확인) 함수 by Moon
-    function fieldCheck() {
-        let form = document.getElementById("joinForm")
-        console.log(form);
-        if(!form.usrId.value) {
-            alert("아이디를 입력하세요~~");
-            return false;
-        }
-        if(!form.passwd.value) {
-            alert("비밀번호를 입력하세요~~");
-            return false;
-        }
-        if(!form.pwch.value) {
-            alert("비밀번호 확인란를 입력하세요~~");
-            return false;
-        }
-        if(!form.nm.value) {
-            alert("이름을 입력하세요~~");
-            return false;
-        }
-        if(!form.bankNm.value) {
-            alert("은행이름을 입력하세요~~");
-            return false;
-        }
-        if(!form.bankAcnt.value) {
-            alert("은행 계좌번호를 입력하세요~~");
-            return false;
-        }
-        if(!form.bankAcntOwr.value) {
-            alert("예금주를 입력하세요~~");
-            return false;
-        }
-
-        if(form.passwd.value != form.pwch.value) {
-            alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
-            return false;
-        }
-
-        if($("#idCheck").data("success") == false) {
-            alert("존재하는 아이디 입니다.")
-            return false;
-        }
-    }
+    // function fieldCheck() {
+    //     let form = document.getElementById("joinForm")
+    //     console.log(form);
+    //     if(!form.usrId.value) {
+    //         alert("아이디를 입력하세요~~");
+    //         return false;
+    //     }
+    //     if(!form.passwd.value) {
+    //         alert("비밀번호를 입력하세요~~");
+    //         return false;
+    //     }
+    //     if(!form.pwch.value) {
+    //         alert("비밀번호 확인란를 입력하세요~~");
+    //         return false;
+    //     }
+    //     if(!form.nm.value) {
+    //         alert("이름을 입력하세요~~");
+    //         return false;
+    //     }
+    //     if(!form.bankNm.value) {
+    //         alert("은행이름을 입력하세요~~");
+    //         return false;
+    //     }
+    //     if(!form.bankAcnt.value) {
+    //         alert("은행 계좌번호를 입력하세요~~");
+    //         return false;
+    //     }
+    //     if(!form.bankAcntOwr.value) {
+    //         alert("예금주를 입력하세요~~");
+    //         return false;
+    //     }
+    //
+    //     if(form.passwd.value != form.pwch.value) {
+    //         alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
+    //         return false;
+    //     }
+    //
+    //     if($("#idCheck").data("success") == false) {
+    //         alert("존재하는 아이디 입니다.")
+    //         return false;
+    //     }
+    // }
 
     // // Ajax를 이용한 회원탈퇴
     // function withdrawEvent () {
@@ -564,6 +566,87 @@
     //         });
     //     });
     // }
+    function joinEvent() {
+        function joinSubmit() {
+            $("#joinForm").validate({
+                rules: {
+                    usrId: { required: true },
+                    passwd: { required: true },
+                    pwch: {
+                        required: true
+                    },
+                    nm: { required: true },
+                    email: { required: true },
+                    bankNm: { required: true },
+                    bankAcnt: { required: true },
+                    bankAcntOwr: { required: true }
+                },
+                messages: {
+                    usrId: "ID를 입력해 주세요.",
+                    passwd: "비밀번호를 입력해 주세요.",
+                    pwch: "비밀번호를 한번 더 입력해 주세요.",
+                    nm: "이름을 입력해 주세요.",
+                    email: "이메일을 입력해 주세요.",
+                    bankNm: "은행명을 입력해 주세요.",
+                    bankAcnt: "계좌번호를 입력해 주세요.",
+                    bankAcntOwr: "예금주를 입력해 주세요"
+                },
+                errorElement: "div",
+                errorPlacement: function (error, element) {
+                    error.addClass("invalid-feedback");
+                    error.insertAfter(element);
+                },
+                highlight: function (element) {
+                    $(element).removeClass('is-valid').addClass('is-invalid');
+                },
+                unhighlight: function (element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+            $('#joinForm').submit();
+        }
+
+        $('#joinCompleteBtn').click(function() {
+            joinSubmit();
+        });
+    }
+
+    function leaveEvent() {
+        function leaveSubmit() {
+            $("#leaveForm").validate({
+                rules: {
+                    passwd : {
+                        required: true
+                    }
+                },
+                messages : {
+                    passwd: "비밀번호를 입력해 주세요."
+                },
+                errorElement: "div",
+                errorPlacement: function ( error, element ) {
+                    error.addClass( "invalid-feedback" );
+                    error.insertAfter( element );
+                },
+                highlight: function(element) {
+                    $(element).removeClass('is-valid').addClass('is-invalid');
+                },
+                unhighlight: function(element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                }
+            });
+            $('#leaveForm').submit();
+        }
+
+        $('#leaveCompleteBtn').click(function() {
+            leaveSubmit();
+        });
+
+        $('#LeavePassword').keyup(function(e){
+            if(e.keyCode == 13) {
+                leaveSubmit();
+            }
+        });
+    }
 
     function logoutEvent() {
         $("#logoutEvent").click(function() {
@@ -606,6 +689,31 @@
             } else {
                 $('#flexCheckDefault').val(true);
             }
+            $("#loginForm").validate({
+                    rules: {
+                        usrId : {
+                            required: true
+                        },
+                        passwd : {
+                            required: true
+                        }
+                    },
+                    messages : {
+                        usrId: "ID를 입력해 주세요.",
+                        passwd: "비밀번호를 입력해 주세요."
+                    },
+                    errorElement: "div",
+                    errorPlacement: function ( error, element ) {
+                        error.addClass( "invalid-feedback" );
+                        error.insertAfter( element );
+                    },
+                    highlight: function(element) {
+                        $(element).removeClass('is-valid').addClass('is-invalid');
+                    },
+                    unhighlight: function(element) {
+                        $(element).removeClass('is-invalid').addClass('is-valid');
+                    }
+            });
             $('#loginForm').submit();
         }
 
@@ -620,27 +728,14 @@
         });
     }
 
-    function leaveEvent() {
-        function leaveSubmit() {
-            $('#leaveForm').submit();
-        }
 
-        $('#leaveCompleteBtn').click(function() {
-            leaveSubmit();
-        });
-
-        $('#LeavePassword').keyup(function(e){
-            if(e.keyCode == 13) {
-                leaveSubmit();
-            }
-        });
-    }
 
     $(document).ready(function() {
-        leaveEvent();
-        logoutEvent();
+        joinEvent();
         duplicateId();
         loginEvent();
+        logoutEvent();
+        leaveEvent();
     });
 </script>
 

@@ -30,37 +30,7 @@ $(document).ready(function () {
                 $('#findIdModal').modal('show');
             },
             // 찾은 아이디 결과를 모달을 통해 보여주기
-            '#findIdSubmit': function () {
-                // ajax로 findIdCheck 호출!
-                // url, type, data(name, email), f:success, f:error
-                // 요청할때 보내줄 데이터 가져오기
-                let _name = $('#findIdNm').val();
-                console.log(_name);
-                let _email = $('#findIdEmail').val();
-                // 보내줄 데이터 MemberDTO 형태에 맞는 JS 객체로 만들기 -> JSON으로 변환해서 데이터 전송
-                let _data = {
-                    nm: _name,
-                    email: _email
-                };
-                console.log(_data);
-                $.ajax({
-                    url: '/findIdCheck',
-                    type: 'POST',
-                    data: JSON.stringify(_data),
-                    contentType: 'application/json;charset=utf-8',
-                    success: function(result){
-                        console.log(result); // 컨트롤러에서 돌려주는 데이터 받았는지 확인
-                        // 돌려받은 데이터 꺼내서 모달 화면에 뿌리고
-                        $('#findIdWrite').text(result);
-                        // 모달 보여주기
-                        $('#findIdModal').modal('hide');
-                        $('#findIdResultModal').modal('show');
-                    },
-                    error: function (e){
-                        console.log("findIdCheck post 요청 실패....");
-                    }
-                });
-            },
+
             // 비밀번호 찾기 모달 보여주기
             '#findPwdEvent': function () {
                 $('#loginModal').modal('hide');
@@ -87,7 +57,7 @@ $(document).ready(function () {
                     type: 'POST',
                     data: JSON.stringify(_data),
                     contentType: 'application/json;charset=utf-8',
-                    success: function(pwdResult){
+                    success: function (pwdResult) {
                         console.log(pwdResult); // 컨트롤러에서 돌려주는 데이터 받았는지 확인
                         // 돌려받은 데이터 꺼내서 모달 화면에 뿌리고
                         $('#findPwdWrite').text(pwdResult);
@@ -95,12 +65,11 @@ $(document).ready(function () {
                         $('#findPwdModal').modal('hide');
                         $('#findPwdResultModal').modal('show');
                     },
-                    error: function (e){
+                    error: function (e) {
                         console.log("findPwdResult post 요청 실패....");
                     }
                 });
             },
-
             // 여러 모달 페이지에서 로그인 또는 비밀번호 찾기 모달 열기 시작 부분 by Moon
             '#loginEvent1': function () {
                 $('#findIdModal').modal('hide');
@@ -141,17 +110,50 @@ $(document).ready(function () {
         };
     console.log(_tag);
     register_event(_tag);
-});
 
-function register_event(_targets) {
-    let _keys = Object.keys(_targets);
-    // $(_keys[0]).on('click', function() {
-    //     _targets[_keys[0]]();
-    // });
-    $.each(_keys, function (_index, _el) {
-        $(_el).on('click', function () {
-            _targets[_el]();
-            console.log(_el);
-        });
+    $("#findIdSubmit").click(function () {
+        //     ajax로 findIdCheck 호출!
+        //     url, type, data(name, email), f:success, f:error
+        //     요청할때 보내줄 데이터 가져오기
+            let _name = $('#findIdNm').val();
+            console.log(_name);
+            let _email = $('#findIdEmail').val();
+            // 보내줄 데이터 MemberDTO 형태에 맞는 JS 객체로 만들기 -> JSON으로 변환해서 데이터 전송
+            let _data = {
+                nm: _name,
+                email: _email
+            };
+            console.log(_data);
+            $.ajax({
+                url: '/findIdCheck',
+                type: 'POST',
+                data: JSON.stringify(_data),
+                contentType: 'application/json;charset=utf-8',
+                success: function (result) {
+                    console.log(result); // 컨트롤러에서 돌려주는 데이터 받았는지 확인
+                    // 돌려받은 데이터 꺼내서 모달 화면에 뿌리고
+                    $('#findIdWrite').text(result);
+                    // 모달 보여주기
+                    $('#findIdModal').modal('hide');
+                    $('#findIdResultModal').modal('show');
+                },
+                error: function (e) {
+                    console.log("findIdCheck post 요청 실패....");
+                }
+            });
     });
-}
+
+    function register_event(_targets) {
+        let _keys = Object.keys(_targets);
+        // $(_keys[0]).on('click', function() {
+        //     _targets[_keys[0]]();
+        // });
+        $.each(_keys, function (_index, _el) {
+            $(_el).on('click', function () {
+                _targets[_el]();
+                console.log(_el);
+            });
+        });
+
+    }
+});
