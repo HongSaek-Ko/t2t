@@ -46,12 +46,21 @@
     </update>
 
 <!--  회원 탈퇴 : MEM 테이블에서 memStat 값을 MEM04(탈퇴)로 변경  -->
-    <delete id="deleteMember" parameterType="org.t2t.mem.dto.MainDTO">
-<!--        DELETE * FROM MEM WHERE usrId=#{usrId} : FK로 묶여서 삭제 불가 함-->
+    <update id="deleteMember" parameterType="org.t2t.mem.dto.MainDTO">
+<!--    DELETE FROM MEM WHERE usrId=#{usrId} : FK로 묶여서 삭제 불가 함-->
         UPDATE MEM SET memStat = "MEM04"
         WHERE usrId = #{usrId}
-    </delete>
+    </update>
 
+<!--    <delete id="deleteMemberFromProfile" parameterType="org.t2t.mem.dto.MainDTO">-->
+<!--        DELETE FROM profile WHERE usrId=#{usrId}-->
+<!--    </delete>-->
+<!--    <delete id="deleteMemberFromMiles" parameterType="org.t2t.mem.dto.MainDTO">-->
+<!--        DELETE FROM miles WHERE usrId=#{usrId}-->
+<!--    </delete>-->
+<!--    <delete id="deleteMemberFromRanking" parameterType="org.t2t.mem.dto.MainDTO">-->
+<!--        DELETE FROM ranking WHERE usrId=#{usrId}-->
+<!--    </delete>-->
 
 
 

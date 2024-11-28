@@ -28,7 +28,10 @@ public interface MainMapper {
 
     // 회원 탈퇴(상태값만 MEM04로 변경)
     void deleteMember(String usrId);
-
-
-
+//    // 회원 탈퇴(Profile 테이블에서 관련 레코드(행) 삭제)
+//    void deleteMemberFromProfile(String usrId);
+//    // 회원 탈퇴(Miles 테이블에서 관련 레코드(행) 삭제)
+//    void deleteMemberFromMiles(String usrId);
+//    // 회원 탈퇴(Ranking 테이블에서 관련 레코드(행) 삭제)
+//    void deleteMemberFromRanking(String usrId);
 }

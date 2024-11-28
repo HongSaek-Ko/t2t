@@ -10,6 +10,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.t2t.mem.dto.MainDTO;
@@ -277,6 +278,7 @@ public class MainController {
 //    }
 
     // 회원 탈퇴 처리 요청
+    @Transactional
     @PostMapping("/member/{usrId}/delete")
     public String deleteMemberPro(@PathVariable("usrId") String usrId, @RequestParam(name="passwd") String passwd, Model model, HttpSession session) throws NoSuchAlgorithmException {
         log.info("deletePro id: {}", usrId);
@@ -289,6 +291,9 @@ public class MainController {
             // 맞으면 탈퇴처리 -> 결과 출력
             result = true;
             mainMapper.deleteMember(usrId);   // 탈퇴
+//            mainMapper.deleteMemberFromProfile(usrId);      // 회원 탈퇴(Profile 테이블에서 관련 레코드(행) 삭제)
+//            mainMapper.deleteMemberFromMiles(usrId);      // 회원 탈퇴(Miles 테이블에서 관련 레코드(행) 삭제)
+//            mainMapper.deleteMemberFromRanking(usrId);     // 회원 탈퇴(Ranking 테이블에서 관련 레코드(행) 삭제)
             session.invalidate();      // 로그아웃 처리
         }
 
