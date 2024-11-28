@@ -101,50 +101,50 @@ public class MainController {
                            HttpServletResponse response, HttpSession session, Model model) throws NoSuchAlgorithmException, IOException {
         log.info("POST /login 로그인처리!!!");
         log.info("id: {}", usrId);
-        log.info("pw: {}", passwd);
-        log.info("auto: {}", auto); // 체크했으면 auto, 체크안했으면 null
-        // 로그인 처리
-        // DB에 사용자가 입력한 id와 pw가 일치하는 데이터가 있는지 확인
 
         boolean result = false;
-
-        MainDTO mainDTO = mainMapper.idPwCheck(usrId, encode(passwd));
+        // 로그인 처리
+        // DB에 사용자가 입력한 id와 pw가 일치하는 데이터가 있는지 확인
         // 가입시 "SHA-512"방식으로 비밀번호가 hashtext로 encoding 되었기 때문에
         // 로그인할 때도 비밀번호를 한번 encoding 해줘야 함 by Moon
+        MainDTO mainDTO = mainMapper.idPwCheck(usrId, encode(passwd));
+        response.setContentType("text/html; charset=UTF-8");
+        PrintWriter out = response.getWriter();
 
         if(mainDTO != null) {
+            // 해당 아이디와 비밀번호가 있는지 확인
             if(mainDTO.getMemStat().equals("MEM01")) {
+                // 해당 멤벙의 MemStat가 MEM01(활동중)인지 확인하고 로그인 허용
                 result = true; // 로그인결과 true로 지정
-                log.info("21322413243");
                 session.setAttribute("sid", mainDTO.getUsrId()); // 사용자 id값 저장
                 session.setAttribute(HTTP_SESSION_USER, mainDTO.toEntity());
-
                 if(auto) { // 자동로그인 체크 했다면,
                     createCookie(usrId, passwd, auto, response);
                 }
             }
-            else if(mainDTO.getMemStat().equals("MEM04")) {
-                response.setContentType("text/html; charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("<script>alert('탈퇴한 회원입니다 !!!'); history.go(-1);</script>");
+            else if(mainDTO.getMemStat().equals("MEM02")) {
+                out.println("<script>alert('휴면상태 회원입니다 !!!'); history.go(-1);</script>");
                 out.flush();
                 response.flushBuffer();
                 out.close();
                 return "redirect:/login";
             }
             else if(mainDTO.getMemStat().equals("MEM03")) {
-                response.setContentType("text/html; charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("<script>alert('활동정지 회원입니다 !!!'); history.go(-1);</script>");
+                out.println("<script>alert('활동정지 상태 회원입니다 !!!'); history.go(-1);</script>");
                 out.flush();
                 response.flushBuffer();
                 out.close();
                 return "redirect:/login";
             }
-            else if(mainDTO.getMemStat().equals("MEM02")) {
-                response.setContentType("text/html; charset=UTF-8");
-                PrintWriter out = response.getWriter();
-                out.println("<script>alert('휴면상태 회원입니다 !!!'); history.go(-1);</script>");
+            else if(mainDTO.getMemStat().equals("MEM04")) {
+                out.println("<script>alert('탈퇴한 회원입니다 !!!'); history.go(-1);</script>");
+                out.flush();
+                response.flushBuffer();
+                out.close();
+                return "redirect:/login";
+            }
+            else if(mainDTO.getMemStat().equals("MEM05")) {
+                out.println("<script>alert('비밀번호 5회 초과했습니다 !!!'); history.go(-1);</script>");
                 out.flush();
                 response.flushBuffer();
                 out.close();
