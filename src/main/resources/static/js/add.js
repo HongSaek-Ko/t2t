@@ -1,6 +1,46 @@
 $(document).ready(function (){
     toggleTextBox(['#trgtSalQty', '#islimit']);
+    $(window).on('submit', function() {
+        $( "#dialogContent" ).html("수정 완료!")
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true
+        });
+    });
 });
+$("#productForm").validate({
+    rules: {
+        title: {required: true, minlength: 2, maxlength: 20},
+        cont: {required: true, maxlength: 200},
+        cate: {required: true},
+        price: {required: true},
+        imgFile: {required: true},
+        trgtSalQty: {required: true, minlength: 0}
+    },
+    messages: {
+        title: "제목은 최소 2글자, 최대 20글자 입니다.",
+        cont: "200글자 이내의 설명을 입력해주세요.",
+        cate: "카테고리를 선택해주세요.",
+        price: "가격을 설정해주세요.",
+        imgFile: "상품 이미지를 올려주세요.",
+        trgtSalQty: "판매 수량을 설정해주세요. (체크 해제 시 수량 제한(-), 설정 불필요)"
+    },
+    errorElement: "div",
+    errorPlacement: function (error, element) {
+        error.addClass("invalid-feedback");
+        error.insertAfter(element);
+    },
+    highlight: function (element) {
+        $(element).removeClass('is-valid').addClass('is-invalid');
+    },
+    unhighlight: function (element) {
+        $(element).removeClass('is-invalid').addClass('is-valid');
+    }
+});
+
+
 
 // 태그 넣는 코드 시작
 const input = document.querySelector('input[name=tags]');
@@ -43,28 +83,30 @@ function toggleTextBox(checkbox) {
         textbox_elem.focus();
     }
 }
-function fieldCheck() {
+// function fieldCheck() {
+//
+//     let form = document.getElementById('form')
+//     if(form.hashTag.value === ''
+//         || form.price.value === ''
+//         || form.cate.value === ''
+//         || form.cont.value === ''
+//         || form.imgFile.value === ''
+//         || form.title.value === '') {
+//         alert("필수 입력사항을 입력해주세요.")
+//         return false;
+//     }
+//     if(form.trgtSalQty.value === '') {
+//         if(form.limitSwitch.checked) {
+//             alert("구매 제한 수량을 입력하세요.");
+//             return false;
+//         }
+//     }else{
+//         document.getElementById('islimit').value = 'Y';
+//     }
+//     return true;
+// }
 
-    let form = document.getElementById('form')
-    if(form.hashTag.value === ''
-        || form.price.value === ''
-        || form.cate.value === ''
-        || form.cont.value === ''
-        || form.imgFile.value === ''
-        || form.title.value === '') {
-        alert("필수 입력사항을 입력해주세요.")
-        return false;
-    }
-    if(form.trgtSalQty.value === '') {
-        if(form.limitSwitch.checked) {
-            alert("구매 제한 수량을 입력하세요.");
-            return false;
-        }
-    }else{
-        document.getElementById('islimit').value = 'Y';
-    }
-    return true;
-}
+// jQuery Validation
 
 
 

@@ -1,11 +1,14 @@
 package org.t2t.prd.dto;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
+@Slf4j
 public class ProductFormDTO {
     private Long prdId;
     private String usrId;
@@ -21,6 +24,9 @@ public class ProductFormDTO {
 
     // 넘어오는 파일 정보 담을 변수
     private MultipartFile imgFile;
+
+    // 넘어오는 해시태그 정보 담을 변수
+    private List<String> prdHash;
 
     public ProductDTO toProductDTO() {
         ProductDTO productDTO = new ProductDTO();

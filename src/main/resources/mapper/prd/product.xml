@@ -23,6 +23,13 @@
         WHERE PRDID=#{prdId}
     </update>
 
+    <select id="getPrdHash" resultType="org.t2t.prd.dto.PrdHashDTO">
+        SELECT P.* FROM
+            PRD R LEFT OUTER JOIN PRDHASH P
+        ON R.PRDID = P.PRDID
+        WHERE
+            P.PRDID = #{prdId}
+    </select>
     <!--  서비스에서 넘어옴      HashMap 타입의 객체를 매개변수로 받았으므로... 쿼리 결과를 GoodDTO 타입으로 변환-->
     <select id="findGoodById" parameterType="hashmap" resultType="org.t2t.prd.dto.GoodDTO">
         SELECT G.* FROM

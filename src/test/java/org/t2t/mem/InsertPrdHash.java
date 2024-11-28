@@ -11,7 +11,7 @@ public class InsertPrdHash {
             "(PRDHASHID, TAGID, PRDID, REGDT, LASTDT)" +
             "VALUES(?, ?, ?, ?, ?)");
 
-    for(int i = 1; i < 30; i++){
+    for(int i = 32; i < 100; i++){
         pstmt.setInt(1, i);
         pstmt.setString(2, "testTag" + i);
         pstmt.setInt(3, i);

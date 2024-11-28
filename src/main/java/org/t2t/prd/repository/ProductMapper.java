@@ -1,9 +1,6 @@
 package org.t2t.prd.repository;
 import org.apache.ibatis.annotations.Mapper;
-import org.t2t.prd.dto.GoodDTO;
-import org.t2t.prd.dto.Pager;
-import org.t2t.prd.dto.ProductDTO;
-import org.t2t.prd.dto.ProductFormDTO;
+import org.t2t.prd.dto.*;
 
 import java.util.List;
 import java.util.Map;
@@ -38,4 +35,6 @@ public interface ProductMapper {
 
     // 게시글 전체 개수
     Long countAllProduct(Pager pager);
+
+    // prdId로 해시태그 찾기
 }

@@ -1,11 +1,14 @@
 package org.t2t.prd.dto;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 
+@Data
 public class PrdHashDTO {
     private Long prdHashId; // pk, ai
-    private Long tagId; // fk
-    private String tagNm; // fk, 태그 설명
+    private String tagId; // fk
+    private Long prdId; // fk
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
 }

@@ -16,7 +16,7 @@
                 <!-- 컨텐츠 시작 지점 -->
 
                 <div class="container text-center">
-                    <form action="" th:action method="post">
+                    <form action="" th:action method="post" id="modifyForm" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col">
                                 <h2> 상품 수정 </h2>
@@ -27,7 +27,6 @@
                             </div>
                             <div class="col">
                                 <div class="mx-auto"> <!--간격 생성 (가로배치 우회) -->
-
                                     <div class="mb-3">
                                         <label for="title" class="form-label">제목 변경</label>                                     <!--아래와 같은 형식으로 입력... -->
                                         <input type="text" class="form-control" id="title" th:field="${product.title}">   <!--th:value="${prd.title}"-->
@@ -55,7 +54,7 @@
                                     </div>
                                     <br/>
                                     <div class="mb-3">
-                                        <label for="price" class="form-label">금액 입력</label>
+                                        <label for="price" class="form-label">금액 변경</label>
                                         <input type="number" class="form-control" name="price" id="price" th:field="${product.price}" disabled>
                                     </div>
                                     <br/>
@@ -79,13 +78,13 @@
                                         <input type="hidden" id="salStat" th:field="${product.salStat}" value="PRD01">
                                     </div>
                                     <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
-                                        <input type="text" class="form-control" id="abtReas" th:field="${product.abtReas}" placeholder="중지 사유 입력..." disabled>
+                                        <input type="text" class="form-control" id="abtReas" name="abtReas" th:field="${product.abtReas}" placeholder="중지 사유 입력..." disabled>
                                     </div>
                                 </div>  <!-- 종료 지점: 가로배치 우회 -->
                             </div>
                         </div>
                     <button type="button" class="btn btn-danger" th:onclick="|location.href='@{/product/{prdId}(prdId=${product.prdId})}'|"> 수정취소 </button>
-                    <button type="submit" onclick="call_confirm()" th:data-prdid="${product.prdId}" class="btn btn-primary"> 수정완료 </button>
+                    <button type="submit" th:data-prdid="${product.prdId}" class="btn btn-primary"> 수정완료 </button>
                 </form>
                 </div>
 
@@ -105,6 +104,9 @@
                     </div>
                 </div>
 
+                <div id="dialog-confirm" title="알림" >
+                    <p><span id="dialogContent"></span></p>
+                </div>
                 <script type="text/javascript" th:src='@{/js/modify.js}'></script>
                 <!-- 컨텐츠 종료 지점 -->
             </th:block>

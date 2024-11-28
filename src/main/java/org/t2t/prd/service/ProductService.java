@@ -1,6 +1,5 @@
 package org.t2t.prd.service;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -8,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.t2t.prd.dto.*;
 import org.t2t.prd.repository.FileMapper;
+import org.t2t.prd.repository.HashMapper;
 import org.t2t.prd.repository.ProductMapper;
 
-import java.io.File;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -28,6 +27,8 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final FileMapper fileMapper;
     private final FileService fileService;
+    private final HashService hashService;
+    private final HashMapper hashMapper;
 
     public void write(ProductFormDTO product) throws IOException {
 
@@ -35,7 +36,7 @@ public class ProductService {
         ProductDTO productDTO = product.toProductDTO();
 
         // 게시글 정보 저장
-        productMapper.write(productDTO);// 실행이후, productDTO 의 prdId값이 체워져있다
+        productMapper.write(productDTO);// 실행이후, productDTO 의 prdId값이 채워져있음
         log.info("ProductService/write: productDTO: {}", productDTO);
         product.setPrdId(productDTO.getPrdId()); // formDTO의 prdId값을 일반prdId을 가져와서 설정
 
@@ -46,7 +47,10 @@ public class ProductService {
         fileMapper.insertFile(imgFile); // File에 저장
 
         // 해시태그 저장
-//        PrdHashDTO prdHash = hashService.uploadHash(product.getHash());
+//        PrdHashDTO prdHash = hashService.writePrdHash(product.getPrdHash());
+//        log.info("게시글 등록 - 해시태그: {}: ", prdHash);
+//        prdHash.setPrdId(productDTO.getPrdId()); // prdHash의 prdId값을 prDTO의 prdId로 설정
+//        hashMapper.insertPrdHash(prdHash); // PRDHASH에 저장
 
     }
 
@@ -88,10 +92,10 @@ public class ProductService {
         FileDTO imgFile = fileMapper.selectFile(prdId);
         findProduct.setImgFile(imgFile);
 
-        // prdId에 해당하는 좋아요 가져오기
+        // prdId에 해당하는 좋아요 수 가져오기
         productMapper.goodCount(prdId);
 
-
+        // prdId에 해당하는 해시태그 가져오기
 
 
         return findProduct;
@@ -144,5 +148,9 @@ public class ProductService {
     public int getProductCount(Pager pager) {
         Long count = productMapper.countAllProduct(pager);
         return count.intValue(); // intvalue: 객체의 값을 정수로 변환
+    }
+
+
+    public void getPrdHash(Long prdId, String tagId) {
     }
 }

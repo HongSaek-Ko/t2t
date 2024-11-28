@@ -32,7 +32,7 @@ function moreProducts() { // 추가 게시글 로드
                             <a href="/product/${_el.prdId}" style="text-decoration: none; color: black">
                                 <div class="card" >
                                     <img
-                                        src="${_el.imgFile != null ? '/product/image/' + _el.imgFile.fileNm : '/upload/profile/profile1.jpg'}"
+                                        src="${_el.imgFile != null ? '/product/image/' + _el.imgFile.fileNm : '/upload/default.png'}"
                                         class="img-fluid" style="border-radius: 5px;" />
                                     <div class="card-body">
                                         <h5 class="card-title">${_el.title}</h5>\n

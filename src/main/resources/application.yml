@@ -19,11 +19,16 @@ spring:
       max-file-size: 10MB
       max-request-size: 30MB
 
-file.dir: E:\moon\framework\uploadt2t\
-#uploadfile.dir: D:\\project\\t2t\\src\\main\\resources\\static\\upload\\
-#movingfile.from: profile\\temp\\
-#movedfile.to: profile\\
+file:
+  product:
+    path: D:/bhs/framework/workspace/t2t/src/main/resources/static/upload/product/
+  profile:
+    path: D:/bhs/framework/workspace/t2t/src/main/resources/static/upload/profile
+
 HTTP_SESSION_USER: t2t_session_user
+HTTP_SESSION_CURRENT_URL: http_session_current_url
+LOGGEDIN_MYUSER: myuser
+
 
 mybatis:
   mapper-locations: classpath:mapper/**/*.xml

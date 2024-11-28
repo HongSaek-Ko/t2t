@@ -42,7 +42,7 @@ public class ProductController {
         return "product/add";
     }
 
-    // 상품 등록 처리
+    // 상품 등록 처리 (게시글 정보 + 이미지 + 해시태그)
     @PostMapping("/add")
     public String productAddPost(@ModelAttribute("product") ProductFormDTO product) throws IOException{
         log.info("상품 등록 완료!");
@@ -54,10 +54,6 @@ public class ProductController {
     // 상품 목록 페이지 todo: 임시로 list, 실제로는 index...?
     @GetMapping("/list")
     public String productList() {
-//        List<ProductDTO> list = productService.getProductList();
-//        List<ProductDTO> productList = productService.getProductListWithPaging(pager);
-//        model.addAttribute("productList", productList);
-//        model.addAttribute("pageDTO", new PageDTO(pager, productService.getProductCount(pager)));
         return "product/list";
     }
 
@@ -76,6 +72,7 @@ public class ProductController {
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
         model.addAttribute("goodCount", productService.goodCount(prdId));
+//        model.addAttribute("prdHash", productService.getPrdHash(prdId));
         return "product/detail";
     }
 
@@ -111,6 +108,16 @@ public class ProductController {
         log.info("제품 삭제?");
         return "redirect:/";
     }
+
+    // 해시태그 조회
+//    @GetMapping("/prdHash/{prdId}")
+//    @ResponseBody
+//    public ResponseEntity<Map<String, Object>> productHash(@PathVariable(name="prdId") Long prdId, Model model) {
+//        ProductDTO product = (ProductDTO) model.getAttribute("product"); // model에 저장된 ProductDTO 객체 가져오기
+//        Map<String, Object> map = new HashMap<>(); //
+//        map.put("prdHash", prdId); //
+//        return ResponseEntity.ok(map);
+//    }
 
     // '좋아요'
     @GetMapping("/good/{prdId}")
