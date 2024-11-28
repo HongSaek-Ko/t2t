@@ -23,12 +23,19 @@
         WHERE PRDID=#{prdId}
     </update>
 
+    <!--게시글 조회: prdId 주고 해시태그(tagId) 가져오기-->
     <select id="getPrdHash" resultType="org.t2t.prd.dto.PrdHashDTO">
-        SELECT P.* FROM
-            PRD R LEFT OUTER JOIN PRDHASH P
-        ON R.PRDID = P.PRDID
-        WHERE
-            P.PRDID = #{prdId}
+        SELECT PH.TAGID
+        FROM PRD P
+        INNER JOIN PRDHASH PH ON P.PRDID = PH.PRDID
+        INNER JOIN HASH H ON PH.TAGID = H.TAGID
+        WHERE P.PRDID = #{prdId}
+    </select>
+
+    <select id="getTagId">
+        SELECT TAGID FROM HASH
+        WHERE TAGID
+        LIKE CONCAT('%', 't', '%') AND ENABLED = 'Y';
     </select>
     <!--  서비스에서 넘어옴      HashMap 타입의 객체를 매개변수로 받았으므로... 쿼리 결과를 GoodDTO 타입으로 변환-->
     <select id="findGoodById" parameterType="hashmap" resultType="org.t2t.prd.dto.GoodDTO">
