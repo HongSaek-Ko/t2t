@@ -18,8 +18,6 @@ public class MemberDTO {
     private String roleId;
     private String memStat;
     private String intro;
-    private String profImg;
-    private String profOrgImg;
     private int logAtmCnt;
     private LocalDateTime chgPassDt;
     private String bankNm;

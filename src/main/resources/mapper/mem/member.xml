@@ -13,12 +13,13 @@
         SELECT * FROM MEM
     </select>
     <!-- 회원정보 수정 -->
+    <!-- 회원정보 수정값이 변경이 안된 값도 있으므로 -->
     <update id="updateMem">
         UPDATE MEM
             SET
             <choose>
-                <when test="{bankNm != null}">
-                    BANKNM = #{bankNm},
+                <when test="{bankAcntOwr != null}">
+                    BANKACNTOWR = #{bankAcntOwr},
                 </when>
                 <when test="{email != null}">
                     email = #{email},
@@ -37,11 +38,6 @@
         WHERE
             USRID = #{usrId}
     </update>
-    <!-- 회원 탈퇴 -->
-    <delete id="deleteMem">
-        DELETE FROM MEM
-        WHERE USRID = #{usrId}
-    </delete>
     <!-- id, pw 일치여부 확인 -->
     <select id="idPwChecking" resultType="org.t2t.mem.dto.MemberDTO">
         SELECT * FROM MEM
@@ -60,7 +56,15 @@
             </otherwise>
         </choose>
         WHERE
-        USRID = #{usrId}
+            <choose>
+                <when test="option == 'TRD02'">
+                    POINT - #{point} > 0 AND <!-- 마일리지 포인트가 0이하일 때는 UPDATE 못 하도록-->
+                </when>
+                <otherwise>
+                    1 = 1 AND
+                </otherwise>
+            </choose>
+            USRID = #{usrId}
     </insert>
     <!-- 나의 마일리지 포인트 -->
     <select id="selectMileTotal" resultType="org.t2t.mem.dto.MileDTO" parameterType="string">
@@ -91,7 +95,7 @@
         FROM ORD O JOIN PRD P
         ON O.PRDID = P.PRDID
         WHERE
-        O.USRID ='test2' AND
+        O.USRID =#{usrId} AND
         P.SALSTAT = 'PRD01' AND
         P.USRID != #{usrId};
     </select>
@@ -101,7 +105,7 @@
         FROM PRD P, MEM M
         WHERE
         P.SALSTAT='PRD01' AND
-        P.USRID='test2'  AND
+        P.USRID=#{usrId}  AND
         M.USRID != #{usrId};
     </select>
     <!-- 회원 1명의 마일리지 테이블 정보 가져오기 -->
@@ -136,4 +140,13 @@
         VALUES
             (#{usrId},  #{score})
     </insert>
+    <update id="updatePassword" parameterType="org.t2t.mem.dto.MemberDTO">
+        UPDATE MEM
+        SET
+            PASSWD = #{passwd},
+            LASTDT = NOW()
+        WHERE
+            USRID = #{usrId}
+
+    </update>
 </mapper>

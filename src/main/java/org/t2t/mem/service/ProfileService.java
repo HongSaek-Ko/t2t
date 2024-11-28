@@ -3,6 +3,7 @@ package org.t2t.mem.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.ProfileDTO;
 
@@ -41,8 +42,24 @@ public class ProfileService {
         // - 실제 파일 폴더에 저장 : 저장할 폴더경로 + 저장할 파일명 -> File 객체
         file.transferTo(new File(fileDir + profImg));
 
+         // 기본 이미지 설정
+         //  String defaultImage = "/upload/profile/profile1.jpg";
+
+
+
+
         // * 저장된 파일의 정보를 ImgFileDTO로 리턴
         ProfileDTO profileDTO = new ProfileDTO(profImg, profOrgImg, filetype);
         return profileDTO;
     }
+
+    //프로필 사진 변경
+    public ProfileDTO updateFile(MultipartFile file) throws IOException {
+
+        return null;
+    }
+
+
+
+
 }

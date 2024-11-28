@@ -27,8 +27,6 @@ public class MemberDTO_ {
                 .roleId(RoleId.MEMBER.name())
                 .memStat(MemberStatus.MEM01.getKey())
                 .intro("나는 잘몰라요")
-                .profImg("profile1.jpg")
-                .profOrgImg("/upload/profile/profile1.jpg")
                 .bankNm("카카오뱅크")
                 .bankAcnt("333344445555")
                 .bankAcntOwr("나짱")

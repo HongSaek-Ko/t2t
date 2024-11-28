@@ -1,12 +1,54 @@
 //충전, 환전 클릭시 이벤트
 //구매목록, 판매목록 탭 전환 이벤트
+//비밀번호 수정 모달환면 띄우기
 //비밀번호 일치 여부 확인 이벤트
 $(document).ready(function () {
     registerEvent(['#rechargeEvent', '#exchageEvent']);
     registerTabEvent('#tabEvent');
     passwordcheckEvent();
+    passwdModify();
+    modifyProfile();
 
 });
+
+/*
+$('#modifyform').validate({
+        rules: {
+        //html name 값 : validate
+        id: {required: true},
+        passwd: {required: true},
+        email: {required: true},
+        name: {required: true},
+        bkname: {required: true},
+        bkAcntName: {required: true},
+        bankAcnt: {required: true},
+    },
+    message : {
+        id : "아이디를 입력해주세요",
+    passwd : "비밀번호를 입력해주세요",
+    email : "이메일을 입력해주세요",
+    name : "이름을 입력해주세요",
+    bkname : "은행명을 입력해주세요",
+    bkAcntName : "예금주명을 입력해주세요",
+    bankAcnt : "계좌번호를 입력해주세요"
+    },
+    erroerElement : "div",
+    errorPlacement : function(error, element){
+            error.addClass("invalid-feedback");
+            error.insertAfter(element);
+    },
+
+        highlight: function (element) {
+        $(element).removeClass('is-valid').addClass('is-invalid');
+    },
+    unhighlight: function (element) {
+        $(element).removeClass('is-invalid').addClass('is-valid');
+    }
+    });
+
+
+*/
+
 
 //Ajax 충전버튼 클릭시 이벤트
 function registerModalEvent() {
@@ -37,28 +79,76 @@ function registerModalEvent() {
 //Ajax 환전버튼 클릭시 이벤트
 function exchangeModalEvent() {
     $('.modal.fade #exchangeMileBtn').on('click', function () {
-        console.log("1");
-        $.ajax({
-            url: "/member/mypage/excharge",
-            type: 'POST',
-            data: {
-                "point": $('.modal.fade.show .modal-body input[name=exchange]').val(),
-            },
-            datatype: 'json'}
-        ).done(function (data, textStatus, xhr) {
-            if(data.success == true) {
-                $('#mile').val(data.mile);
+        if(parseInt($('#haveMile').val()) - parseInt($('#exchangeMile').val()) > 0) {
+            $.ajax({
+                url: "/member/mypage/excharge",
+                type: 'POST',
+                data: {
+                    "point": $('.modal.fade.show input[name=exchange]').val(),
+                },
+                datatype: 'json'}
+            ).done(function (data, textStatus, xhr) {
+                console.log(data);
+                console.log("환전 값", data.success); // true
+                if(data.success == true) {
+                    $('#mile').val(data.mile);
+                    $('#commonModal').modal('hide');
+                }
+                else
+                    alert('환전 할수 없습니다.');
 
-            }
-            else
-                alert('환전 할수 없습니다.');
-        });
+            });
+        } else {
+            alert("출금 마일리지보다 보유 마일리지가 적습니다. 다시 입력 해주세요.");
+            $('#exchangeMile').val("0");
+        }
     });
 
 }
 
+//모달 찾아서 바디, 풋터 비우기
+function clearModal(title) {
+    $('#commonModal').find('.modal-body').empty();
+    $('#commonModal').find('.modal-footer').empty();
+    $('#commonModalLabel').text(title);
+}
+
+//비밀번호 수정하기 모달
+function passwordcheckEvent(){
+    //비밀번호 수정하기 버튼 클릭시
+    $('#modifyPasswdModal').on('click', function(){
+        let element = $($('#passwordcheckModel').html()).clone();
+        clearModal('비밀번호 변경하기');
+        $('#commonModal').find('.modal-content').append($(element));
+        $('#commonModal').modal('show');
+        passwdModify();
+    });
+}
 
 
+//비밀번호 변경하기
+function passwdModify() {
+    $('.modal.fade #modifyPassword').on('click', function () {
+        if($('#modalPasswd').val() !== $('#modalPasswdCheck').val()) {
+            alert('비밀번호가 일치하지 않습니다.');
+            $('#modalPasswd').val('');
+            $('#modalPasswdCheck').val('');
+        } else {
+            $.ajax({
+                url: "mypage/modify/passswd",
+                type: 'POST',
+                data: {
+                    "passwd": $('.modal.fade.show input[name=passwd]').val()
+                },
+                datatype: 'json'}
+            ).done(function (data, textStatus, xhr) {
+                console.log($('.modal.fade.show input[name=passwd]').val()); //1234
+                console.log($('.modal.fade.show input[name=passwdcheck]').val()); //1234
+            });
+        }
+    });
+
+}
 
 
 //충전, 환전 모달환면 전환 이벤트
@@ -74,33 +164,21 @@ function registerEvent(_target) {
             console.log(e);
             if (_id == 'rechargeEvent') {
                 let element = $($('#rechargeModel').html()).clone();
-                $('#commonModal').find('.modal-body').detach();
-                $('#commonModal').find('.modal-footer').detach();
-                $('#commonModalLabel').text('충전');
-
+                clearModal('충전');
                 $('#commonModal').find('.modal-content').append($(element));
                 $('#commonModal').modal('show');
+                $('#mileModal').val($('#mile').val());
                 registerModalEvent();
             } else if (_id == 'exchageEvent') {
                 let element = $($('#exchangeModel').html()).clone();
-                $('#commonModal').find('.modal-body').detach(); //detach : 요소를 find(찾아서) 제거해라
-                $('#commonModal').find('.modal-footer').detach();
-                $('#commonModalLabel').text('환전');
+                clearModal('환전');
                 $('#commonModal').find('.modal-content').append($(element));
                 $('#commonModal').modal('show');
+                $('#mileModal').val($('#mile').val());
                 exchangeModalEvent();
             }
         });
     });
-}
-
-
-
-// 마이페이지 프로필 수정
-function modifyProf(input) {
-    console.log(input.files[0]);
-    let file = input.files[0];
-    $('#imgTag').attr("src", URL.createObjectURL(file));
 }
 
 
@@ -123,26 +201,8 @@ function registerTabEvent(root) {
     });
 }
 
-//비밀번호 수정하기 모달
-function passwordcheckEvent(){
-    //비밀번호 수정하기 버튼 클릭시
-    $('#pwcheck').on('click', function(){
-        let element = $($('#passwordcheckModel').html()).clone();
-        $('#commonModal').find('.modal-body').detach();
-        $('#commonModal').find('.modal-footer').detach();
-        $('#commonModalLabel').text('수정완료');
-
-        $('#commonModal').find('.modal-content').append($(element));
-        $('#commonModal').modal('show');
-        registerModalEvent();
-        $('#passwordcheckModel').modal('show');
-
-    });
-}
-
-
 //자기소개 글자수 카운팅
-$('#myinfotext').keyup(function(e){
+$('#myInfoText').keyup(function(e){
     let content = $(this).val();
     $('#lengthCheck').text("(" + content.length + "/최대 200자)"); //실시간 글자수 카운팅
     if(content.length > 200){
@@ -154,47 +214,46 @@ $('#myinfotext').keyup(function(e){
 })
 
 //수정완료, 수정취소 버튼 숨겨놓기
-$('#modifydone').hide();
-$('#modifycancel').hide();
+$('#modifyDone').hide();
+$('#modifyCancel').hide();
 
 //비밀번호 수정버튼 숨기기
-$('#pwcheck').hide();
+$('#modifyPasswdModal').hide();
 
+//프로필 변경 수정 숨기기
+$('#profileForm').hide();
 
 // 수정모드로 변경하기
-$('#modifyinfo').on('click', function (){
+$('#modifyInfo').on('click', function (){
     //readonly 속성 제거
     $('#email').removeAttr("readonly");   // readonly 속성 제거
-    $('#bkAcntName').removeAttr("readonly");
+    $('#bankAcntOwr').removeAttr("readonly");
     $('#bankAcnt').removeAttr("readonly");
-    $('#myinfotext').removeAttr("readonly");
-    $('#pwcheck').show();
-    $('#modifyinfo').text("수정완료");
-    $('#modifyinfo').hide();
-    $('#modifydone').show(); //수정완료 버튼 보여주기
-    $('#modifycancel').show(); //취소버튼 보여주기
+    $('#myInfoText').removeAttr("readonly");
+    $('#profileForm').removeAttr("readonly").show();
+    $('#modifyPasswdModal').show();
+    $('#modifyInfo').text("수정완료").hide();
+
+    $('#modifyDone').show(); //수정완료 버튼 보여주기
+    $('#modifyCancel').show(); //취소버튼 보여주기
 });
 
 //마이페이지 수정처리하기
-$('#modifydone').on('click', function(){
+$('#modifyDone').on('click', function(){
     console.log("done!!!!!!!!!!!");
     // 컨트롤러로 보내서 MemberDTO로 받을 예정 ->
     // 여기서 보낼 데이터를 MemberDTO 구조에 맞게 JS 객체로 만들어 데이터 체우고
-    // Json 문자열로 변경해서 보내기
-    let updatedata = {
-        // 키 : 값
-        // DTO : mypage id
-        //
-        email: $('#email').val(),
-        bankAcnt: $('#bankAcnt').val(),
-        bankNm: $('#bkAcntName').val(),
-        usrId: $('#usrID').val(), // where 조건문 사용시 필요
-        intro : $('#myinfotext').val()
-    }
     $.ajax({
         url: "/member/mypage/modify",
         type: "POST",
-        data: JSON.stringify(updatedata),
+        data: JSON.stringify({
+            email: $('#email').val(),
+            bankAcnt: $('#bankAcnt').val(),
+            bankAcntOwr: $('#bankAcntOwr').val(),
+            bankNm: $('#bankNm').val(),
+            usrId: $('#usrID').val(), // where 조건문 사용시 필요
+            intro : $('#myInfoText').val()
+        }),
         contentType: 'application/json;charset=utf-8',
         //map에서 넘어온 값 result로 받아줌
         success: function(result){
@@ -203,12 +262,15 @@ $('#modifydone').on('click', function(){
             console.log(result.findUser.usrId);
 
             $('#email').attr('readonly',true);
-            $('#myinfotext').attr('readonly',true);
-            $('#bkAcntName').attr('readonly',true);
+            $('#myInfoText').attr('readonly',true);
+            $('#bankNm').attr('readonly',true);
             $('#bankAcnt').attr('readonly',true);
+            $('#profileForm').hide();
 
+            $( "#notify_dialog #nofiy_cont").html("수정이 완료 되었습니다.");
+            $( "#notify_dialog" ).dialog('open');
             //수정완료 후 페이지 되돌아가기
-            window.location.href="/member/mypage";
+            // window.location.href="/member/mypage";
             //window.location.reload();
 
         },
@@ -220,18 +282,12 @@ $('#modifydone').on('click', function(){
 });
 
 
+// 마이페이지 프로필 수정
+function modifyProfile() {
+    $('#formFile').on('change',function(){
+        let file = $(this).get(0).files[0];
+        console.log($(this).get(0).files[0]);
+        $('#profileImg').attr("src", URL.createObjectURL(file));
+    })
+}
 
-//비밀번호 일치 여부 확인
-$(function() {
-    let pwd1 = $('#passwd').val();
-    let pwd2 = $('#passwdcheck').val();
-    if (pwd1 != "" || pwd2 != "") {
-        if (pwd1 == pwd2) {
-            $('#alert-success').show();
-            $('#alert-danger').hide();
-        } else {
-            $('#alert-success').hide();
-            $('#alert-danger').show();
-        }
-    }
-});

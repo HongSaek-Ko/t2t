@@ -12,7 +12,7 @@ import java.util.List;
 
 @Mapper
 public interface MemberMapper {
-    //void : DB에서 작업하고 끝, update, delete, insert DB에서 작업하면 끝
+    //int, void : DB에서 작업하고 끝, update, delete, insert DB에서 작업하면 끝
     //return : 뭔가 다시 값을 되돌려줄 때, select 등 DB에서 작업한 후 화면에 뿌려줌
 
     //포인트 충전 / 환전
@@ -21,8 +21,6 @@ public interface MemberMapper {
     List<MileDTO> selectMileTotal(String usrId);
     //회원정보 수정
     void updateMem(MemberDTO memberDTO);
-    //회원 탈퇴
-    void deleteMem(String usrId);
     //나의 신고목록 가져오기
     List<ComplaintDTO> selectComplaintList(String usrId);
     //나의 구매(order)목록 가져오기
@@ -41,4 +39,6 @@ public interface MemberMapper {
     void insertMile(MileDTO mileDTO);
     //랭킹 테이블 추가
     void insertRank(RankingDTO rank);
+    //비밀번호 변경
+    void updatePassword(MemberDTO memberDTO);
 }
