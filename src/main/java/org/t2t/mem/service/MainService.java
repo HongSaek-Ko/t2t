@@ -26,7 +26,7 @@ public class MainService {
 
     @Transactional // 2개 이상 CUD 시 필수 작성; 오류 발생 시 작업 취소(롤백)
     // 회원 가입
-    public void insertMember(MainFormDTO member) throws IOException, NoSuchAlgorithmException {
+    public int insertMember(MainFormDTO member) throws IOException, NoSuchAlgorithmException {
         // 회원 가입 창에서 입력 받지는 않지만 not null property 기본값 주기
         member.setRoleId(RoleId.MEMBER.name());   // 기본값 MEMBER
         member.setMemStat(MemberStatus.MEM01.getKey());   // 기본값 MEM01
@@ -37,7 +37,7 @@ public class MainService {
         // MainFormDTO -> MainDTO로 변환해서 전달
         MainDTO mainDTO = member.toMainDTO();
         // DB에 member 주면서 저장해라~
-        mainMapper.insertMember(mainDTO); // 저장 이후 id 생성
+        int insertMember = mainMapper.insertMember(mainDTO);// 저장 이후 id 생성
         memberService.insertMile(makeEmptyMile(mainDTO));
         memberService.insertRank(makeEmptyRank(mainDTO));
         // 실제 파일 저장처리 -> ProfileService
@@ -50,6 +50,7 @@ public class MainService {
             imgProfile.setUsrId(member.getUsrId());
             profileMapper.insertFile(imgProfile); // 저장
         }
+        return insertMember;
     }
 
     private RankingDTO makeEmptyRank(MainDTO mainDTO) {

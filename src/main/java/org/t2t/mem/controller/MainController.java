@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.t2t.mem.dto.MainDTO;
 import org.t2t.mem.dto.MemberDTO;
 import org.t2t.mem.dto.MainFormDTO;
@@ -158,9 +159,12 @@ public class MainController {
     }
 
     @GetMapping("/logout")
-    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpSession session, HttpServletRequest request, HttpServletResponse response, RedirectAttributes rttr) {
+
+//        log.info("sid1: {}", session.getId());
         session.removeAttribute(HTTP_SESSION_USER);
         session.invalidate(); // 세션 속성 모두 삭제
+//        log.info("sid2: {}", session.getId());
         // 쿠키 삭제
         Cookie[] cookies = request.getCookies();
         if(cookies != null) {
@@ -171,16 +175,19 @@ public class MainController {
                 }
             }
         }
-
+        rttr.addFlashAttribute("numForAlert", 1);
         return "redirect:/";  // 홈으로 강제 이동
     }
 
     // 회원 가입 처리 요청 by moon
     @PostMapping("/guest/signup")
-    public String newMemberPro(@ModelAttribute MainFormDTO member) throws IOException, NoSuchAlgorithmException {
+    public String newMemberPro(@ModelAttribute MainFormDTO member, RedirectAttributes rttr) throws IOException, NoSuchAlgorithmException {
         log.info("mainFormDTO: {}", member);
+
         // DB 저장
-        mainService.insertMember(member);
+        int insertMember = mainService.insertMember(member);
+        rttr.addFlashAttribute("insertMember", insertMember);
+        log.info("insertMember: {}", insertMember);
 
         return "redirect:/";
     }
@@ -290,7 +297,8 @@ public class MainController {
         if (mainDTO != null) {
             // 맞으면 탈퇴처리 -> 결과 출력
             result = true;
-            mainMapper.deleteMember(usrId);   // 탈퇴
+            mainMapper.deleteMember(usrId);// 탈퇴
+
 //            mainMapper.deleteMemberFromProfile(usrId);      // 회원 탈퇴(Profile 테이블에서 관련 레코드(행) 삭제)
 //            mainMapper.deleteMemberFromMiles(usrId);      // 회원 탈퇴(Miles 테이블에서 관련 레코드(행) 삭제)
 //            mainMapper.deleteMemberFromRanking(usrId);     // 회원 탈퇴(Ranking 테이블에서 관련 레코드(행) 삭제)
