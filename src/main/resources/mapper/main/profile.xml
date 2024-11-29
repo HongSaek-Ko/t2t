@@ -8,5 +8,11 @@
         INSERT INTO PROFILE(USRID, PROFIMG, PROFORGIMG, FILETYPE)
         VALUES(#{usrId}, #{profImg}, #{profOrgImg}, #{filetype})
     </insert>
-
+    <!-- 프로필 사진 변경 -->
+    <update id="updateProfile" parameterType="org.t2t.mem.dto.ProfileDTO">
+        UPDATE PROFILE
+        SET
+        PROFIMG = #{profImg}
+        WHERE USRID = #{usrId}
+    </update>
 </mapper>
