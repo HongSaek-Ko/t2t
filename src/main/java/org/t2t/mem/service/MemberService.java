@@ -84,5 +84,11 @@ public class MemberService {
         }
         return hashtext;
     }
+    //나의 현재 거래내역 보기
+    public void selectCurTradeList(String usrId) {
+    }
+    //나의 과거 거래내역 보기
+    public void selectPastTradeList(String usrId) {
+    }
 }
 

@@ -94,12 +94,24 @@
         P.SALSTAT = 'PRD01' AND
         P.USRID != #{usrId};
     </select>
-    <!-- 나의 거래내역(판매상태에 따른) -->
-    <select id="selectTradeList" resultType="org.t2t.prd.dto.ProductDTO">
+    <!-- 나의 현재 거래내역(판매상태에 따른) -->
+    <!-- SAL01 : 판매중, SAL02 : 판매중지, SAL03 : 매진 -->
+    <select id="selectCurTradeList" resultType="org.t2t.prd.dto.ProductDTO">
         SELECT P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
         FROM PRD P, MEM M
         WHERE
-        P.SALSTAT='PRD01' AND
+        P.SALSTAT='SAL01' AND
+        P.USRID=#{usrId}  AND
+        M.USRID != #{usrId};
+    </select>
+    <!-- 나의 과거 거래내역(판매상태에 따른) -->
+    <!-- SAL01 : 판매중, SAL02 : 판매중지, SAL03 : 매진 -->
+    <select id="selectPastTradeList" resultType="org.t2t.prd.dto.ProductDTO">
+        SELECT P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
+        FROM PRD P, MEM M
+        WHERE
+        P.SALSTAT='SAL02' AND
+        P.SALSTAT='SAL03' AND
         P.USRID=#{usrId}  AND
         M.USRID != #{usrId};
     </select>
@@ -135,6 +147,7 @@
         VALUES
             (#{usrId},  #{score})
     </insert>
+    <!-- 비밀번호 변경 -->
     <update id="updatePassword" parameterType="org.t2t.mem.dto.MemberDTO">
         UPDATE MEM
         SET

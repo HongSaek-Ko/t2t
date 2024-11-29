@@ -51,6 +51,7 @@
                             </table>
                         </div>
                         <div class="col">
+                                <form id="modifyform">
                             <table class="table">
                                 <tbody>
                                 <tr>
@@ -137,12 +138,15 @@
                                                th:value="${myuser.bankAcnt}">
                                     </td>
                                 </tr>
+                                    <tr>
                                 <td colspan="2">
                                     <button type="button" class="btn btn-primary" id="modifyInfo">수정하기</button>
                                     <button type="button" class="btn btn-primary" id="modifyDone">수정완료</button>
                                     <button type="button" class="btn btn-danger" id="modifyCancel" th:onclick="|location.href='/member/mypage'|">취소</button>
                                 </td>
+                                </tr>
                             </table>
+                            </form>
                         </div>
                     </div>
                 </div>

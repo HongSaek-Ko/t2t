@@ -11,7 +11,7 @@
     <!-- Sidebar -->
 
     <th:block th:fragment="sidebar">
-        <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+        <th:block th:replace="fragments/sidebar::setMySideBar(~{::content})">
             <th:block th:fragment="content">
                 <!--   나의 현재거래내역 보여주기   -->
                 <!-- 구매목록/ 판매목록 -->
@@ -35,92 +35,51 @@
                         </div>
                     </div>
                 </div>
+                <!-- 현재 판매내역 -->
+                <div id="Curscroller" class="container text-center">
+                    <div class="row" >
+                        <div class="col" >
+                            <div class="container text-center">
+                                <div class="row" id="scroller0"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="container text-center">
+                                <div class="row" id="scroller1">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col" >
+                            <div class="container text-center">
+                                <div class="row" id="scroller2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
-
-
-                <!--                <div class="container text-center">-->
-                <!--                    <div class="row">-->
-                <!--                        <div class="col">-->
-
-
-                <!--                            <div class="d-grid gap-2 d-md-block">-->
-                <!--                                <button class="btn btn-outline-info" type="button">구매목록</button>-->
-                <!--                                <button class="btn btn-outline-info" type="button">판매목록</button>-->
-                <!--                            </div>-->
-
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                    &lt;!&ndash; 구매목록 &ndash;&gt;-->
-                <!--                    <div class="row">-->
-                <!--                        <div class="col">-->
-                <!--                            <div>-->
-                <!--                                <table class="table">-->
-                <!--                                    <thead>-->
-                <!--                                    <tr>-->
-                <!--                                        <div id="purchase">-->
-                <!--                                            여기가 구매목록-->
-                <!--                                        </div>-->
-                <!--                                    </tr>-->
-                <!--                                    </thead>-->
-
-                <!--                                    <tbody>-->
-                <!--                                    <tr>-->
-                <!--                                        <img th:src="@{/db/person/person001.jpg}" class="rounded float-start" alt="...">-->
-                <!--                                    </tr>-->
-                <!--                                    <tr>-->
-                <!--                                        <img src="" class="rounded float-middle" alt="...">-->
-                <!--                                    </tr>-->
-                <!--                                    <tr>-->
-                <!--                                        <img src="" class="rounded float-end" alt="...">-->
-
-                <!--                                    </tr>-->
-                <!--                                    </tbody>-->
-                <!--                                </table>-->
-                <!--                            </div>-->
-                <!--                            &lt;!&ndash; 판매목록 &ndash;&gt;-->
-                <!--                            <div>-->
-                <!--                                <table class="table">-->
-                <!--                                    <thead>-->
-                <!--                                    <tr>-->
-                <!--                                        <div id="sale">-->
-                <!--                                            여기가 판매목록-->
-                <!--                                        </div>-->
-                <!--                                    </tr>-->
-                <!--                                    </thead>-->
-
-                <!--                                    <tbody>-->
-                <!--                                    <tr>-->
-                <!--                                        <th scope="row">1</th>-->
-                <!--                                        <td>Mark</td>-->
-                <!--                                        <td>Otto</td>-->
-                <!--                                        <td>@mdo</td>-->
-                <!--                                    </tr>-->
-                <!--                                    <tr>-->
-                <!--                                        <th scope="row">2</th>-->
-                <!--                                        <td>Jacob</td>-->
-                <!--                                        <td>Thornton</td>-->
-                <!--                                        <td>@fat</td>-->
-                <!--                                    </tr>-->
-                <!--                                    <tr>-->
-                <!--                                        <th scope="row">3</th>-->
-                <!--                                        <td colspan="2">Larry the Bird</td>-->
-                <!--                                        <td>@twitter</td>-->
-                <!--                                    </tr>-->
-                <!--                                    </tbody>-->
-                <!--                                </table>-->
-                <!--                            </div>-->
-
-                <!--                        </div>-->
-                <!--                    </div>-->
-                <!--                </div>-->
-                <!--                <div class="row">-->
-                <!--                    <div class="col">-->
-
-                <!--                    </div>-->
-                <!--                </div>-->
-
-
+                <!-- 과거 판매내역 -->
+                <div id="Pastscroller" class="container text-center">
+                    <div class="row" >
+                        <div class="col" >
+                            <div class="container text-center">
+                                <div class="row" id="scroller3"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="container text-center">
+                                <div class="row" id="scroller4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col" >
+                            <div class="container text-center">
+                                <div class="row" id="scroller5">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <!--                여기서부터 종료-->
             </th:block>

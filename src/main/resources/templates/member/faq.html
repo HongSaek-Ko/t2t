@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::header('회원정보보기')"></head>
+<body>
+<div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
+    <!-- Sidebar -->
+    <th:block th:fragment="searchbar">
+        <th:block th:replace="fragments/searchbar::searchbar"></th:block>
+    </th:block>
+
+    <!-- Sidebar -->
+
+    <th:block th:fragment="sidebar">
+        <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+            <th:block th:fragment="content">
+                <!--                여기서부터 시작-->
+
+                <div class="accordion accordion-flush" id="accordionFlushExample" style="width:806 height:62;">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                이 사이트에 대해 소개해주세요!
+                            </button>
+                        </h2>
+                        <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                                수익은 어떻게 받을 수 있나요?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the second item's accordion body. Let's imagine this being filled with some actual content.</div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree">
+                                등급 기준과 유지기간이 어떻게 되나요?
+                            </button>
+                        </h2>
+                        <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion body. Nothing more exciting happening here in terms of content, but just filling up the space to make it look, at least at first glance, a bit more representative of how this would look in a real-world application.</div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <!--                여기서부터 종료-->
+            </th:block>
+        </th:block>
+    </th:block>
+    <!-- End of Sidebar -->
+</div>
+</body>
+</html>

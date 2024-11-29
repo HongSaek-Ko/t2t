@@ -12,7 +12,7 @@ $(document).ready(function () {
 
 });
 
-/*
+
 $("#modifyForm").validate({
     rules: {
         //html name 값 : validate
@@ -38,7 +38,7 @@ $("#modifyForm").validate({
         $(element).removeClass('is-invalid').addClass('is-valid');
     }
 });
-*/
+
 
 //Ajax 충전버튼 클릭시 이벤트
 function registerModalEvent() {
@@ -327,3 +327,14 @@ function jqAlert(outputMsg, titleMsg, onCloseCallback) {
 jqAlert("로그인 성공!!!", "로그인 확인 창", function(){ window.location.href = "/" });
 
 */
+
+//마이페이지 수정시 validate
+$.ajax({
+    url: "/member/mypage/modifyform",
+    type: "post",
+    data: "email",
+    dataType: "json",
+    contentType: "application/json; charset = utf - 8",
+
+
+});

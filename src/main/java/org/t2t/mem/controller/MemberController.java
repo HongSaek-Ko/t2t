@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.t2t.mem.dto.*;
 import org.t2t.mem.service.MemberService;
 
+import java.lang.reflect.Member;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -83,6 +84,7 @@ public class MemberController {
         return ResponseEntity.ok(map);
     }
 
+    //비밀번호 변경
     @PostMapping("mypage/modify/passswd")
     @ResponseBody
     public ResponseEntity<String> changePassword(MemberDTO memberDTO, HttpSession session) throws NoSuchAlgorithmException {
@@ -141,7 +143,7 @@ public class MemberController {
     };
 
 
-    //나의 판매 리스트 보기
+    //나의 구매 리스트 보기
     @GetMapping("/mypage/orderList")
     public String mypageorderlist(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
@@ -150,23 +152,49 @@ public class MemberController {
         return "/member/mypageList";
     }
 
+    //나의 현재 판매 리스트 보기
+    @GetMapping("/mypage/CurTradeList")
+    public String mypageCurTradeList(HttpServletRequest request,Model model) {
+        HttpSession session = request.getSession();
+        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        memberService.selectCurTradeList(user.getUsrId());
+        return "member/mypageList";
+    }
+
+    //나의 과거 판매 리스트 보기
+    @GetMapping("/mypage/PastTradeList")
+    public String mypagePastTradeList(HttpServletRequest request,Model model) {
+        HttpSession session = request.getSession();
+        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        memberService.selectPastTradeList(user.getUsrId());
+        return "member/mypageList";
+    }
+
+
     //나의 구매 리스트 보기
-    @GetMapping("/mypage/purchaseList")
+    @GetMapping("/mypage/OrderList")
     public String mypagepurchaselist(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-       // memberService.selectTradeList(user.getUsrId());
+        memberService.selectOrderList(user.getUsrId());
         return "/member/mypageList";
     }
 
 
-    //나의 신고내역 !!
+    //나의 신고내역
     @GetMapping("/mypage/complist")
     public String myComplaint(HttpServletRequest request, Model model) {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
         List<ComplaintDTO> cmpList = memberService.findComplaintListByUsrId(user.getUsrId());
         model.addAttribute("cmpList", cmpList);
-        return "member/mycomplaint";
+        return "/member/mycomplaint";
     }
+
+    //FAQ
+    @GetMapping("/mypage/faq")
+    public String Faq(HttpServletRequest request, Model model) {
+        return  "/member/faq";
+    }
+
 }
