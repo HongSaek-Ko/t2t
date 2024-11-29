@@ -37,6 +37,12 @@
         WHERE TAGID
         LIKE CONCAT('%', 't', '%') AND ENABLED = 'Y';
     </select>
+
+    <select id="getAllTagId" resultType="org.t2t.prd.dto.HashDTO">
+        SELECT TAGID FROM HASH
+        WHERE ENABLED = 'Y';
+    </select>
+
     <!--  서비스에서 넘어옴      HashMap 타입의 객체를 매개변수로 받았으므로... 쿼리 결과를 GoodDTO 타입으로 변환-->
     <select id="findGoodById" parameterType="hashmap" resultType="org.t2t.prd.dto.GoodDTO">
         SELECT G.* FROM
