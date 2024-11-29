@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.t2t.prd.dto.*;
 import org.t2t.prd.repository.FileMapper;
-import org.t2t.prd.repository.HashMapper;
 import org.t2t.prd.repository.ProductMapper;
+import org.t2t.prd.repository.TagMapper;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -27,8 +27,8 @@ public class ProductService {
     private final ProductMapper productMapper;
     private final FileMapper fileMapper;
     private final FileService fileService;
-    private final HashService hashService;
-    private final HashMapper hashMapper;
+    private final TagService tagService;
+    private final TagMapper tagMapper;
 
     public void write(ProductFormDTO product) throws IOException {
 
@@ -47,6 +47,7 @@ public class ProductService {
         fileMapper.insertFile(imgFile); // File에 저장
 
         // 해시태그 저장
+
 //        PrdHashDTO prdHash = hashService.writePrdHash(product.getPrdHash());
 //        log.info("게시글 등록 - 해시태그: {}: ", prdHash);
 //        prdHash.setPrdId(productDTO.getPrdId()); // prdHash의 prdId값을 prDTO의 prdId로 설정

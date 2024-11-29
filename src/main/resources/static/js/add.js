@@ -1,7 +1,10 @@
 $(document).ready(function (){
     toggleTextBox(['#trgtSalQty', '#islimit']);
+
+    registerProductEvent();
+
     $(window).on('submit', function() {
-        $( "#dialogContent" ).html("수정 완료!")
+        $( "#dialogContent" ).html("등록 완료!")
         $( "#dialog-confirm" ).dialog({
             resizable: false,
             height: "auto",
@@ -9,7 +12,29 @@ $(document).ready(function (){
             modal: true
         });
     });
+
 });
+
+function registerProductEvent () {
+    $('#registerProductEvent').click(function() {
+        let tags = $('#productForm tag');
+        console.log(tags);
+        console.log(tags.get(0));
+        console.log(tags.get(0).value);
+
+        let tags_attr = [];
+        for(let key in tags) {
+            console.log(key);
+            tags_attr.push(tags[key].value);
+        }
+        console.log('tags_attr: ' + tags_attr);
+        $('#tagId').val(tags_attr.join(','));
+        console.log('tagId.val: ' + $('#tagId').val());
+
+        $('#productForm').submit();
+    });
+}
+
 $("#productForm").validate({
     rules: {
         title: {required: true, minlength: 2, maxlength: 20},
@@ -43,18 +68,116 @@ $("#productForm").validate({
 
 
 // 태그 넣는 코드 시작
-var input = document.querySelector('input[name="input-custom-dropdown"]'),
-    // init Tagify script on the above inputs
-    tagify = new Tagify(input, { // 제안 목록... 반복문으로 돌릴 수 있을까?
-        whitelist: ["태그 입력..."],
-        maxTags: 10, // 최대 태그 개수
-        dropdown: {
-            maxItems: 10,           // 최대 제안 개수
-            classname: 'tags-look', // custom classname for this dropdown, so it could be targeted (??)
-            enabled: 0,             // 제안 강조표시(?)
-            closeOnSelect: false    // 제안 선택 후 제안 숨김 처리 여부 (true: 제안 사라짐 / false: 제안 유지)
+var inputElements = document.querySelector('input[name=tagId]'),
+    whitelist = []; // 기본은 빈배열
+
+// initialize Tagify on the above input node reference
+var tagify = new Tagify(inputElements, {
+    enforceWhitelist: true,
+    whitelist: inputElements.value.trim().split(/\s*,\s*/), // Array of values. stackoverflow.com/a/43375571/104380
+    maxTags: 5
+})
+
+
+
+// "remove all tags" button event listener
+document.querySelector('.tags--removeAllBtn')
+    .addEventListener('click', tagify.removeAllTags.bind(tagify))
+
+// Chainable event listeners
+tagify.on('add', onAddTag)
+    .on('remove', onRemoveTag)
+    .on('input', onInput)
+    .on('edit', onTagEdit)
+    .on('invalid', onInvalidTag)
+    .on('click', onTagClick)
+    .on('focus', onTagifyFocusBlur)
+    .on('blur', onTagifyFocusBlur)
+    .on('dropdown:hide dropdown:show', e => console.log(e.type))
+    .on('dropdown:select', onDropdownSelect)
+
+var mockAjax = (function mockAjax(){
+    var timeout;
+    return function(duration){
+        clearTimeout(timeout); // abort last request
+        return new Promise(function(resolve, reject){
+            timeout = setTimeout(resolve, duration || 700, whitelist)
+        })
+    }
+})()
+
+// on character(s) added/removed (user is typing/deleting)
+// 태그 입력 시 목록 요청
+function onInput(e){
+    console.log("onInput: ", e)
+    console.log("onInput detail: ", e.detail);
+    console.log("onInput value: ", e.detail.value); // = 입력한 값(엔터는 안누름, 단순 입력)
+    whitelist = []; // 현재 화이트리스트 초기화 (이전에 추가됐던 whitelist 제거)
+    tagify.loading(true) // 불러오기 애니메이션
+    $.ajax({
+        url: '/tags/' + e.detail.value,
+        datatype: 'JSON',
+        method: 'GET',
+        success: function (data) {
+            console.log("data: ", data);
+            $.each(data, function(index, el) {
+                console.log("data.tagId: ", el);
+                whitelist.push(el.tagId);
+            });
+        },
+        error: function(error) {
+            console.error('태그 목록 요청 실패:', error);
         }
     })
+    // get new whitelist from a delayed mocked request (Promise)
+    mockAjax()
+        .then(function(result){
+            tagify.settings.whitelist = result.concat(tagify.value) // add already-existing tags to the new whitelist array
+            tagify
+                .loading(false)
+                // render the suggestions dropdown.
+                .dropdown.show(e.detail.value);
+        })
+        .catch(err => tagify.dropdown.hide())
+}
+
+// tag added callback - 태그 추가하면 이후에 실행될 함수
+function onAddTag(e){
+    console.log("onAddTag: ", e.detail);
+    console.log("original input value: ", inputElements.value)
+    tagify.off('add', onAddTag) // exmaple of removing a custom Tagify event
+}
+
+// tag remvoed callback - 태그 삭제하면 이후에 실행될 함수
+function onRemoveTag(e){
+    console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify.value)
+}
+
+
+
+function onTagEdit(e){
+    console.log("onTagEdit: ", e.detail);
+}
+
+// invalid tag added callback
+function onInvalidTag(e){
+    console.log("onInvalidTag: ", e.detail);
+}
+
+// invalid tag added callback
+function onTagClick(e){
+    console.log(e.detail);
+    console.log("onTagClick: ", e.detail);
+}
+
+function onTagifyFocusBlur(e){
+    console.log(e.type, "event fired")
+}
+
+function onDropdownSelect(e){
+    console.log("onDropdownSelect: ", e.detail)
+}
+
 
 function toggleTextBox(checkbox) {
 

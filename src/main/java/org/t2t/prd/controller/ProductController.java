@@ -15,6 +15,7 @@ import org.t2t.mem.dto.MemberDTO;
 import org.t2t.prd.dto.*;
 import org.t2t.prd.service.FileService;
 import org.t2t.prd.service.ProductService;
+import org.t2t.prd.service.TagService;
 
 import java.awt.print.Pageable;
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.util.Map;
 public class ProductController {
     private final ProductService productService;
     private final FileService fileService;
+    private final TagService tagService;
 
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
@@ -44,10 +46,10 @@ public class ProductController {
 
     // 상품 등록 처리 (게시글 정보 + 이미지 + 해시태그)
     @PostMapping("/add")
-    public String productAddPost(@ModelAttribute("product") ProductFormDTO product) throws IOException{
-        log.info("상품 등록 완료!");
+    public String productAddPost(@ModelAttribute("product") ProductFormDTO product, PrdHashDTO prdHashDTO) throws IOException{
         log.info("productDTO: {}", product);
         productService.write(product);
+        log.info("상품 등록 완료!");
         return "redirect:/product/" + product.getPrdId();
     }
 
@@ -109,7 +111,7 @@ public class ProductController {
         return "redirect:/";
     }
 
-    // 해시태그 조회
+//    // 게시글에 해당하는 해시태그 조회
 //    @GetMapping("/prdHash/{prdId}")
 //    @ResponseBody
 //    public ResponseEntity<Map<String, Object>> productHash(@PathVariable(name="prdId") Long prdId, Model model) {

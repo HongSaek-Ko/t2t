@@ -32,11 +32,7 @@
         WHERE P.PRDID = #{prdId}
     </select>
 
-    <select id="getTagId">
-        SELECT TAGID FROM HASH
-        WHERE TAGID
-        LIKE CONCAT('%', 't', '%') AND ENABLED = 'Y';
-    </select>
+
 
     <select id="getAllTagId" resultType="org.t2t.prd.dto.HashDTO">
         SELECT TAGID FROM HASH

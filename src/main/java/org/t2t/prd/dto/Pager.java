@@ -12,7 +12,7 @@ public class Pager {
     private String keyword;    // 검색 키워드
 
     public Pager(){
-        this(1, 20); // page=1, 한페이지에 글 10개씩
+        this(1, 10); // page=1, 한페이지에 글 10개씩
     }
     public Pager(int page, int size) {
         this.page = page;

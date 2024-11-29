@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.t2t.prd.repository.TagMapper">
+
+    <!--모든 해시태그 가져오기 (게시글 등록시 필요)-->
+    <select id="getTagsByTagId" resultType="org.t2t.prd.dto.HashDTO" parameterType="java.util.List">
+        SELECT TAGID FROM HASH
+        WHERE TAGID
+        LIKE CONCAT('%', #{tagId}, '%') AND ENABLED = 'Y';
+    </select>
+
+    <!--게시글에 해당하는 해시태그 가져오기 (게시글 상세보기, 수정 시 필요)-->
+    <select id="getPrdHashByPrdId" resultType="org.t2t.prd.dto.PrdHashDTO">
+        SELECT * FROM PRDHASH
+        WHERE PRDID=#{prdId}
+    </select>
+</mapper>
