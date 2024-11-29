@@ -43,28 +43,18 @@ $("#productForm").validate({
 
 
 // 태그 넣는 코드 시작
-const input = document.querySelector('input[name=tags]');
-const tagify = new Tagify(input);
-
-tagify.on('add', function (e) {
-    console.log('Tag added:', e.detail.data.value);
-});
-
-tagify.on('remove', function (e) {
-    console.log('Tag removed:', e.detail.data.value);
-});
-
-function changingStatus() {
-    let curatorStatus = $('#curatorStatus').val();
-    if (curatorStatus) {
-        const currentUrl = window.location.href;
-        location.href = updateUrlParameter(currentUrl, 'curatorStatus', curatorStatus);
-    } else {
-        const urlObject = new URL(window.location.href);
-        urlObject.searchParams.delete('curatorStatus');
-        location.href = urlObject.toString();
-    }
-}
+var input = document.querySelector('input[name="input-custom-dropdown"]'),
+    // init Tagify script on the above inputs
+    tagify = new Tagify(input, { // 제안 목록... 반복문으로 돌릴 수 있을까?
+        whitelist: ["태그 입력..."],
+        maxTags: 10, // 최대 태그 개수
+        dropdown: {
+            maxItems: 10,           // 최대 제안 개수
+            classname: 'tags-look', // custom classname for this dropdown, so it could be targeted (??)
+            enabled: 0,             // 제안 강조표시(?)
+            closeOnSelect: false    // 제안 선택 후 제안 숨김 처리 여부 (true: 제안 사라짐 / false: 제안 유지)
+        }
+    })
 
 function toggleTextBox(checkbox) {
 
@@ -83,30 +73,7 @@ function toggleTextBox(checkbox) {
         textbox_elem.focus();
     }
 }
-// function fieldCheck() {
-//
-//     let form = document.getElementById('form')
-//     if(form.hashTag.value === ''
-//         || form.price.value === ''
-//         || form.cate.value === ''
-//         || form.cont.value === ''
-//         || form.imgFile.value === ''
-//         || form.title.value === '') {
-//         alert("필수 입력사항을 입력해주세요.")
-//         return false;
-//     }
-//     if(form.trgtSalQty.value === '') {
-//         if(form.limitSwitch.checked) {
-//             alert("구매 제한 수량을 입력하세요.");
-//             return false;
-//         }
-//     }else{
-//         document.getElementById('islimit').value = 'Y';
-//     }
-//     return true;
-// }
 
-// jQuery Validation
 
 
 
