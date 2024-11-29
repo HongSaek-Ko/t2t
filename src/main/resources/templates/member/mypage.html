@@ -84,64 +84,64 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td colspan="2"> <!--TODO: 레프트 정렬-->
+                                    <td colspan="2">
                                         <label for="usrID" class="form-label" style="text-align:left;display:block;">ID</label>
-                                        <input type="email" class="form-control" id="usrID" placeholder="ID" readonly
+                                        <input type="id" class="form-control" id="usrID" name=usrId placeholder="ID" readonly
                                                th:value="${myuser.usrId}" style="background: #d3d3d3;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="passwd" class="form-label">Password</label>
+                                        <label for="passwd" class="form-label" style="text-align:left;display:block;">Password</label>
                                         <input type="password" class="form-control" name="password" id="passwd" placeholder="password" readonly
                                                th:value="${myuser.passwd}" style="background: #d3d3d3;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <button type="button" class="btn btn-primary" id="modifyPasswdModal"> 비밀번호 변경</button>
+                                        <button type="button" class="btn btn-primary" id="modifyPasswdModal" > 비밀번호 변경</button>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email" placeholder="Email"
+                                        <label for="email" class="form-label" style="text-align:left;display:block;">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email"
                                                readonly th:value="${myuser.email}" >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="name" class="form-label">이름</label>
-                                        <input type="text" class="form-control" id="name" placeholder="이름" readonly
+                                        <label for="name" class="form-label" style="text-align:left;display:block;">이름</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="이름" readonly
                                                th:value="${myuser.nm}" style="background: #d3d3d3;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="bankAcntOwr" class="form-label">예금주 명</label>
+                                        <label for="bankAcntOwr" class="form-label" style="text-align:left;display:block;">예금주 명</label>
                                         <input type="text" class="form-control" id="bankAcntOwr" name="bankAcntOwr" placeholder="계좌주"
                                                readonly th:value="${myuser.bankAcntOwr}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="bankNm" class="form-label">은행명</label>
+                                        <label for="bankNm" class="form-label" style="text-align:left;display:block;">은행명</label>
                                         <input type="text" class="form-control" id="bankNm" name="bankNm" placeholder="은행명" readonly
                                                th:value="${myuser.bankNm}" style="background: #d3d3d3;">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <label for="bankAcnt" class="form-label">계좌번호</label>
+                                        <label for="bankAcnt" class="form-label" style="text-align:left;display:block;">계좌번호</label>
                                         <input type="text" class="form-control" id="bankAcnt" name="bankAcnt" placeholder="계좌번호"
                                                th:value="${myuser.bankAcnt}">
                                     </td>
                                 </tr>
-                                    <td colspan="2">
-                                        <button type="button" class="btn btn-primary" id="modifyInfo">수정하기</button>
-                                        <button type="button" class="btn btn-primary" id="modifyDone">수정완료</button>
-                                        <button type="button" class="btn btn-danger" id="modifycancel" th:onclick="|location.href='/member/mypage'|">취소</button>
-                                    </td>
+                                <td colspan="2">
+                                    <button type="button" class="btn btn-primary" id="modifyInfo">수정하기</button>
+                                    <button type="button" class="btn btn-primary" id="modifyDone">수정완료</button>
+                                    <button type="button" class="btn btn-danger" id="modifyCancel" th:onclick="|location.href='/member/mypage'|">취소</button>
+                                </td>
                             </table>
                         </div>
                     </div>
@@ -192,14 +192,6 @@
                                 <tbody>
                                 <tr>
                                     <td colspan="2">
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" >보유 마일리지</span>
-                                            <input type="text" class="form-control" id="haveMile" placeholder="Username" aria-label="Username" aria-describedby="mile" readonly th:value="${myuser.mile.point}">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td colspan="2">
                                         <div class="input-group mb-3"><span class="input-group-text">출금할 마일리지</span>
                                             <input type="text" name="exchange" id="exchangeMile" class="form-control" aria-label="Username" aria-describedby="grade" required min="1" max="8">
                                         </div>
@@ -229,38 +221,35 @@
                         </div>
                     </form>
                 </div>
-
                 <!-- 비밀번호 확인 모달 -->
                 <div id="passwordcheckModel" style="display:none;">
                     <div class="modal-body">
                         <form action="" method="post">
-                        <tbody>
-                        <tr>
-                            <td colspan="2">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">비밀번호 변경</span>
-                                    <input type="password" class="form-control" id="modalPasswd" name="passwd" placeholder="비밀번호 변경" aria-label="Username" aria-describedby="mile">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">비밀번호 재확인</span>
-                                    <input type="password" class="form-control" id="modalPasswdCheck" placeholder="비밀번호 재확인" aria-label="Username" aria-describedby="grade">
-                                </div>
-                            </td>
-                        </tr>
+                            <tbody>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">비밀번호 변경</span>
+                                        <input type="password" class="form-control" id="modalPasswd" name="passwd" placeholder="비밀번호 변경">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">비밀번호 재확인</span>
+                                        <input type="password" class="form-control" id="modalPasswdCheck" name="modalPasswd" placeholder="비밀번호 재확인">
+                                    </div>
+                                </td>
+                            </tr>
                         </form>
                     </div>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="modifyPassword">비밀번호 변경하기</button>
+                        <button type="button" class="btn btn-primary" id="modifyPassword" name="modalPasswd">비밀번호 변경하기</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
                     </div>
                 </div>
-
-                <script type="text/javascript" th:src='@{/js/third/jquery-3.7.1.js}'></script>
                 <script type="text/javascript" th:src='@{/js/mypage.js}'></script>
             </th:block>
         </th:block>

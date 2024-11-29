@@ -9,46 +9,36 @@ $(document).ready(function () {
     passwdModify();
     modifyProfile();
 
+
 });
 
 /*
-$('#modifyform').validate({
-        rules: {
+$("#modifyForm").validate({
+    rules: {
         //html name 값 : validate
-        id: {required: true},
-        passwd: {required: true},
         email: {required: true},
-        name: {required: true},
-        bkname: {required: true},
-        bkAcntName: {required: true},
-        bankAcnt: {required: true},
+        bankAcntOwr : {required: true},
+        bankAcnt: {required: true}
     },
-    message : {
-        id : "아이디를 입력해주세요",
-    passwd : "비밀번호를 입력해주세요",
-    email : "이메일을 입력해주세요",
-    name : "이름을 입력해주세요",
-    bkname : "은행명을 입력해주세요",
-    bkAcntName : "예금주명을 입력해주세요",
-    bankAcnt : "계좌번호를 입력해주세요"
-    },
-    erroerElement : "div",
-    errorPlacement : function(error, element){
-            error.addClass("invalid-feedback");
-            error.insertAfter(element);
-    },
+    messages: {
+        email: "이메일을 입력하세요.",
+        bankAcntOwr : "예금주 명을 입력하세요",
+        bankAcnt: "계좌번호를 입력하세요"
 
-        highlight: function (element) {
+    },
+    errorElement: "div",
+    errorPlacement: function (error, element) {
+        error.addClass("invalid-feedback");
+        error.insertAfter(element);
+    },
+    highlight: function (element) {
         $(element).removeClass('is-valid').addClass('is-invalid');
     },
     unhighlight: function (element) {
         $(element).removeClass('is-invalid').addClass('is-valid');
     }
-    });
-
-
+});
 */
-
 
 //Ajax 충전버튼 클릭시 이벤트
 function registerModalEvent() {
@@ -64,8 +54,7 @@ function registerModalEvent() {
             console.log(data.success);
             if(data.success) {
                 $('#mile').val(data.mile);
-                $('#mileModal').val(data.mile);
-                console.log( data.mile);
+                console.log(data.mile);
                 $('#commonModal').modal('hide');
             }
             else
@@ -79,7 +68,8 @@ function registerModalEvent() {
 //Ajax 환전버튼 클릭시 이벤트
 function exchangeModalEvent() {
     $('.modal.fade #exchangeMileBtn').on('click', function () {
-        if(parseInt($('#haveMile').val()) - parseInt($('#exchangeMile').val()) > 0) {
+        //내가 가지고 있는 mile에서 환전할 mile 뺀 값이 0보다 클 때 환전가능
+        if(!(parseInt($('#mile').val()) - parseInt($('#exchangeMile').val()) < 0)) {
             $.ajax({
                 url: "/member/mypage/excharge",
                 type: 'POST',
@@ -91,14 +81,16 @@ function exchangeModalEvent() {
                 console.log(data);
                 console.log("환전 값", data.success); // true
                 if(data.success == true) {
-                    $('#mile').val(data.mile);
                     $('#commonModal').modal('hide');
+                    $('#mile').val(data.mile);
+
                 }
                 else
                     alert('환전 할수 없습니다.');
 
             });
         } else {
+            //마일리지가 -가 되면 환전할 마일리지 0으로 리셋
             alert("출금 마일리지보다 보유 마일리지가 적습니다. 다시 입력 해주세요.");
             $('#exchangeMile').val("0");
         }
@@ -108,8 +100,8 @@ function exchangeModalEvent() {
 
 //모달 찾아서 바디, 풋터 비우기
 function clearModal(title) {
-    $('#commonModal').find('.modal-body').empty();
-    $('#commonModal').find('.modal-footer').empty();
+    $('#commonModal').find('.modal-body').empty().remove();
+    $('#commonModal').find('.modal-footer').empty().remove();
     $('#commonModalLabel').text(title);
 }
 
@@ -131,6 +123,7 @@ function passwdModify() {
     $('.modal.fade #modifyPassword').on('click', function () {
         if($('#modalPasswd').val() !== $('#modalPasswdCheck').val()) {
             alert('비밀번호가 일치하지 않습니다.');
+            //비밀번호가 일치하지 않을 경우 리셋
             $('#modalPasswd').val('');
             $('#modalPasswdCheck').val('');
         } else {
@@ -138,12 +131,15 @@ function passwdModify() {
                 url: "mypage/modify/passswd",
                 type: 'POST',
                 data: {
-                    "passwd": $('.modal.fade.show input[name=passwd]').val()
+                    "passwd": $('.modal.fade.show input[name=modalPasswd]').val()
                 },
                 datatype: 'json'}
             ).done(function (data, textStatus, xhr) {
-                console.log($('.modal.fade.show input[name=passwd]').val()); //1234
-                console.log($('.modal.fade.show input[name=passwdcheck]').val()); //1234
+                console.log($('.modal.fade.show input[name=modalPasswd]').val()); //1234
+                console.log($('.modal.fade.show input[name=modalPasswdCheck]').val()); //1234
+                alert("비밀번호가 변경되었습니다.");
+                $('#commonModal').modal('hide');
+
             });
         }
     });
@@ -247,6 +243,7 @@ $('#modifyDone').on('click', function(){
         url: "/member/mypage/modify",
         type: "POST",
         data: JSON.stringify({
+            // DTO : html id
             email: $('#email').val(),
             bankAcnt: $('#bankAcnt').val(),
             bankAcntOwr: $('#bankAcntOwr').val(),
@@ -259,18 +256,25 @@ $('#modifyDone').on('click', function(){
         success: function(result){
             console.log("ajax 요청 성공!!");
             alert("수정이 완료되었습니다");
+            //jqAlert("수정이 완료되었습니다!!!", "수정 완료",
+            //    function(){ window.location.href="/member/mypage" });
+
             console.log(result.findUser.usrId);
 
             $('#email').attr('readonly',true);
             $('#myInfoText').attr('readonly',true);
             $('#bankNm').attr('readonly',true);
             $('#bankAcnt').attr('readonly',true);
+            $('#bankAcntOwr').attr('readonly',true);
             $('#profileForm').hide();
 
-            $( "#notify_dialog #nofiy_cont").html("수정이 완료 되었습니다.");
-            $( "#notify_dialog" ).dialog('open');
+            $('#modifyDone').hide(); //수정완료 버튼 숨기기
+            $('#modifyCancel').hide(); //취소버튼 숨기기
+
+            //$( "#notify_dialog #nofiy_cont").html("수정이 완료 되었습니다.");
+            // $( "#notify_dialog" ).dialog('open');
             //수정완료 후 페이지 되돌아가기
-            // window.location.href="/member/mypage";
+            window.location.href="/member/mypage";
             //window.location.reload();
 
         },
@@ -291,3 +295,35 @@ function modifyProfile() {
     })
 }
 
+
+//dialog
+//#2. script에 아래 함수 복사해서 붙이기
+/*
+function jqAlert(outputMsg, titleMsg, onCloseCallback) {
+    if (!titleMsg)
+        titleMsg = 'Alert';
+
+    if (!outputMsg)
+        outputMsg = 'No Message to Display.';
+
+    $("<div></div>").html(outputMsg).dialog({
+        title: titleMsg,
+        resizable: false,
+        modal: true,
+        buttons: {
+            "OK": function () {
+                $(this).dialog("close");
+            }
+        },
+        close: function() { onCloseCallback();
+            // Cleanup node(s) from DOM
+            $(this).dialog('destroy').remove();
+        }
+    });
+}
+
+//#3. 원하는 위치에서아래 형식 참고해서 jqAlert 호출
+
+jqAlert("로그인 성공!!!", "로그인 확인 창", function(){ window.location.href = "/" });
+
+*/
