@@ -17,23 +17,18 @@
     <update id="updateMem">
         UPDATE MEM
             SET
-            <choose>
-                <when test="{bankAcntOwr != null}">
-                    BANKACNTOWR = #{bankAcntOwr},
-                </when>
-                <when test="{email != null}">
-                    email = #{email},
-                </when>
-                <when test="{intro != null}">
-                    INTRO = #{intro},
-                </when>
-                <when test="{passwd != null}">
-                    PASSWD = #{passwd},
-                </when>
-                <when test="{bankAcnt != null}">
-                    BANKACNT = #{bankAcnt},
-                </when>
-            </choose>
+            <if test="{bankAcntOwr != null}">
+                BANKACNTOWR = #{bankAcntOwr},
+            </if>
+            <if test="{email != null}">
+                email = #{email},
+            </if>
+            <if test="{intro != null}">
+                INTRO = #{intro},
+            </if>
+            <if test="{bankAcnt != null}">
+                BANKACNT = #{bankAcnt},
+            </if>
             LASTDT = now()
         WHERE
             USRID = #{usrId}
@@ -58,7 +53,7 @@
         WHERE
             <choose>
                 <when test="option == 'TRD02'">
-                    POINT - #{point} > 0 AND <!-- 마일리지 포인트가 0이하일 때는 UPDATE 못 하도록-->
+                    POINT - #{point} >= 0 AND <!-- 마일리지 포인트가 0이하일 때는 UPDATE 못 하도록-->
                 </when>
                 <otherwise>
                     1 = 1 AND
