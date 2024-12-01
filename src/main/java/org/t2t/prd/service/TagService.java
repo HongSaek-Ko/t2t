@@ -1,9 +1,11 @@
 package org.t2t.prd.service;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.t2t.prd.dto.HashDTO;
 import org.t2t.prd.dto.PrdHashDTO;
+import org.t2t.prd.dto.ProductFormDTO;
 import org.t2t.prd.repository.TagMapper;
 
 import java.util.List;
@@ -24,6 +26,17 @@ public class TagService {
         return tagMapper.getTagsByTagId(tagId);
     }
 
-    public void write(PrdHashDTO prdHashDTO) {
+
+    public void saveTags(List<PrdHashDTO> tagId) {
+        log.info("saveTags : {}", tagId);
+        for (PrdHashDTO prdHashDTO : tagId) {
+            log.info("saveTags? : {}", prdHashDTO);
+            tagMapper.saveTags(prdHashDTO);
+        }
+    }
+
+    public List<PrdHashDTO> getPrdHashByPrdId(Long prdId) {
+        log.info("getPrdHashByPrdId : {}", prdId);
+        return tagMapper.getPrdHashByPrdId(prdId);
     }
 }

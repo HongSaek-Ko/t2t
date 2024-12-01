@@ -1,13 +1,35 @@
 $(document).ready(function () {
     registerEvent(['#complaintEvent', '#modifyEvent', '#deleteEvent']);
     registerGoodEvent('#goodEvent') ;
+    getPrdHashes();
 });
+
+function getPrdHashes() {
+    $.ajax({
+        url: '/tags/prdHash/' + $('#complaintEvent').data('prdid'),
+        method: 'GET',
+        success: function (data) {
+            console.log(data, "요청 성공!");
+        },
+        error: function (error) {
+            console.log(error, "요청 실패.");
+        }
+
+    });
+}
 
 function registerGoodEvent(registerGoodEvent) {
     $(registerGoodEvent).on('click', function() {
         $.ajax({
            url : '/product/detail/good/' + $('input[name=prdId]').val(),
-           type: 'GET'
+           method: 'GET',
+            success: function (data) {
+               $.each(data, function (_i, _el){
+                   console.log(data);
+                   console.log(_i);
+                   console.log(_el);
+               })
+            }
 
         });
     });

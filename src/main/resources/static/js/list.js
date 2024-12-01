@@ -20,12 +20,6 @@ function moreProducts() { // 추가 게시글 로드
             let _arr2 =  [];
 
             $.each(data, function (_i, _el) {
-                // console.log(_el);
-                // console.log(_el.imgFile);
-                // console.log(_el.lastDt);
-                // console.log(_el.goodCount);
-                // console.log(_el.hit);
-
                 const html =
                     `<div class="row" >
                         <div class="col" >

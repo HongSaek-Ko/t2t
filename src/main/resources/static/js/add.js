@@ -1,8 +1,8 @@
+var registerList = []; // 태그 추가 시 담아줄 빈 배열
+
 $(document).ready(function (){
     toggleTextBox(['#trgtSalQty', '#islimit']);
-
     registerProductEvent();
-
     $(window).on('submit', function() {
         $( "#dialogContent" ).html("등록 완료!")
         $( "#dialog-confirm" ).dialog({
@@ -11,29 +11,38 @@ $(document).ready(function (){
             width: 400,
             modal: true
         });
+        console.log(registerList[0]); // 정상 추출 확인!
     });
 
 });
 
 function registerProductEvent () {
     $('#registerProductEvent').click(function() {
-        let tags = $('#productForm tag');
-        console.log(tags);
-        console.log(tags.get(0));
-        console.log(tags.get(0).value);
+        registerList.join(',');
+        var prdHashList = registerList.map(function (tag){
+            return {
+                tagId: tag
+            };
+        });
 
-        let tags_attr = [];
-        for(let key in tags) {
-            console.log(key);
-            tags_attr.push(tags[key].value);
-        }
-        console.log('tags_attr: ' + tags_attr);
-        $('#tagId').val(tags_attr.join(','));
-        console.log('tagId.val: ' + $('#tagId').val());
-
-        $('#productForm').submit();
+        $.ajax({
+            url: '/tags/addPrdHash',
+            method: 'POST',
+            data: JSON.stringify(prdHashList),
+            contentType: 'application/json',
+            success: function (e) {
+                console.log(prdHashList);
+                console.log("해시태그 등록 성공: ", e);
+                // 해시태그 등록이 성공적으로 완료된 후 폼 제출
+                $('#productForm').submit();
+            },
+            error: function (error) {
+                console.log("해시태그 전송 실패: ", error);
+            }
+        });
     });
 }
+
 
 $("#productForm").validate({
     rules: {
@@ -121,7 +130,8 @@ function onInput(e){
         success: function (data) {
             console.log("data: ", data);
             $.each(data, function(index, el) {
-                console.log("data.tagId: ", el);
+                console.log("이건 data(el).: ", el);
+                console.log("뭐지 data.tagId: ", el.tagId); // 선택한 태그
                 whitelist.push(el.tagId);
             });
         },
@@ -175,7 +185,10 @@ function onTagifyFocusBlur(e){
 }
 
 function onDropdownSelect(e){
-    console.log("onDropdownSelect: ", e.detail)
+    console.log("onDropdownSelect: ", e.detail);
+    console.log("onDropdownSelect: ", e.detail.data);
+    console.log("onDropdownSelect: ", e.detail.data.value);
+    registerList.push(e.detail.data.value);
 }
 
 

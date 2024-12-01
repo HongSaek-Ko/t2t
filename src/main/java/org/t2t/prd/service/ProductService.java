@@ -3,6 +3,7 @@ package org.t2t.prd.service;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.t2t.prd.dto.*;
@@ -45,14 +46,6 @@ public class ProductService {
         log.info("게시글 등록 - 이미지 파일: {}: ", imgFile);
         imgFile.setPrdId(productDTO.getPrdId()); // 이미지 prdId 값도...
         fileMapper.insertFile(imgFile); // File에 저장
-
-        // 해시태그 저장
-
-//        PrdHashDTO prdHash = hashService.writePrdHash(product.getPrdHash());
-//        log.info("게시글 등록 - 해시태그: {}: ", prdHash);
-//        prdHash.setPrdId(productDTO.getPrdId()); // prdHash의 prdId값을 prDTO의 prdId로 설정
-//        hashMapper.insertPrdHash(prdHash); // PRDHASH에 저장
-
     }
 
 
@@ -72,14 +65,6 @@ public class ProductService {
             productMapper.deleteGood(map); // deleteGood을 호출, 좋아요 기록 삭제.
         }
     }
-
-
-
-//    // 좋아요 수
-//    public int getTotalGood(Long prdId) {
-//        return productMapper.goodCount(prdId);
-//    }
-
     // 게시글 조회(상세보기)
     public ProductDTO getProduct(Long prdId) {
         // 조회수 올리기
@@ -95,9 +80,6 @@ public class ProductService {
 
         // prdId에 해당하는 좋아요 수 가져오기
         productMapper.goodCount(prdId);
-
-        // prdId에 해당하는 해시태그 가져오기
-
 
         return findProduct;
     }
@@ -127,12 +109,6 @@ public class ProductService {
         return productMapper.goodCount(prdId);
     }
 
-//    // 게시글 목록 전체 가져오기
-//    public List<ProductDTO> getProductList() {
-//        List<ProductDTO> list = productMapper.getProductList();
-//        return list;
-//    }
-
     // 게시글 목록 + 페이징 처리
     public List<ProductDTO> getProductListWithPaging(Pager pager) {
         List<ProductDTO> productList = productMapper.getPrdListWithPaging(pager);
@@ -149,9 +125,5 @@ public class ProductService {
     public int getProductCount(Pager pager) {
         Long count = productMapper.countAllProduct(pager);
         return count.intValue(); // intvalue: 객체의 값을 정수로 변환
-    }
-
-
-    public void getPrdHash(Long prdId, String tagId) {
     }
 }

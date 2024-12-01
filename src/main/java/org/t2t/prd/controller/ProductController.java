@@ -46,7 +46,7 @@ public class ProductController {
 
     // 상품 등록 처리 (게시글 정보 + 이미지 + 해시태그)
     @PostMapping("/add")
-    public String productAddPost(@ModelAttribute("product") ProductFormDTO product, PrdHashDTO prdHashDTO) throws IOException{
+    public String productAddPost(@ModelAttribute("product") ProductFormDTO product) throws IOException{
         log.info("productDTO: {}", product);
         productService.write(product);
         log.info("상품 등록 완료!");
@@ -111,15 +111,15 @@ public class ProductController {
         return "redirect:/";
     }
 
-//    // 게시글에 해당하는 해시태그 조회
-//    @GetMapping("/prdHash/{prdId}")
-//    @ResponseBody
-//    public ResponseEntity<Map<String, Object>> productHash(@PathVariable(name="prdId") Long prdId, Model model) {
-//        ProductDTO product = (ProductDTO) model.getAttribute("product"); // model에 저장된 ProductDTO 객체 가져오기
-//        Map<String, Object> map = new HashMap<>(); //
-//        map.put("prdHash", prdId); //
-//        return ResponseEntity.ok(map);
-//    }
+    // 게시글에 해당하는 해시태그 조회
+    @GetMapping("/product/tags/{prdId}")
+    @ResponseBody
+    public ResponseEntity<Map<String, Object>> productHash(@PathVariable(name="prdId") Long prdId, Model model) {
+        ProductDTO product = (ProductDTO) model.getAttribute("product"); // model에 저장된 ProductDTO 객체 가져오기
+        Map<String, Object> map = new HashMap<>(); //
+        map.put("prdHash", prdId); //
+        return ResponseEntity.ok(map);
+    }
 
     // '좋아요'
     @GetMapping("/good/{prdId}")

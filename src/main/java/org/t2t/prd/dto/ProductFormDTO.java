@@ -25,9 +25,6 @@ public class ProductFormDTO {
     // 넘어오는 파일 정보 담을 변수
     private MultipartFile imgFile;
 
-    // 넘어오는 해시태그 정보 담을 변수
-    private List<String> prdHash;
-
     public ProductDTO toProductDTO() {
         ProductDTO productDTO = new ProductDTO();
         productDTO.setPrdId(this.prdId);

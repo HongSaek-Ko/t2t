@@ -11,6 +11,15 @@
         LIKE CONCAT('%', #{tagId}, '%') AND ENABLED = 'Y';
     </select>
 
+
+    <insert id="saveTags">
+        <selectKey resultType="long" keyProperty="prdId" order="BEFORE">
+            SELECT MAX(PRDID) AS PRDID FROM PRD
+        </selectKey>
+        INSERT INTO PRDHASH(PRDID, TAGID)
+        VALUES (#{prdId}, #{tagId})
+    </insert>
+
     <!--게시글에 해당하는 해시태그 가져오기 (게시글 상세보기, 수정 시 필요)-->
     <select id="getPrdHashByPrdId" resultType="org.t2t.prd.dto.PrdHashDTO">
         SELECT * FROM PRDHASH
