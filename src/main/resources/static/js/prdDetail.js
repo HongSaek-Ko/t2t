@@ -10,6 +10,14 @@ function getPrdHashes() {
         method: 'GET',
         success: function (data) {
             console.log(data, "요청 성공!");
+            console.log(data[0].tagId, "요청 성공!");
+            $.each(data, function (_i, _el){
+               console.log(_i);
+               console.log(_el.tagId);
+               const html =
+                   `<span class="badge text-bg-secondary"><h5>${_el.tagId}</h5></span>`;
+               $('#prdHash').append(html);
+            });
         },
         error: function (error) {
             console.log(error, "요청 실패.");
