@@ -46,7 +46,9 @@
                           <div align="center">
                           <a type="button" id="goodEvent">
                             <i class="bi bi-heart" style="color: red"></i>
-                          </a><span id="goodCount" th:text="${goodCount}" style="margin-left: 3px"></span> <!--줄바꿈 안하려고 span 씀, 문자열은 바꿔야 할 부분...-->
+                              <!--"세션의 usrId"와, "prdId에 해당하는 good과 연관된 usrId"와 동일하면 찬 하트, 아니라면 빈 하트-->
+<!--                              <i class="bi" th:classappend="${session.sid == goodUsrId} ? 'bi-heart-fill' : 'bi-heart'" style="color: red"></i>-->
+                          </a><span id="goodCount" style="margin-left: 3px">[[${goodCount}]]</span> <!--줄바꿈 안하려고 span 씀, 문자열은 바꿔야 할 부분...-->
                             <!--todo: 간격 벌리기 -->
                           <a style="margin-left: 30px">
                             <i class="bi bi-eye"></i>

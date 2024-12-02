@@ -13,7 +13,6 @@ $(document).ready(function () {
         });
     });
 });
-
 function getPrdHashes() {
     $.ajax({
         url: '/tags/prdHash/' + $('#complaintEvent').data('prdid'),
@@ -42,8 +41,24 @@ function registerGoodEvent(registerGoodEvent) {
            method: 'GET',
             success: function (data) {
                $.each(data, function (_i, _el){
-                   console.log(_el);
-               })
+                   console.log(_el); // el: prdId
+                   console.log(_i); // _i: good
+                   console.log(data); // good:prdId
+               });
+                $.ajax({
+                    url: '/product/goodCount/' + $('#complaintEvent').data('prdid'),
+                    method: 'GET',
+                    success: function (count){
+                        console.log("ajax post 요청 성공!");
+                        console.log("count: " + count);
+                        $("#goodCount").text(count);
+
+                    },
+                    error: function (error) {
+                        console.log("ajax Get 요청 실패...");
+                        console.log("error: " + error);
+                    }
+                });
             }
         });
     });

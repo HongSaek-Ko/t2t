@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.MemberDTO;
 import org.t2t.prd.dto.*;
+import org.t2t.prd.repository.ProductMapper;
 import org.t2t.prd.service.FileService;
 import org.t2t.prd.service.ProductService;
 import org.t2t.prd.service.TagService;
@@ -32,6 +33,7 @@ public class ProductController {
     private final ProductService productService;
     private final FileService fileService;
     private final TagService tagService;
+    private final ProductMapper productMapper;
 
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
@@ -69,12 +71,19 @@ public class ProductController {
 
     // 상품 상세 페이지
     @GetMapping("/{prdId}")
-    public String productDetail(@PathVariable("prdId") Long prdId, Model model) {
+    public String productDetail(@PathVariable("prdId") Long prdId, Model model, HttpSession session) {
         log.info("상품 상세 페이지! prdId: {}", prdId);
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
         model.addAttribute("goodCount", productService.goodCount(prdId));
-//        model.addAttribute("prdHash", productService.getPrdHash(prdId));
+
+        // 세션에서 유저아이디 추출
+//        String sid = (String) session.getAttribute("sid");
+        // goodDTO에서 유저 아이디 추출?
+//        GoodDTO goodDTO = productService.updateGood(prdId, sid); // 이러려면 updateGood을 GoodDTO 타입으로 변경해야 함
+        // 모델에 usrId 추가; 있으면 가져온 걸로 / 없으면 null
+//        model.addAttribute("goodUsrId", goodDTO != null ? goodDTO.getUsrId() : null);
+
         return "product/detail";
     }
 
@@ -131,6 +140,13 @@ public class ProductController {
         Map<String, Object> map = new HashMap<>(); // 문자열을 key, object를 value로 갖는 객체 map 생성.
         map.put("good", prdId); // 객체 map에 다음 값을 추가; key: 'good', value: prdId.
         return ResponseEntity.ok(map); // map은 {"good" : prdId} 형태로 응답 (응답 본문에 map, 상태코드는 200(OK)로 설정) → 서비스로!
+    }
+
+    @GetMapping("/goodCount/{prdId}")
+    @ResponseBody
+    public int getGoodCount(@PathVariable(name="prdId")Long prdId) {
+        log.info("ajax post 요청! prdId: {}", prdId);
+        return productService.goodCount(prdId);
     }
 
 
