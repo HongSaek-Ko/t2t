@@ -46,6 +46,7 @@
         ON R.PRDID = G.PRDID <!--테이블 결합 조건. PRD / GOOD 테이블의 PRDID가 일치하는 것만 결합 -->
         WHERE
             G.USRID = #{usrId} <!--매개변수로 전달된 usrId 값과 일치하는 USRID 데이터를 선택; 어떤 사용자가 '좋아요' 누른 것만 조회 -->
+        AND R.PRDID = #{prdId}
     </select>
 
     <!--'좋아요'를 눌렀다는 정보(데이터)를 삭제; 넘어온 매개변수와 일치하는 레코드를 삭제...-->
@@ -58,9 +59,15 @@
 
     <!--'좋아요'를 눌렀다는 정보(데이터)를 저장-->
     <insert id="insertGood" parameterType="hashmap" >
-        INSERT INTO GOOD (prdId, usrId)
+        INSERT INTO GOOD (PRDID, USRID)
         VALUES (#{prdId}, #{usrId})
     </insert>
+
+    <!--좋아요 수 계산, 동일한 PRDID의 칼럼수로 계산-->
+    <select id="goodCount" resultType="int">
+        SELECT COUNT(*) FROM GOOD
+        WHERE PRDID=#{prdId}
+    </select>
 
     <!--게시글 삭제-->
     <delete id="deleteProduct">
@@ -68,11 +75,6 @@
         WHERE PRDID=#{prdId}
     </delete>
 
-    <!--좋아요 수 계산, 동일한 PRDID의 칼럼수로 계산-->
-    <select id="goodCount" resultType="int">
-        SELECT COUNT(*) FROM GOOD
-        WHERE PRDID=#{prdId}
-    </select>
 
     <!--게시글 조회수 증가-->
     <update id="updateProductHit">

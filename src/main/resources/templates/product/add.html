@@ -1,132 +1,141 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="fragments/head::header('T2T 작성')"></head>
+<head th:replace="fragments/head::header('T2T 등록')"></head>
 <body>
-<div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
-  <!-- Sidebar -->
-  <th:block th:fragment="searchbar">
-    <th:block th:replace="fragments/searchbar::searchbar"></th:block>
-  </th:block>
-
-  <!-- Sidebar -->
-
-  <th:block th:fragment="sidebar">
-    <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
-      <th:block th:fragment="content">
-        <!-- 컨텐츠 시작 지점 -->
-        <style>
-          .img_width_100 {
-            width:100%;
-            height:100%;
-          }
-        </style>
-        <div class="container text-center">
-          <form action="" th:action method="post" id="productForm" enctype="multipart/form-data">
-            <div class="row">
-              <div class="col">
-                <div class="mx-auto">
-<!--                  <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg">-->
-                  <p></p>
-                  <div>
-                    <label for="imgFile">
-                      <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg" style="margin-bottom: auto">
-<!--                      <br/>-->
-<!--                      <i class="bi bi-image"></i> 사진 업로드-->
-                    </label>
-                    <input type="file" class="form-control" name="imgFile" id="imgFile" th:field="${product.imgFile}" onchange="loadFile(this)"><!--업로드한 사진으로 보여줌-->
-                  </div> <br/>
-                  <p style="color: crimson"> ※ 작성 후에는 이미지를 수정할 수 없습니다! </p>
-                </div>
-              </div>
-              <div class="col" align="left">
-                <div class="mx-auto" > <!--간격 생성 (가로배치 우회) -->
-
-                  <div class="mb-3" >
-                    <label for="title" class="form-label">제목</label>
-                    <input type="text" class="form-control" name="title" id="title" th:field="${product.title}" placeholder="제목을 입력해주세요. (2~20자 이내)">
-                  </div>
-                  <div class="mb-3" >
-                    <label for="cont" class="form-label" >설명</label>
-                    <textarea class="form-control" id="cont" name="cont" th:field="${product.cont}" rows="3" placeholder="설명을 입력해주세요. (200자 이내)"></textarea>
-                  </div> <!--제목/설명 끝-->
-                  <br/>
-                  <div class="mb-3" hidden=""> <!--todo: 임시로 입력, 나중에 ${session.usrId}로 변경-->
-                    <label for="usrId" class="form-label">사용자</label>
-                    <input type="text" class="form-control" id="usrId" name="usrId" th:value="test1">
-                  </div>
-
-                  <div class="input-group mb-3" >
-                    <label class="input-group-text" for="cate">카테고리 설정</label>
-                    <select class="form-select" id="cate" th:field="${product.cate}" name="cate">
-                      <option selected value="">선택하세요...</option>
-                      <option value="food">음식</option>
-                      <option value="anima">동물</option>
-                      <option value="vacat">여행</option>
-                      <option value="human">인물</option>
-                    </select>
-                  </div>
-                  <br/>
-                  <div class="mb-3" >
-                      <label for="tagId" class="form-label">해시태그</label>
-                      <input id="tagId" class="form-control" placeholder="태그 입력(최대 5개)" name="tagId" data-blacklist='.NET, PHP'>
-                      <br/>
-                      <button class='tags--removeAllBtn' type='button'>입력한 태그 모두 삭제</button>
-                  </div>
-
-                  <div class="mb-3">
-                    <label for="price" class="form-label">금액</label>
-                    <input type="number" class="form-control" name="price" id="price" placeholder="금액 입력..." th:field="${product.price}">
-                  </div>
-                  <br/>
-
-                  <div class="form-check form-switch" >
-                    <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
-                    <input class="form-check-input" type="checkbox" id="limitSwitch" name="limitSwitch" onclick="toggleTextBox(this)">
-                    <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" >
-                  </div>
-
-                  <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
-                    <input type="number" class="form-control" id="trgtSalQty" name="trgtSalQty" th:field="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
-                  </div>
-                </div>  <!-- 종료 지점: 가로배치 우회 -->
-              </div>
-            </div>
-            <hr/>
-            <button type="button" class="btn btn-warning" onclick="window.location='/'"> 작성취소 </button>
-            <a id="registerProductEvent" class="btn btn-primary"> 등록하기 </a> <!--컨트롤러에서 -->
-          </form>
-        </div>
-
-          <!-- alert → Modal -->
-          <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
-              <div class="modal-dialog">
-                  <div class="modal-content">
-                      <div class="modal-header">
-                          <h5 class="modal-title" id="alertModalLabel">오류</h5>
-                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body" id="modalBody">
-                      </div>
-                      <div class="modal-footer">
-                          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
-                      </div>
-                  </div>
-              </div>
-          </div>
-
-
-          <div id="dialog-confirm" title="알림" >
-              <p><span id="dialogContent"></span></p>
-          </div>
-
-        <script type="text/javascript" th:src='@{/js/add.js}'></script>
-        <!-- 컨텐츠 종료 지점 -->
+<div th:if="${session.sid == null}">
+    <script>
+        alert("로그인 후 등록 가능합니다!")
+        window.location.href="/";
+    </script>
+</div>
+<div th:if="${session.sid != null}">
+    <div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
+      <!-- Sidebar -->
+      <th:block th:fragment="searchbar">
+        <th:block th:replace="fragments/searchbar::searchbar"></th:block>
       </th:block>
-    </th:block>
-  </th:block>
+
+      <!-- Sidebar -->
+
+      <th:block th:fragment="sidebar">
+        <th:block th:replace="fragments/sidebar::setSideBar(~{::content})">
+          <th:block th:fragment="content">
+            <!-- 컨텐츠 시작 지점 -->
+            <style>
+              .img_width_100 {
+                width:100%;
+                height:100%;
+              }
+            </style>
+            <div class="container text-center">
+              <form action="" th:action method="post" id="productForm" enctype="multipart/form-data">
+                <div class="row">
+                  <div class="col" align="center">
+                    <div class="shadow-sm p-3 bg-body-tertiary rounded" >
+                        <h3><label for="usrId" class="form-label" style="margin-top: 10px">[[${session.sid}]] 님의 Treasure 등록</label></h3>
+                        <input type="text" hidden="hidden" class="form-control" id="usrId" name="usrId" th:value="${session.sid}">
+                    </div>
+                    <div class="mx-auto">
+    <!--                  <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg">-->
+                      <p></p>
+                      <div style="width: 70%; height: 70%">
+                        <label for="imgFile">
+                          <img th:src="@{/common/img/default.png}" class="card-img-top" id="defaultImg" style="margin-bottom: auto">
+    <!--                      <br/>-->
+                          <i class="bi bi-image"></i> 사진 업로드
+                        </label>
+                        <input type="file" hidden="hidden" class="form-control" name="imgFile" id="imgFile" th:field="${product.imgFile}" onchange="loadFile(this)"><!--업로드한 사진으로 보여줌-->
+                      </div> <br/>
+                      <p style="color: crimson"> ※ 작성 후에는 이미지를 수정할 수 없습니다! </p>
+                    </div>
+                  </div>
+                  <div class="col" align="left">
+                    <div class="mx-auto" > <!--간격 생성 (가로배치 우회) -->
+
+                      <div class="mb-3" >
+                        <label for="title" class="form-label">제목</label>
+                        <input type="text" class="form-control" name="title" id="title" th:field="${product.title}" placeholder="제목을 입력해주세요. (2~20자 이내)">
+                      </div>
+                      <div class="mb-3" >
+                        <label for="cont" class="form-label" >설명</label>
+                        <textarea class="form-control" id="cont" name="cont" th:field="${product.cont}" rows="3" placeholder="설명을 입력해주세요. (200자 이내)"></textarea>
+                      </div> <!--제목/설명 끝-->
+                      <br/>
 
 
-  <!-- End of Sidebar -->
+                      <div class="input-group mb-3" >
+                        <label class="input-group-text" for="cate">카테고리 설정</label>
+                        <select class="form-select" id="cate" th:field="${product.cate}" name="cate">
+                          <option selected value="">선택하세요...</option>
+                          <option value="food">음식</option>
+                          <option value="anima">동물</option>
+                          <option value="vacat">여행</option>
+                          <option value="human">인물</option>
+                        </select>
+                      </div>
+                      <br/>
+                      <div class="mb-3" >
+                          <label for="tagId" class="form-label">해시태그</label>
+                          <input id="tagId" class="form-control" placeholder="태그 입력(최대 5개)" name="tagId" data-blacklist='.NET, PHP'>
+                          <br/>
+                          <button class='tags--removeAllBtn' type='button'>입력한 태그 모두 삭제</button>
+                      </div>
+
+                      <div class="mb-3">
+                        <label for="price" class="form-label">금액</label>
+                        <input type="number" class="form-control" name="price" id="price" placeholder="금액 입력..." th:field="${product.price}">
+                      </div>
+                      <br/>
+
+                      <div class="form-check form-switch" >
+                        <label class="form-check-label" for="limitSwitch" >판매수량 설정</label>
+                        <input class="form-check-input" type="checkbox" id="limitSwitch" name="limitSwitch" onclick="toggleTextBox(this)">
+                        <input type="hidden" id="islimit" name="islimit" th:field="${product.islimit}" >
+                      </div>
+
+                      <div class="mb-3"> <!--판매수량 설정 활성화 시 활성화-->
+                        <input type="number" class="form-control" id="trgtSalQty" name="trgtSalQty" th:field="${product.trgtSalQty}" placeholder="판매 수량 입력..." disabled>
+                      </div>
+                    </div>  <!-- 종료 지점: 가로배치 우회 -->
+                  </div>
+                </div>
+                <hr/>
+                <button type="button" class="btn btn-warning" onclick="window.location='/'"> 작성취소 </button>
+                <a id="registerProductEvent" class="btn btn-primary"> 등록하기 </a> <!--컨트롤러에서 -->
+              </form>
+            </div>
+
+              <!-- alert → Modal -->
+              <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h5 class="modal-title" id="alertModalLabel">오류</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body" id="modalBody">
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-danger" data-bs-dismiss="modal">닫기</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+
+              <div id="dialog-confirm" title="알림" >
+                  <p><span id="dialogContent"></span></p>
+              </div>
+
+            <script type="text/javascript" th:src='@{/js/add.js}'></script>
+            <!-- 컨텐츠 종료 지점 -->
+          </th:block>
+        </th:block>
+      </th:block>
+
+
+      <!-- End of Sidebar -->
+    </div>
 </div>
 </body>
 </html>

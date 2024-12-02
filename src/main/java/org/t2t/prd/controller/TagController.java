@@ -42,6 +42,7 @@ public class TagController {
     @GetMapping("/prdHash/{prdId}")
     @ResponseBody // 이거 추가 안하면 return값을 view 경로로 인식해서, 해당 html 파일을 만들지 않으면 에러 발생
     public List<PrdHashDTO> getPrdHashByPrdId(@PathVariable(name="prdId") Long prdId) {
+        log.info("prdId: {}", prdId);
         return tagService.getPrdHashByPrdId(prdId);
     }
 

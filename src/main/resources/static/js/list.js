@@ -24,18 +24,18 @@ function moreProducts() { // 추가 게시글 로드
                     `<div class="row" >
                         <div class="col" >
                             <a href="/product/${_el.prdId}" style="text-decoration: none; color: black">
-                                <div class="card" >
+                                <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
                                     <img
                                         src="${_el.imgFile != null ? '/product/image/' + _el.imgFile.fileNm : '/upload/default.png'}"
-                                        class="img-fluid" style="border-radius: 5px;" />
-                                    <div class="card-body">
-                                        <h5 class="card-title">${_el.title}</h5>\n
-                                        <span> 
-                                            <i class="bi bi-eye"><span style="margin-left: 3px"> ${_el.hit}</span></i>
-                                            <i class="bi bi-heart-fill" style="margin-left: 3px"><span style="margin-left: 3px"> ${_el.goodCount}</span></i>
-                                            <i class="bi bi-cash"><span style="margin-left: 3px"> ${_el.trgtSalQty}(ea)</span></i>
-                                        </span>
-                                        <p class="card-text"><small class="text-muted" >게시(수정)일: ${_el.lastDt}</small></p>
+                                        class="img-fluid" style="border-radius: 5px; margin-bottom: 10px" />
+                                        <div class="card-body">
+                                            <h5 class="card-title">${_el.title}</h5><hr/>
+                                            <span> 
+                                                <i class="bi bi-eye"><span style="margin-left: 3px"> ${_el.hit}</span></i>
+                                                <i class="bi bi-heart-fill" style="margin-left: 3px; color: red"></i><span style="margin-left: 3px"> ${_el.goodCount}</span>
+                                                <i class="bi bi-cash"><span style="margin-left: 3px"> ${_el.trgtSalQty}(ea)</span></i>
+                                            </span>
+                                        <p class="card-text"><small class="text-muted">${_el.lastDt}</small></p>
                                     </div>
                                 </div>
                             </a>

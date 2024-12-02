@@ -1,7 +1,17 @@
 $(document).ready(function () {
-    registerEvent(['#complaintEvent', '#modifyEvent', '#deleteEvent']);
-    registerGoodEvent('#goodEvent') ;
+    registerEvent(['#complaintEvent', '#purchaseEvent', '#deleteEvent']);
+    registerGoodEvent('#goodEvent');
     getPrdHashes();
+    $(window).on('submit', function (){
+        $( "#dialogContent" ).html("구매 완료!")
+        $( "#dialog-confirm" ).dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            redirect: '/'
+        });
+    });
 });
 
 function getPrdHashes() {
@@ -10,7 +20,7 @@ function getPrdHashes() {
         method: 'GET',
         success: function (data) {
             console.log(data, "요청 성공!");
-            console.log(data[0].tagId, "요청 성공!");
+            console.log(data[0], "요청 성공!");
             $.each(data, function (_i, _el){
                console.log(_i);
                console.log(_el.tagId);
@@ -22,26 +32,23 @@ function getPrdHashes() {
         error: function (error) {
             console.log(error, "요청 실패.");
         }
-
     });
 }
 
 function registerGoodEvent(registerGoodEvent) {
     $(registerGoodEvent).on('click', function() {
         $.ajax({
-           url : '/product/detail/good/' + $('input[name=prdId]').val(),
+           url : '/product/detail/good/' + $('#complaintEvent').data('prdid'),
            method: 'GET',
             success: function (data) {
                $.each(data, function (_i, _el){
-                   console.log(data);
-                   console.log(_i);
                    console.log(_el);
                })
             }
-
         });
     });
 }
+
 function registerEvent(_target) {
     $.each(_target, function (_i, _el) {
         $(_el).on('click', function (e) {
@@ -52,20 +59,17 @@ function registerEvent(_target) {
             console.log(_el);
             console.log(e);
             console.log(e.target);
-
-
-
             if (_id === 'complaintEvent') {
                 $('#complaintModal').find('.modal-body').empty(); // 모달 새로 열 때마다 기존 것 비워줘야하므로...
                 $('#complaintModal').find('.modal-body').append(createComplaintLayout()); // 모달에 이거 추가...
                 $('#complaintModalLabel').text('신고');
                 $('#complaintModal').modal('show');
 
-            // } else if (_id === 'modifyEvent') {
-            //     $('#modifyPrdModal').find('.modal-body').empty();
-            //     $('#modifyPrdModal').find('.modal-body').append(createModifyLayout());
-            //     $('#modifyPrdModalLabel').text('수정');
-            //     $('#modifyPrdModal').modal('show');
+            } else if (_id === 'purchaseEvent') {
+                $('#purchaseModal').find('.modal-body').empty();
+                $('#purchaseModal').find('.modal-body').append(createPurchaseLayout());
+                $('#purchaseModalLabel').text('T2T 구매');
+                $('#purchaseModal').modal('show');
 
             } else if (_id === 'deleteEvent') {
                 $('#deletePrdModal').find('.modal-body').empty();
@@ -142,54 +146,25 @@ function createDeleteLayout() {
     deleteArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
     deleteArr.push('        <h4> 정말 삭제하시겠습니까? </h4>')
     deleteArr.push('    </div>')
-    // deleteArr.push('    <div class="form-floating mb-2">')
-    // deleteArr.push('        <input type="password" class="form-control" id="floatingDeletePassword" placeholder="Password">')
-    // deleteArr.push('            <label for="floatingDeletePassword">Password</label>')
-    // deleteArr.push('    </div>')
     deleteArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
     deleteArr.push('        <button type="submit" class="btn btn-danger mx-2" id="deletePrdComplete" >삭제</button>')
     deleteArr.push('    </div>')
-    // deleteArr.push('    <ul class="nav justify-content-center mb-2">')
-    // deleteArr.push('        <li class="nav-item">')
-    // deleteArr.push('            <a class="nav-link" href="#">비밀번호 찾기</a>')
-    // deleteArr.push('        </li>')
-    // deleteArr.push('    </ul>')
     deleteArr.push('</form>')
-
     return deleteArr.join('');
 }
 
-
-
-/*
-$(document).ready(function(){
-    var nowpoint = $('input[name="nowPoint"]:checked').val();
-    console.log(money);
-    $('#rechargeEvent').on('click',function(){
-        $.ajax({
-            type: post,
-            url : "/member/mypage/charge/point",
-            data :{
-                "addpoint" : nowpoint
-            },
-        });
-    })
-})
-*/
-
-/*
-function clickGood() {
-    // 하트 클릭 시 빈 하트 ↔ 채워진 하트 상태 변경
-
-    // AJAX 요청을 사용하여 서버에 좋아요 상태를 전달
-    $.ajax({
-        url: '/good/' + prdId,  // 서버로 요청할 URL
-        type: 'GET',
-        success: function(data) {
-            // 좋아요 수 업데이트; 좋아요가 추가되었으면 카운트 증가, 삭제되었으면 감소
-             누르면 현재값에서 1 추가, 이미 누른 유저가 한 번 더 누르면 1 감소
-
-        }
-    });
+function createPurchaseLayout() {
+    var purchaseArr = [];
+    purchaseArr.push('<form id="purchaseForm" action="/product/'+ $('#complaintEvent').data('prdid') +'/purchase" method="get">') // <...action="/product/prdId/delete"...>
+    purchaseArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
+    purchaseArr.push('        <h4> 이 상품을 구매하시겠습니까? </h4>')
+    purchaseArr.push('    </div>')
+    purchaseArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
+    purchaseArr.push('        <button type="submit" class="btn btn-danger mx-2" id="purchaseComplete" value="purchaseComplete">구매</button>')
+    purchaseArr.push('    </div>')
+    purchaseArr.push('</form>')
+    return purchaseArr.join('');
 }
-*/
+
+
+

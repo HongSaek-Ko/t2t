@@ -122,7 +122,7 @@ public class ProductController {
     }
 
     // '좋아요'
-    @GetMapping("/good/{prdId}")
+    @GetMapping("/detail/good/{prdId}")
     @ResponseBody // Http 응답; Http 요청을 객체로 변환 or 객체를 응답으로 변환 (응답 본문에 데이터를 담아 변환)
     public ResponseEntity<Map<String, Object>> updateGood(@PathVariable(name="prdId")Long prdId, HttpSession session) {
         MemberDTO user = (MemberDTO) session.getAttribute(HTTP_SESSION_USER); // HttpSession에 저장된 MemberDTO 객체(사용자 정보)를 가져옴;

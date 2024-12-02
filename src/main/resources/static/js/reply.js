@@ -1,6 +1,7 @@
 $(document).ready(function() {
     // URL에서 prdId를 가져오기
     const prdId = window.location.pathname.split('/').pop();  // 마지막 부분이 prdId
+    const usrId = $('#usrId').data('usrid');
 
     loadReplies(prdId);
 
@@ -18,6 +19,7 @@ $(document).ready(function() {
 
         // 댓글 데이터를 서버에 POST 요청
         const replyData = {
+            usrId: usrId, // 댓글 작성자 (= 세션에 있는 usrId)
             prdId: prdId,  // 게시글 ID
             rpyCont: content,  // 댓글 내용
             prtRpyId: null  // 원댓글 ID (대댓글을 작성하는 경우 이 값이 설정됨)
@@ -31,6 +33,7 @@ $(document).ready(function() {
             data: JSON.stringify(replyData),  // 댓글 데이터를 JSON 형식으로 전송
             success: function() {
                 // 댓글이 DB에 저장된 후 댓글 목록을 다시 불러옴
+                console.log(replyData);
                 loadReplies(prdId);  // 댓글 목록 다시 불러오기
                 $input.val('');  // 입력창 초기화
             },
@@ -53,6 +56,7 @@ $(document).ready(function() {
                 replies.forEach(function(reply) {
                     const row = createRow(reply.usrId, reply.rpyCont, reply.regDt);
                     $commentList.append(row);
+                    console.log("reply.rpyCont: "+reply.rpyCont);
                 });
 
                 // 댓글 개수 업데이트 ('댓글쓰기' 안 span 태그 선택)
