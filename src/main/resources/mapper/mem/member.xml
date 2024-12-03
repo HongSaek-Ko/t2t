@@ -124,7 +124,13 @@
     <!-- SAL01 : 판매중, SAL02 : 판매중지, SAL03 : 매진 -->
     <select id="selectPastTradeList" resultType="org.t2t.prd.dto.ProductDTO">
         SELECT
-            P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
+            P.SALSTAT
+            , P.PRDID
+            , P.USRID
+            , P.PRDID
+            , P.TITLE
+            , P.CONT
+            , P.PRICE
         FROM
             PRD P, MEM M
         WHERE
