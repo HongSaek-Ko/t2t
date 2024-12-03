@@ -12,6 +12,11 @@ $(document).ready(function () {
             redirect: '/'
         });
     });
+
+    $('#hide_effect').hide();
+    $('#detail_effect').click(function() {
+        $('#hide_effect').toggle(1000);
+    });
 });
 
 function getPrdHashes() {

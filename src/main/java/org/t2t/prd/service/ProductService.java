@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.t2t.mem.dto.MemberDTO;
+import org.t2t.mem.service.MemberService;
 import org.t2t.prd.dto.*;
 import org.t2t.prd.repository.FileMapper;
 import org.t2t.prd.repository.ProductMapper;
@@ -29,6 +31,7 @@ public class ProductService {
     private final FileService fileService;
     private final TagService tagService;
     private final TagMapper tagMapper;
+    private final MemberService memberService;
 
     public void write(ProductFormDTO product) throws IOException {
 
@@ -76,6 +79,10 @@ public class ProductService {
         // prdId에 해당하는 이미지 가져오기
         FileDTO imgFile = fileMapper.selectFile(prdId);
         findProduct.setImgFile(imgFile);
+
+
+        MemberDTO postedMember = memberService.findByUserId(findProduct.getUsrId());
+        findProduct.setUploadMemberInfo(postedMember);
 
         // prdId에 해당하는 좋아요 수 가져오기
         productMapper.goodCount(prdId);

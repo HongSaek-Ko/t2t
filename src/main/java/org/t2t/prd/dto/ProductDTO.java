@@ -1,6 +1,7 @@
 package org.t2t.prd.dto;
 
 import lombok.Data;
+import org.t2t.mem.dto.MemberDTO;
 
 import java.time.LocalDateTime;
 
@@ -35,5 +36,7 @@ public class ProductDTO {
 
     // 좋아요 개수 정보
     private int goodCount;
+
+    private MemberDTO uploadMemberInfo;
 
 }

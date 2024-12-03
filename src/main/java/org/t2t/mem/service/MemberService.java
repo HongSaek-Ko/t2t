@@ -37,6 +37,9 @@ public class MemberService {
         RankingDTO rankingDTO = memberMapper.selectRankByUsrId(memberDTO);
         memberDTO.setMile(mileDTO);
         memberDTO.setRank(rankingDTO);
+
+        memberDTO.setImageProfile(profileMapper.selectFileList(memberDTO.getUsrId()));
+
         return memberDTO;
     }
     //마일리지 충전/환전
