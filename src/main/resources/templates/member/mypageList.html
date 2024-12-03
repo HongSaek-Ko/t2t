@@ -19,73 +19,69 @@
                     <div class="row">
                         <div class="col-first">
                             <nav class="nav nav-pills nav-justified" id="tabEvent">
-                                <a class="nav-link active" tabindex="1">구매목록</a>
-                                <a class="nav-link" tabindex="2">판매목록</a>
+                                <a class="nav-link active" tabindex="1">판매목록</a>
+                                <a class="nav-link" tabindex="2">구매목록</a>
                             </nav>
                         </div>
-                        <div class="row" name="tabTradeList" id="tab_index_1">
-                            <div class="col">
-                                <h1>Test1</h1>
-                            </div>
-                        </div>
-                        <div class="row" name="tabTradeList" id="tab_index_2">
-                            <div class="col">
-                                <h1>Test1</h1>
-                            </div>
-                        </div>
                     </div>
-                </div>
-                <!-- 현재 판매내역 -->
-                <div id="Curscroller" class="container text-center">
-                    <div class="row" >
-                        <div class="col" >
-                            <div class="container text-center">
-                                <div class="row" id="scroller0"></div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="container text-center">
-                                <div class="row" id="scroller1">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col" >
-                            <div class="container text-center">
-                                <div class="row" id="scroller2">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- 과거 판매내역 -->
-                <div id="Pastscroller" class="container text-center">
-                    <div class="row" >
-                        <div class="col" >
-                            <div class="container text-center">
-                                <div class="row" id="scroller3"></div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="container text-center">
-                                <div class="row" id="scroller4">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col" >
-                            <div class="container text-center">
-                                <div class="row" id="scroller5">
-                                </div>
-                            </div>
-                        </div>
+                    <!-- 판매내역 -->
+                    <div id="SalList" class="container text-center">
+                        <h1> 판매내역</h1>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">순번</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">상품이미지</th>
+                                <th scope="col">내용</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="cmp :${cmpList}">
+                                <td th:text="${cmp.cmpId}"></td>
+                                <td th:text="${cmp.regDt}"></td>
+                                <td th:text="${cmp.cmpCateCd}"></td>
+                                <td th:text="${cmp.usrId}"></td>
+                                <td th:text="${cmp.cRstCd}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <!-- 구매내역 -->
+                    <div id="OrList" class="container text-center">
+                        <h1> 구매내역 </h1>
+                        <table class="table">
+                            <thead>
+                            <!-- 주문상세 누르면 상품 상세페이지로 이동 -->
+                            <tr>
+                                <th scope="col">순번</th>
+                                <th scope="col">제목</th>
+                                <th scope="col">상품이미지</th>
+                                <th scope="col">내용</th>
+
+
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr th:each="prd :${orderList}">
+                                <td th:text="${prd.prdId}"></td>
+                                <td th:text="${prd.title}"></td>
+                                <td><img th:src="@{/upload/product/{url}(url=${prd.getFileNm()})}" /></td>
+                                <td th:text="${prd.cont}"></td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-
-                <!--                여기서부터 종료-->
+                <script type="text/javascript" th:src='@{/js/mypageList.js}'></script>
+                    <!--                여기서부터 종료-->
             </th:block>
         </th:block>
-        <script type="text/javascript" th:src='@{/js/third/jquery-3.7.1.js}'></script>
-        <script type="text/javascript" th:src='@{/js/mypage.js}'></script>
     </th:block>
     <!-- End of Sidebar -->
 </div>

@@ -18,11 +18,11 @@ public interface MemberMapper {
     //마일리지 목록 불러오기
     List<MileDTO> selectMileTotal(String usrId);
     //회원정보 수정
-    void updateMem(MemberDTO memberDTO);
+    void updateMem(MainFormDTO mainFormDTO);
     //나의 신고목록 가져오기
     List<ComplaintDTO> selectComplaintList(String usrId);
     //나의 구매(order)목록 가져오기
-    void selectOrderList(String usrId);
+    List<OrderDTO> selectOrderList(String usrId);
     //나의 거래목록 가져오기
     void selectTradeList(String usrId);
     //id, pw 일치여부 확인
@@ -39,4 +39,6 @@ public interface MemberMapper {
     void insertRank(RankingDTO rank);
     //비밀번호 변경
     void updatePassword(MemberDTO memberDTO);
+    //회원 전체 수 조회
+    void countMember(String usrId);
 }

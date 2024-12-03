@@ -1,3 +1,4 @@
+
 //충전, 환전 클릭시 이벤트
 //구매목록, 판매목록 탭 전환 이벤트
 //비밀번호 수정 모달환면 띄우기
@@ -8,7 +9,6 @@ $(document).ready(function () {
     passwordcheckEvent();
     passwdModify();
     modifyProfile();
-
 
 });
 
@@ -178,25 +178,6 @@ function registerEvent(_target) {
     });
 }
 
-
-//구매/판매 목록 보기 탭
-function registerTabEvent(root) {
-    $('div[name=tabTradeList]').hide();
-    $.each($(root).find('.nav-link'), function(_i, _el){
-        $(_el).click(function() {
-            $(root).find('.nav-link').removeClass('active');
-            $(this).addClass('active');
-
-            if($(this).attr("tabindex") == 1) {
-                $('#tab_index_1').show();
-                $('#tab_index_2').hide();
-            } else {
-                $('#tab_index_1').hide();
-                $('#tab_index_2').show();
-            }
-        });
-    });
-}
 
 //자기소개 글자수 카운팅
 $('#myInfoText').keyup(function(e){

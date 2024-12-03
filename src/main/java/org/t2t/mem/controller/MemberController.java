@@ -12,16 +12,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.t2t.mem.dto.*;
-import org.t2t.mem.repository.MemberMapper;
 import org.t2t.mem.repository.ProfileMapper;
 import org.t2t.mem.service.MemberService;
 import org.t2t.mem.service.ProfileService;
+import org.t2t.prd.dto.OrderDTO;
+import org.t2t.prd.dto.ProductDTO;
 
-import java.lang.reflect.Member;
 import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,6 +49,8 @@ public class MemberController {
         //세션에 저장된 usrId 가져오기
         //MemberDTO findUser = memberService.findByUserId(user.getUsrId());
         MemberDTO findUser = memberService.findByUserId(user.getUsrId());
+        RankingDTO rankingDTO = memberService.selectRankByUsrId(findUser);
+        findUser.setRank(rankingDTO);
         log.info("getmyPage: {}", findUser.toString());
         // 이미지 파일가져오기
         ProfileDTO imageProfile = profileMapper.selectFileList(user.getUsrId());
@@ -57,7 +58,6 @@ public class MemberController {
 
         findUser.setImageProfile(imageProfile);
         model.addAttribute(LOGGEDIN_MYUSER, findUser);
-
         return "member/mypage";
     }
 
@@ -170,10 +170,9 @@ public class MemberController {
 
     //나의 구매 리스트 보기
     @GetMapping("/mypage/orderList")
-    public String mypageorderlist(HttpServletRequest request, Model model) {
-        HttpSession session = request.getSession();
+    public String mypageorderlist(HttpSession session, Model model) {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        memberService.selectOrderList(user.getUsrId());
+        model.addAttribute("orderList", memberService.selectOrderList(user.getUsrId()));
         return "/member/mypageList";
     }
 
@@ -195,7 +194,7 @@ public class MemberController {
         return "member/mypageList";
     }
 
-
+/*
     //나의 구매 리스트 보기
     @GetMapping("/mypage/OrderList")
     public String mypagepurchaselist(HttpServletRequest request, Model model) {
@@ -204,7 +203,7 @@ public class MemberController {
         memberService.selectOrderList(user.getUsrId());
         return "/member/mypageList";
     }
-
+*/
 
     //나의 신고내역
     @GetMapping("/mypage/complist")
@@ -222,7 +221,14 @@ public class MemberController {
         return  "/member/faq";
     }
 
+    //나의 구매목록
+    @GetMapping("/mypage/order")
+    public String mypagepurchaselist(HttpServletRequest request, Model model){
+        HttpSession session = request.getSession();
+        MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        List<OrderDTO> orList = memberService.selectOrderList(user.getUsrId());
 
-
-
+        model.addAttribute("orList", orList);
+        return "/member/mypageList";
+    }
 }

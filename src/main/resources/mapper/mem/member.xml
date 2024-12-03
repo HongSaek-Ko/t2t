@@ -3,10 +3,15 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.t2t.mem.repository.MemberMapper">
-
     <!-- 회원 1명 정보 조회 -->
     <select id="findByID" resultType="org.t2t.mem.dto.MemberDTO">
         SELECT * FROM MEM WHERE USRID = #{usrId}
+    </select>
+    <!-- 회원수 조회 -->
+    <select id="countMember" resultType="org.t2t.mem.dto.MemberDTO" parameterType="int">
+        SELECT
+            COUNT(*)
+        FROM MEM
     </select>
     <!-- 회원 전체 조회 -->
     <select id="findList" resultType="org.t2t.mem.dto.MemberDTO">
@@ -84,36 +89,49 @@
             R.USRID = #{usrId}
     </select>
     <!-- 나의 구매내역 -->
-    <select id="selectOrderList" resultType="org.t2t.prd.dto.ProductDTO">
+    <select id="selectOrderList" resultType="org.t2t.prd.dto.OrderDTO">
         SELECT
-        O.ORDID, O.ORDDT, O.PRDID, P.PRDID, P.TITLE, P.CONT, P.PRICE
-        FROM ORD O JOIN PRD P
-        ON O.PRDID = P.PRDID
+            O.ordId
+            ,O.usrId
+            , O.prdId
+            , O.ordDt
+            , P.title
+            , P.cont
+            , P.price
+            , F.fileNm
+            , F.fileOrgNm
+        FROM ORD O, PRD P, FILE F
         WHERE
-        O.USRID =#{usrId} AND
-        P.SALSTAT = 'PRD01' AND
-        P.USRID != #{usrId};
+            O.PRDID = P.PRDID AND
+            F.PRDID = P.PRDID AND
+            O.USRID = #{usrId} AND
+            P.SALSTAT = 'PRD01' AND
+            P.USRID != #{usrId}
     </select>
     <!-- 나의 현재 거래내역(판매상태에 따른) -->
     <!-- SAL01 : 판매중, SAL02 : 판매중지, SAL03 : 매진 -->
     <select id="selectCurTradeList" resultType="org.t2t.prd.dto.ProductDTO">
-        SELECT P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
-        FROM PRD P, MEM M
+        SELECT
+            P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
+        FROM
+            PRD P, MEM M
         WHERE
-        P.SALSTAT='SAL01' AND
-        P.USRID=#{usrId}  AND
-        M.USRID != #{usrId};
+            P.SALSTAT = 'SAL01' AND
+            P.USRID = #{usrId}  AND
+            M.USRID != #{usrId}
     </select>
     <!-- 나의 과거 거래내역(판매상태에 따른) -->
     <!-- SAL01 : 판매중, SAL02 : 판매중지, SAL03 : 매진 -->
     <select id="selectPastTradeList" resultType="org.t2t.prd.dto.ProductDTO">
-        SELECT P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
-        FROM PRD P, MEM M
+        SELECT
+            P.SALSTAT, P.PRDID, P.USRID ,P.PRDID, P.TITLE, P.CONT, P.PRICE
+        FROM
+            PRD P, MEM M
         WHERE
-        P.SALSTAT='SAL02' AND
-        P.SALSTAT='SAL03' AND
-        P.USRID=#{usrId}  AND
-        M.USRID != #{usrId};
+            P.SALSTAT = 'SAL02' AND
+            P.SALSTAT = 'SAL03' AND
+            P.USRID = #{usrId}  AND
+            M.USRID != #{usrId}
     </select>
     <!-- 회원 1명의 마일리지 테이블 정보 가져오기 -->
     <select id="selectMileByUsrId" resultType="org.t2t.mem.dto.MileDTO">
@@ -122,16 +140,31 @@
             USRID = #{usrId}
     </select>
     <!-- 회원 1명의 랭킹 테이블 정보 가져오기 -->
-    <select id="selectRankByUsrId" resultType="org.t2t.mem.dto.RankingDTO">
+    <select id="selectRankByUsrId" resultType="org.t2t.mem.dto.RankingDTO" parameterType="org.t2t.mem.dto.MemberDTO">
         SELECT
-            USRID,
-            SCORE,
-            LASTACTDT,
-            REGDT,
-            LASTDT
-        FROM RANKING
+            CASE
+                WHEN rankP <![CDATA[<=]]> 0.05 THEN 'A등급'
+                WHEN rankP > 0.05 AND rankP <![CDATA[<=]]> 0.15 THEN 'B등급'
+                WHEN rankP > 0.15 AND rankP <![CDATA[<=]]> 0.3 THEN 'C등급'
+                WHEN rankP > 0.3 AND rankP <![CDATA[<=]]> 0.5 THEN 'D등급'
+                WHEN rankP > 0.51 THEN 'E등급'
+            end AS grade,
+            usrId,
+            score,
+            lastActDt,
+            regDt,
+            lastDt
+        FROM (
+            SELECT usrId,
+                score,
+                lastActDt,
+                regDt,
+                lastDt,
+                PERCENT_RANK() OVER (ORDER BY score DESC) AS rankP
+            FROM RANKING
+        ) A
         WHERE
-        USRID = #{usrId}
+            USRID = #{usrId}
     </select>
     <!-- 마일리지 테이블에 회원 포인트 추가 -->
     <insert id="insertMile" parameterType="org.t2t.mem.dto.MileDTO">
@@ -155,6 +188,17 @@
             LASTDT = NOW()
         WHERE
             USRID = #{usrId}
-
     </update>
+    <!-- prdId에 맞는 사진파일 불러오기 -->
+    <select id="findByPrdFile" parameterType="org.t2t.prd.dto.FileDTO">
+        SELECT *
+        FROM FILE
+        WHERE PRDID=#{prdId}
+    </select>
+    <!-- prdId 내용물 불러오기 -->
+    <select id="findByPrdCon" parameterType="org.t2t.prd.dto.ProductDTO">
+        SELECT USRID, TITLE, CONT, PRIC
+        FROM PRD
+        WHERE PRDID=#{prdId}
+    </select>
 </mapper>

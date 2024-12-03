@@ -8,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.*;
 import org.t2t.mem.repository.MemberMapper;
 import org.t2t.mem.repository.ProfileMapper;
+import org.t2t.prd.dto.OrderDTO;
+import org.t2t.prd.dto.ProductDTO;
 
 
 import java.io.IOException;
@@ -40,35 +42,28 @@ public class MemberService {
 
         memberDTO.setImageProfile(profileMapper.selectFileList(memberDTO.getUsrId()));
 
-        return memberDTO;
+       return memberDTO;
     }
     //마일리지 충전/환전
     public void updownMile(MileDTO mile) {
         memberMapper.updateMile(mile);
     }
-
-
     //회원정보 수정
     public void modifyMem(MainFormDTO mainFormDTO) throws IOException {
-        // MainFormDTO -> MemberDTO로 변환해서 전달
-        MemberDTO memberDTO = mainFormDTO.toMemberDTO();
-        // DB에 member 주면서 저장해라~
-        memberMapper.updateMem(memberDTO);
-        log.info("memberDTO : {}", memberDTO.toString());
+        memberMapper.updateMem(mainFormDTO);
+        log.info("memberDTO : {}", mainFormDTO.toString());
         // 실제 파일 저장처리 -> ProfileService
         ProfileDTO imgProfile = profileService.saveFile((MultipartFile) mainFormDTO.getImageProfile());// 이미지 실제 파일 저장
 
         // 파일 저장시 usrId 필요
         // 이미지 파일정보 있으면, DB에 저장
         if (imgProfile != null) {
-            imgProfile.setUsrId(memberDTO.getUsrId());
+            imgProfile.setUsrId(mainFormDTO.getUsrId());
             log.info("imgProfile : {}", imgProfile.toString());
             profileMapper.updateProfile(imgProfile); // 저장
         }
         return;
     }
-
-
     //회원 탈퇴 시 id,pw 일치여부 확인
     public MemberDTO idPwCheck(@Param("usrId") String usrId, @Param("passwd") String passwd){
         return memberMapper.idPwChecking(usrId,passwd);
@@ -78,8 +73,8 @@ public class MemberService {
         return memberMapper.selectMileTotal(usrId);
     }
     //나의 구매목록 불러오기(판매상태에 따른)
-    public void selectOrderList(String usrId){
-        memberMapper.selectOrderList(usrId);
+    public List<OrderDTO> selectOrderList(String usrId){
+        return memberMapper.selectOrderList(usrId);
     }
     //나의 거래목록 불러오기(판매상태에 따른)
     public void selectTradeList(String usrId){
@@ -119,6 +114,13 @@ public class MemberService {
     }
     //나의 과거 거래내역 보기
     public void selectPastTradeList(String usrId) {
+    }
+    //회원 전체 수 조회
+    public void countMem(String usrId){
+    }
+
+    public RankingDTO selectRankByUsrId(MemberDTO findUser) {
+        return memberMapper.selectRankByUsrId(findUser);
     }
 }
 

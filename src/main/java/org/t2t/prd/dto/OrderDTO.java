@@ -10,5 +10,10 @@ public class OrderDTO {
     private String usrId;
     private int prdId;
     private LocalDateTime ordDt;
-
+    // PRD 내용
+    private String title;
+    private String cont;
+    private Long price;
+    private String fileNm;
+    private String fileOrgNm;
 }

@@ -70,7 +70,7 @@
                                                     <span class="input-group-text" id="grade">등급 현황</span>
                                                     <input type="text" class="form-control" placeholder="Username"
                                                            aria-label="Username" aria-describedby="grade" readonly
-                                                           th:value="${myuser.rank.score}" style="background: #d3d3d3;" required>
+                                                           th:value="|${myuser.rank.grade} ( ${myuser.rank.score} )|" style="background: #d3d3d3;" required>
                                                 </div>
                                             </td>
                                         </tr>
@@ -197,7 +197,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <div class="input-group mb-3"><span class="input-group-text">출금할 마일리지</span>
-                                            <input type="number" name="exchange" id="exchangeMile" class="form-control" aria-label="Username" aria-describedby="grade" required min="1" max="8">
+                                            <input type="text" name="exchange" id="exchangeMile" class="form-control" aria-label="Username" aria-describedby="grade" required min="1" max="8">
                                         </div>
                                     </td>
                                 </tr>

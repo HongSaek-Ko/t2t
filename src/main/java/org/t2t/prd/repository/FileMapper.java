@@ -12,4 +12,6 @@ public interface FileMapper {
     FileDTO selectFile(Long prdId);
 
     void deleteFile(Long prdId);
+
+    void updateFile(FileDTO fileDTO);
 }

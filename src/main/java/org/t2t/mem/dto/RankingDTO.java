@@ -15,5 +15,6 @@ public class RankingDTO {
     private LocalDateTime lastActDt;
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
+    private String grade;
 
 }
