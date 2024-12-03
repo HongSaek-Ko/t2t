@@ -84,7 +84,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <img id="defaultImg" src="/common/img/t2t.png" width="40" height="40"/>
+                    <img id="profileImg" src="/common/img/t2t.png" width="40" height="40"/>
                     <h1 class="modal-title fs-5" id="joinModalLabel">T2T 회원가입 페이지</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -96,7 +96,7 @@
                             </div>
                         </div>
                         <div class="form-floating mb-1" style="display: flex; justify-content: center; width: 350px;">
-                            <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile" onchange="loadFile(this)" />
+                            <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile" onchange="loadFile('#profileImg', this)" />
                         </div>
                         <div class="form-floating mb-1">
                             <input type="text" class="form-control" name="usrId" id="floatingJoinInput" placeholder="userId" required>

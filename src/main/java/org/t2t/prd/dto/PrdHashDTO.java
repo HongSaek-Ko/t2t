@@ -11,4 +11,9 @@ public class PrdHashDTO {
     private Long prdId; // fk
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
+
+    public PrdHashDTO(String tagId, Long prdId) {
+        this.tagId = tagId;
+        this.prdId = prdId;
+    }
 }

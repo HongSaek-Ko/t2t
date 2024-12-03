@@ -2,7 +2,6 @@ $(document).ready(function () {
     registerEvent(['#complaintEvent', '#purchaseEvent', '#deleteEvent']);
     registerGoodEvent('#goodEvent');
     getPrdHashes();
-    selectIhaveGood();
     $(window).on('submit', function (){
         $( "#dialogContent" ).html("구매 완료!")
         $( "#dialog-confirm" ).dialog({
@@ -15,9 +14,6 @@ $(document).ready(function () {
     });
 });
 
-function selectIhaveGood() {
-
-}
 function getPrdHashes() {
     $.ajax({
         url: '/tags/prdHash/' + $('#complaintEvent').data('prdid'),
@@ -41,6 +37,7 @@ function getPrdHashes() {
 
 function registerGoodEvent(registerGoodEvent) {
     $(registerGoodEvent).on('click', function() {
+        // ajax 요청 1; 좋아요 정보 업데이트
         $.ajax({
            url : '/product/detail/good/' + $('#complaintEvent').data('prdid'),
            method: 'GET',
@@ -50,6 +47,7 @@ function registerGoodEvent(registerGoodEvent) {
                    console.log(_i); // _i: good
                    console.log(data); // good:prdId
                });
+                // ajax 요청 2; 좋아요 수 업데이트
                 $.ajax({
                     url: '/product/goodCount/' + $('#complaintEvent').data('prdid'),
                     method: 'GET',
@@ -57,7 +55,6 @@ function registerGoodEvent(registerGoodEvent) {
                         console.log("ajax post 요청 성공!");
                         console.log("count: " + count);
                         $("#goodCount").text(count);
-
                     },
                     error: function (error) {
                         console.log("ajax Get 요청 실패...");

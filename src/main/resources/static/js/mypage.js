@@ -282,14 +282,6 @@ $('#modifyDone').on('click', function(){
             //수정완료 후 페이지 되돌아가기
             window.location.href="/member/mypage";
             //window.location.reload();
-
-            // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
-            function loadFile(input) {
-                console.log(input.files[0]);
-                let file = input.files[0];
-                $('#defaultImg').attr("src", URL.createObjectURL(file));
-            }
-
         },
         error: function (e) {
             console.log("ajax 요청 실패..");

@@ -173,10 +173,10 @@ $(document).ready(function () {
 });
 
 // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
-function loadFile(input) {
+function loadFile(target, input) {
     console.log(input.files[0]);
     let file = input.files[0];
-    $('#imgTag').attr("src", URL.createObjectURL(file));
+    $(target).attr("src", URL.createObjectURL(file));
 }
 
 // 유효성 검사(Not null 속성값이 다 입력 되었는지 확인) 함수 by Moon

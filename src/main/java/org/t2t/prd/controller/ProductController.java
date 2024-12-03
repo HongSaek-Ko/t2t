@@ -26,6 +26,7 @@ import java.awt.print.Pageable;
 import java.io.IOException;
 import java.lang.reflect.Member;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,9 +57,17 @@ public class ProductController {
 
     // 상품 등록 처리 (게시글 정보 + 이미지 + 해시태그)
     @PostMapping("/add")
-    public String productAddPost(@ModelAttribute("product") ProductFormDTO product) throws IOException{
+    public String productAddPost(@ModelAttribute("product") ProductFormDTO product, @RequestParam(name="tagId") String tagId) throws IOException{
         log.info("productDTO: {}", product);
         productService.write(product);
+
+        String[] tags = tagId.split(",");
+        List<PrdHashDTO> tagList = new ArrayList<>();
+        for(String tag : tags) {
+            tagList.add(new PrdHashDTO(tag, product.getPrdId()));
+        }
+
+        tagService.saveTags(tagList);
         log.info("상품 등록 완료!");
         return "redirect:/product/" + product.getPrdId();
     }
@@ -86,6 +95,7 @@ public class ProductController {
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
         model.addAttribute("goodCount", productService.goodCount(prdId));
+        // prd에서 prdId 가져오기, 로그인 세션에서 usrId
         model.addAttribute("clickgood", productService.clickgood(prdId, loggedInMember.getUsrId()));
 //        // Prd에서 usrId 가져오기
 //        String usrId = product.getUsrId();
@@ -99,14 +109,6 @@ public class ProductController {
 //        // Prd에서 가져온 usrId로 프로필 이미지 가져오기
 //        ProfileDTO profImg = profileMapper.selectFileList(usrId);
 //        log.info("profImg: {} ", profImg.toString());
-
-
-        // 세션에서 유저아이디 추출
-//        String sid = (String) session.getAttribute("sid");
-        // goodDTO에서 유저 아이디 추출?
-//        GoodDTO goodDTO = productService.updateGood(prdId, sid); // 이러려면 updateGood을 GoodDTO 타입으로 변경해야 함
-        // 모델에 usrId 추가; 있으면 가져온 걸로 / 없으면 null
-//        model.addAttribute("goodUsrId", goodDTO != null ? goodDTO.getUsrId() : null);
 
         return "product/detail";
     }

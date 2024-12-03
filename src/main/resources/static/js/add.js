@@ -18,28 +18,12 @@ $(document).ready(function (){
 
 function registerProductEvent () {
     $('#registerProductEvent').click(function() {
-        registerList.join(',');
-        var prdHashList = registerList.map(function (tag){
-            return {
-                tagId: tag
-            };
+        let tags = JSON.parse($('#tagId').val());
+        let arr = tags.map(function(_e, _i) {
+            return _e.value;
         });
-
-        $.ajax({
-            url: '/tags/addPrdHash',
-            method: 'POST',
-            data: JSON.stringify(prdHashList),
-            contentType: 'application/json',
-            success: function (e) {
-                console.log(prdHashList);
-                console.log("해시태그 등록 성공: ", e);
-                // 해시태그 등록이 성공적으로 완료된 후 폼 제출
-                $('#productForm').submit();
-            },
-            error: function (error) {
-                console.log("해시태그 전송 실패: ", error);
-            }
-        });
+        $('#tagId').val(arr.join(','));
+        $('#productForm').submit();
     });
 }
 
@@ -88,10 +72,9 @@ var tagify = new Tagify(inputElements, {
 })
 
 
-
-// "remove all tags" button event listener
-document.querySelector('.tags--removeAllBtn')
-    .addEventListener('click', tagify.removeAllTags.bind(tagify))
+$('#tagRemoveAll').click(function() {
+    tagify.removeAllTags();
+});
 
 // Chainable event listeners
 tagify.on('add', onAddTag)
@@ -208,14 +191,4 @@ function toggleTextBox(checkbox) {
         textbox_elem.value = '';
         textbox_elem.focus();
     }
-}
-
-
-
-
-// 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
-function loadFile(input) {
-    console.log(input.files[0]);
-    let file = input.files[0];
-    $('#defaultImg').attr("src", URL.createObjectURL(file));
 }

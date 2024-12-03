@@ -97,6 +97,7 @@
         SELECT COUNT(*) FROM PRD
     </select>
 
+    <!--(게시글 번호(prdId)와 로그인 정보(usrId)로 좋아요 여부 검사(count(*), from good), 좋아요 했으면 '결과' / 안했으면(없으면, null) 0.-->
     <select id="clickgood" parameterType="hashmap" resultType="integer">
         SELECT
             IFNULL(COUNT(*), 0) AS RESULT

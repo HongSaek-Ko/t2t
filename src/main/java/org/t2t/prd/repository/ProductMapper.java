@@ -38,5 +38,4 @@ public interface ProductMapper {
 
     int clickgood(Map<String, String> map);
 
-    // prdId로 해시태그 찾기
 }

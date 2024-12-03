@@ -44,7 +44,7 @@
     <!--                      <br/>-->
                           <i class="bi bi-image"></i> 사진 업로드
                         </label>
-                        <input type="file" hidden="hidden" class="form-control" name="imgFile" id="imgFile" th:field="${product.imgFile}" onchange="loadFile(this)"><!--업로드한 사진으로 보여줌-->
+                        <input type="file" hidden="hidden" class="form-control" name="imgFile" id="imgFile" th:field="${product.imgFile}" onchange="loadFile('#defaultImg', this)"><!--업로드한 사진으로 보여줌-->
                       </div> <br/>
                       <p style="color: crimson"> ※ 작성 후에는 이미지를 수정할 수 없습니다! </p>
                     </div>
@@ -78,7 +78,7 @@
                           <label for="tagId" class="form-label">해시태그</label>
                           <input id="tagId" class="form-control" placeholder="태그 입력(최대 5개)" name="tagId" data-blacklist='.NET, PHP'>
                           <br/>
-                          <button class='tags--removeAllBtn' type='button'>입력한 태그 모두 삭제</button>
+                          <button type="button"  id="tagRemoveAll" class="btn btn-sm btn-primary mt-3">태그삭제</button>
                       </div>
 
                       <div class="mb-3">

@@ -126,10 +126,11 @@ public class ProductService {
         return count.intValue(); // intvalue: 객체의 값을 정수로 변환
     }
 
+    // 좋아요 여부 확인
     public boolean clickgood(Long prdId, String usrId) {
         Map<String, String> map = new HashMap<>();
         map.put("usrId", usrId);
         map.put("prdId",prdId.toString());
-        return productMapper.clickgood(map) == 1 ? true : false;
+        return productMapper.clickgood(map) == 1 ? true : false; // 결과값 1이면 true, 아니면 false
     }
 }
