@@ -239,19 +239,35 @@ $('#modifyDone').on('click', function(){
     console.log("done!!!!!!!!!!!");
     // 컨트롤러로 보내서 MemberDTO로 받을 예정 ->
     // 여기서 보낼 데이터를 MemberDTO 구조에 맞게 JS 객체로 만들어 데이터 체우고
+    let formData = new FormData();
+    formData.append("email", $('#email').val());
+    formData.append("bankAcnt", $('#bankAcnt').val());
+    formData.append("bankAcntOwr", $('#bankAcntOwr').val());
+    formData.append("bankNm", $('#bankNm').val());
+    formData.append("usrId", $('#usrID').val()); // where 조건문 사용시 필요
+    formData.append("intro", $('#myInfoText').val());
+    let inputFile = $("#formFile");
+    let files = inputFile[0].files;
+    console.log(files);
+    formData.append("imageProfile",files[0]);
+
     $.ajax({
         url: "/member/mypage/modify",
         type: "POST",
-        data: JSON.stringify({
-            // DTO : html id
-            email: $('#email').val(),
-            bankAcnt: $('#bankAcnt').val(),
-            bankAcntOwr: $('#bankAcntOwr').val(),
-            bankNm: $('#bankNm').val(),
-            usrId: $('#usrID').val(), // where 조건문 사용시 필요
-            intro : $('#myInfoText').val()
-        }),
-        contentType: 'application/json;charset=utf-8',
+        // data: JSON.stringify({
+        //     // DTO : html id
+        //     email: $('#email').val(),
+        //     bankAcnt: $('#bankAcnt').val(),
+        //     bankAcntOwr: $('#bankAcntOwr').val(),
+        //     bankNm: $('#bankNm').val(),
+        //     usrId: $('#usrID').val(), // where 조건문 사용시 필요
+        //     intro : $('#myInfoText').val()
+        // }),
+        data: formData,
+        processData : false,
+        contentType : false,
+        //enctype: ,
+        //contentType: 'multipart/form-data',
         //map에서 넘어온 값 result로 받아줌
         success: function(result){
             console.log("ajax 요청 성공!!");
@@ -276,6 +292,13 @@ $('#modifyDone').on('click', function(){
             //수정완료 후 페이지 되돌아가기
             window.location.href="/member/mypage";
             //window.location.reload();
+
+            // 기존 default 프로필 사진을 선택한 사진으로 변경하는 함수 by Moon
+            function loadFile(input) {
+                console.log(input.files[0]);
+                let file = input.files[0];
+                $('#defaultImg').attr("src", URL.createObjectURL(file));
+            }
 
         },
         error: function (e) {
@@ -329,12 +352,12 @@ jqAlert("로그인 성공!!!", "로그인 확인 창", function(){ window.locati
 */
 
 //마이페이지 수정시 validate
-$.ajax({
-    url: "/member/mypage/modifyform",
-    type: "post",
-    data: "email",
-    dataType: "json",
-    contentType: "application/json; charset = utf - 8",
-
-
-});
+// $.ajax({
+//     url: "/member/mypage/modifyform",
+//     type: "post",
+//     data: "email",
+//     dataType: "json",
+//     contentType: "application/json; charset = utf - 8",
+//
+//
+// });

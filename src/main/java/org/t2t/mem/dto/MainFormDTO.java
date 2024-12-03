@@ -33,7 +33,7 @@ public class MainFormDTO {
     // 넘어오는 파일 정보 담아줄 변수
     private MultipartFile imageProfile;  // 폼에서 넘어오는 이미지
 
-    // MemberFormDTO -> MemberDTO 변환해주는 메서드
+    // MainFormDTO -> MainDTO 변환해주는 메서드
     public MainDTO toMainDTO() {
         MainDTO mainDTO = new MainDTO();
 
@@ -53,5 +53,27 @@ public class MainFormDTO {
         mainDTO.setLastDt(this.lastDt);
 
         return mainDTO;
+    }
+
+    // MainFormDTO -> MemberDTO 변환해주는 메서드
+    public MemberDTO toMemberDTO() {
+        MemberDTO memberDTO = new MemberDTO();
+
+        memberDTO.setUsrId(this.usrId);
+        memberDTO.setPasswd(this.passwd);
+        memberDTO.setNm(this.nm);
+        memberDTO.setEmail(this.email);
+        memberDTO.setRoleId(this.roleId);
+        memberDTO.setMemStat(this.memStat);
+        memberDTO.setIntro(this.intro);
+        memberDTO.setLogAtmCnt(this.logAtmCnt);
+        memberDTO.setChgPassDt(this.chgPassDt);
+        memberDTO.setBankNm(this.bankNm);
+        memberDTO.setBankAcnt(this.bankAcnt);
+        memberDTO.setBankAcntOwr(this.bankAcntOwr);
+        memberDTO.setRegDt(this.regDt);
+        memberDTO.setLastDt(this.lastDt);
+
+        return memberDTO;
     }
 }

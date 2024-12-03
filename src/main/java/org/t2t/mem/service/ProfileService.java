@@ -42,8 +42,8 @@ public class ProfileService {
         // - 실제 파일 폴더에 저장 : 저장할 폴더경로 + 저장할 파일명 -> File 객체
         file.transferTo(new File(fileDir + profImg));
 
-         // 기본 이미지 설정
-         //  String defaultImage = "/upload/profile/profile1.jpg";
+        // 기본 이미지 설정
+        //  String defaultImage = "/upload/profile/profile1.jpg";
 
 
 
@@ -57,6 +57,12 @@ public class ProfileService {
     public ProfileDTO updateFile(MultipartFile file) throws IOException {
 
         return null;
+    }
+
+
+    // 파일 전체 경로 리턴
+    public String getFullPath(String filename) {
+        return fileDir + filename;
     }
 
 

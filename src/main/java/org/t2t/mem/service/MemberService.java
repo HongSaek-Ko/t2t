@@ -1,12 +1,16 @@
 package org.t2t.mem.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.*;
 import org.t2t.mem.repository.MemberMapper;
+import org.t2t.mem.repository.ProfileMapper;
 
 
+import java.io.IOException;
 import java.lang.reflect.Member;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -16,8 +20,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberService {
     private final MemberMapper memberMapper;
+    private final ProfileService profileService;
+    private final ProfileMapper profileMapper;
+
     //신고리스트
     public List<ComplaintDTO> findComplaintListByUsrId(String usrId) {
         return memberMapper.selectComplaintList(usrId);
@@ -29,19 +37,38 @@ public class MemberService {
         RankingDTO rankingDTO = memberMapper.selectRankByUsrId(memberDTO);
         memberDTO.setMile(mileDTO);
         memberDTO.setRank(rankingDTO);
-       return memberDTO;
+        return memberDTO;
     }
     //마일리지 충전/환전
     public void updownMile(MileDTO mile) {
         memberMapper.updateMile(mile);
     }
+
+
     //회원정보 수정
-    public void modifyMem(MemberDTO memberDTO){
+    public void modifyMem(MainFormDTO mainFormDTO) throws IOException {
+        // MainFormDTO -> MemberDTO로 변환해서 전달
+        MemberDTO memberDTO = mainFormDTO.toMemberDTO();
+        // DB에 member 주면서 저장해라~
         memberMapper.updateMem(memberDTO);
+        log.info("memberDTO : {}", memberDTO.toString());
+        // 실제 파일 저장처리 -> ProfileService
+        ProfileDTO imgProfile = profileService.saveFile((MultipartFile) mainFormDTO.getImageProfile());// 이미지 실제 파일 저장
+
+        // 파일 저장시 usrId 필요
+        // 이미지 파일정보 있으면, DB에 저장
+        if (imgProfile != null) {
+            imgProfile.setUsrId(memberDTO.getUsrId());
+            log.info("imgProfile : {}", imgProfile.toString());
+            profileMapper.updateProfile(imgProfile); // 저장
+        }
+        return;
     }
+
+
     //회원 탈퇴 시 id,pw 일치여부 확인
     public MemberDTO idPwCheck(@Param("usrId") String usrId, @Param("passwd") String passwd){
-       return memberMapper.idPwChecking(usrId,passwd);
+        return memberMapper.idPwChecking(usrId,passwd);
     }
     //마일리지 전체 목록 불러오기
     public List<MileDTO> selectMileTotal(String usrId) {
@@ -53,7 +80,7 @@ public class MemberService {
     }
     //나의 거래목록 불러오기(판매상태에 따른)
     public void selectTradeList(String usrId){
-         memberMapper.selectTradeList(usrId);
+        memberMapper.selectTradeList(usrId);
     }
     //나의 마일리지 정보 마일리지 테이블에 넣기
     public void insertMile(MileDTO mileDTO){

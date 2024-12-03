@@ -19,9 +19,11 @@ import org.t2t.mem.dto.MemberDTO;
 import org.t2t.mem.dto.MainFormDTO;
 import org.t2t.mem.repository.MainMapper;
 import org.t2t.mem.service.MainService;
+import org.t2t.mem.service.MemberService;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Member;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -37,7 +39,7 @@ public class MainController {
 
     private final MainService mainService;
     private final MainMapper mainMapper;
-
+    private final MemberService memberService;
 
 
     @GetMapping("/testuser")
@@ -308,6 +310,25 @@ public class MainController {
         // 틀리면 결과 출력
         model.addAttribute("result", result);
         return "/deletePro";
+    }
+
+
+
+    //마이페이지 수정처리
+    @PostMapping("/member/mypage/modify")
+    @ResponseBody
+    public ResponseEntity<Map<String, MemberDTO>> mypagemodify(MainFormDTO mainFormDTO, HttpServletRequest request) throws IOException {
+        Map<String, MemberDTO> map = new HashMap<>();
+        log.info("mypage modify post - memberDTO : {}", mainFormDTO);
+        memberService.modifyMem(mainFormDTO);
+        // 세션정보 수정
+        HttpSession session = request.getSession();
+        MemberDTO findUser = memberService.findByUserId(mainFormDTO.getUsrId());
+        session.setAttribute(HTTP_SESSION_USER, findUser);
+        map.put("findUser", findUser);
+        //map.put("memberDTO", memberDTO.toString();
+
+        return ResponseEntity.ok(map);
     }
 
 }

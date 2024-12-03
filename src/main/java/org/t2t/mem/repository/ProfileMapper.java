@@ -8,5 +8,8 @@ public interface ProfileMapper {
     // 파일 정보 저장
     void insertFile(ProfileDTO imgProfileDTO);
 
-    void updateProfile(ProfileDTO profileDTO);
+    void updateProfile(ProfileDTO imgprofileDTO);
+
+    ProfileDTO selectFileList(String usrId);
+
 }

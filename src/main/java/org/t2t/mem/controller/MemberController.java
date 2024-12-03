@@ -5,16 +5,23 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.t2t.mem.dto.*;
+import org.t2t.mem.repository.MemberMapper;
+import org.t2t.mem.repository.ProfileMapper;
 import org.t2t.mem.service.MemberService;
+import org.t2t.mem.service.ProfileService;
 
 import java.lang.reflect.Member;
+import java.net.MalformedURLException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +33,8 @@ import java.util.Map;
 
 public class MemberController {
     private final MemberService memberService;
+    private final ProfileService profileService;
+    private final ProfileMapper profileMapper;
 
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
@@ -37,14 +46,30 @@ public class MemberController {
     @GetMapping("/mypage")
     public String getMypage(HttpSession session, Model model) {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
-        log.info(user.toString());
+        log.info("getmyPage: {}", user.toString());
         //세션에 저장된 usrId 가져오기
         //MemberDTO findUser = memberService.findByUserId(user.getUsrId());
         MemberDTO findUser = memberService.findByUserId(user.getUsrId());
-        log.info(findUser.toString());
+        log.info("getmyPage: {}", findUser.toString());
+        // 이미지 파일가져오기
+        ProfileDTO imageProfile = profileMapper.selectFileList(user.getUsrId());
+        log.info("getmyPage: {}", imageProfile.getProfImg().toString());
+
+        findUser.setImageProfile(imageProfile);
         model.addAttribute(LOGGEDIN_MYUSER, findUser);
+
         return "member/mypage";
     }
+
+    // 마이페이지 프로필 이미지(뷰) 요청
+    @GetMapping("/mypage/image/{filename}")
+    @ResponseBody
+    public Resource getImages(@PathVariable("filename") String filename) throws MalformedURLException {
+        log.info("GET /board/images - filename : {}", filename);
+        return new UrlResource("file:" + profileService.getFullPath(filename));
+    }
+
+
 
     // mile, rank 가짜데이터 체워주는 임시 메서드
     private void setTestData(MemberDTO findUser, String usrId) {
@@ -67,22 +92,22 @@ public class MemberController {
     }
 
 
-    //마이페이지 수정처리
-    @PostMapping("/mypage/modify")
-    @ResponseBody
-    public ResponseEntity<Map<String, MemberDTO>> mypagemodify(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
-        Map<String, MemberDTO> map = new HashMap<>();
-        log.info("mypate modify post - memberDTO : {}", memberDTO);
-        memberService.modifyMem(memberDTO);
-        // 세션정보 수정
-        HttpSession session = request.getSession();
-        MemberDTO findUser = memberService.findByUserId(memberDTO.getUsrId());
-        session.setAttribute(HTTP_SESSION_USER, findUser);
-        map.put("findUser", findUser);
-        //map.put("memberDTO", memberDTO.toString();
-
-        return ResponseEntity.ok(map);
-    }
+//    //마이페이지 수정처리
+//    @PostMapping("/mypage/modify")
+//    @ResponseBody
+//    public ResponseEntity<Map<String, MemberDTO>> mypagemodify(@RequestBody MemberDTO memberDTO, HttpServletRequest request) {
+//        Map<String, MemberDTO> map = new HashMap<>();
+//        log.info("mypate modify post - memberDTO : {}", memberDTO);
+//        memberService.modifyMem(memberDTO);
+//        // 세션정보 수정
+//        HttpSession session = request.getSession();
+//        MemberDTO findUser = memberService.findByUserId(memberDTO.getUsrId());
+//        session.setAttribute(HTTP_SESSION_USER, findUser);
+//        map.put("findUser", findUser);
+//        //map.put("memberDTO", memberDTO.toString();
+//
+//        return ResponseEntity.ok(map);
+//    }
 
     //비밀번호 변경
     @PostMapping("mypage/modify/passswd")
@@ -106,10 +131,10 @@ public class MemberController {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
 
         memberService.updownMile(MileDTO.builder()
-                        .usrId(user.getUsrId())
-                        .point(point)
-                        .option(Trade.TRD01.getKey())
-                        .build());
+                .usrId(user.getUsrId())
+                .point(point)
+                .option(Trade.TRD01.getKey())
+                .build());
 
         log.info("충전서비스");
         MileDTO totalMile = memberService.selectMileTotal(user.getUsrId()).get(0);
@@ -196,5 +221,8 @@ public class MemberController {
     public String Faq(HttpServletRequest request, Model model) {
         return  "/member/faq";
     }
+
+
+
 
 }

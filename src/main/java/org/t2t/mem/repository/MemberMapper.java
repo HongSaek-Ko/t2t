@@ -1,13 +1,11 @@
 package org.t2t.mem.repository;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.t2t.mem.dto.ComplaintDTO;
-import org.t2t.mem.dto.MemberDTO;
-import org.t2t.mem.dto.MileDTO;
-import org.t2t.mem.dto.RankingDTO;
+import org.t2t.mem.dto.*;
 import org.t2t.prd.dto.OrderDTO;
 import org.t2t.prd.dto.ProductDTO;
 
+import java.lang.reflect.Member;
 import java.util.List;
 
 @Mapper

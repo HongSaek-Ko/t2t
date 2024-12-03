@@ -12,7 +12,11 @@
     <update id="updateProfile" parameterType="org.t2t.mem.dto.ProfileDTO">
         UPDATE PROFILE
         SET
-        PROFIMG = #{profImg}
+        PROFIMG = #{profImg}, PROFORGIMG = #{profOrgImg}, FILETYPE = #{filetype}
         WHERE USRID = #{usrId}
     </update>
+
+    <select id="selectFileList" resultType="ProfileDTO">
+        select * from profile where usrId=#{usrId}
+    </select>
 </mapper>
