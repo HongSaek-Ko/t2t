@@ -21,8 +21,15 @@
     </insert>
 
     <!--게시글에 해당하는 해시태그 가져오기 (게시글 상세보기, 수정 시 필요)-->
-    <select id="getPrdHashByPrdId" resultType="org.t2t.prd.dto.PrdHashDTO">
-        SELECT * FROM PRDHASH
-        WHERE PRDID=#{prdId}
+    <select id="getPrdHashByPrdId" resultType="hashmap" parameterType="long">
+        SELECT
+            prdHashId
+            ,tagId
+            ,prdId
+            ,regDt
+            ,lastDt
+        FROM PRDHASH
+        WHERE
+            PRDID = #{prdId}
     </select>
 </mapper>

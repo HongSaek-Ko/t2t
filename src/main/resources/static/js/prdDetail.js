@@ -30,7 +30,7 @@ function getPrdHashes() {
                console.log(_i);
                console.log(_el.tagId);
                const html =
-                   `<span class="badge text-bg-secondary"><h5>${_el.tagId}</h5></span>`;
+                   `<span class="badge text-bg-secondary">${_el.tagId}</span>`;
                $('#prdHash').append(html);
             });
         },

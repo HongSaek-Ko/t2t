@@ -91,7 +91,6 @@ public class ProductService {
     }
 
     public void modify(ProductFormDTO product) {
-        // 수정시간 표기... todo: 게시글 본문에 해당시키지 말아야 함...
         Date now = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         String datetime = "-";

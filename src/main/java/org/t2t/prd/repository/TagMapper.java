@@ -6,6 +6,7 @@ import org.t2t.prd.dto.HashDTO;
 import org.t2t.prd.dto.PrdHashDTO;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface TagMapper {
@@ -13,6 +14,6 @@ public interface TagMapper {
 
     void saveTags(PrdHashDTO tagId);
 
-    List<PrdHashDTO> getPrdHashByPrdId(Long prdId);
+    List<Map> getPrdHashByPrdId(Long prdId);
 
 }
