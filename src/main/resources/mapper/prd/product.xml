@@ -97,5 +97,12 @@
         SELECT COUNT(*) FROM PRD
     </select>
 
-
+    <select id="clickgood" parameterType="hashmap" resultType="integer">
+        SELECT
+            IFNULL(COUNT(*), 0) AS RESULT
+        FROM GOOD
+        WHERE
+            USRID = #{usrId} AND
+            PRDID = #{prdId}
+    </select>
 </mapper>

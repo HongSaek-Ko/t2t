@@ -3,7 +3,6 @@ package org.t2t.prd.service;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.t2t.prd.dto.*;
@@ -125,5 +124,12 @@ public class ProductService {
     public int getProductCount(Pager pager) {
         Long count = productMapper.countAllProduct(pager);
         return count.intValue(); // intvalue: 객체의 값을 정수로 변환
+    }
+
+    public boolean clickgood(Long prdId, String usrId) {
+        Map<String, String> map = new HashMap<>();
+        map.put("usrId", usrId);
+        map.put("prdId",prdId.toString());
+        return productMapper.clickgood(map) == 1 ? true : false;
     }
 }

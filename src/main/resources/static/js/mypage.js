@@ -18,7 +18,8 @@ $("#modifyForm").validate({
         //html name 값 : validate
         email: {required: true},
         bankAcntOwr : {required: true},
-        bankAcnt: {required: true}
+        bankAcnt: {required: true},
+
     },
     messages: {
         email: "이메일을 입력하세요.",
@@ -237,32 +238,21 @@ $('#modifyInfo').on('click', function (){
 //마이페이지 수정처리하기
 $('#modifyDone').on('click', function(){
     console.log("done!!!!!!!!!!!");
-    // 컨트롤러로 보내서 MemberDTO로 받을 예정 ->
-    // 여기서 보낼 데이터를 MemberDTO 구조에 맞게 JS 객체로 만들어 데이터 체우고
+    let _arr = $('#modifyForm').find('input[required], textarea[required]')
     let formData = new FormData();
-    formData.append("email", $('#email').val());
-    formData.append("bankAcnt", $('#bankAcnt').val());
-    formData.append("bankAcntOwr", $('#bankAcntOwr').val());
-    formData.append("bankNm", $('#bankNm').val());
-    formData.append("usrId", $('#usrID').val()); // where 조건문 사용시 필요
-    formData.append("intro", $('#myInfoText').val());
-    let inputFile = $("#formFile");
-    let files = inputFile[0].files;
-    console.log(files);
-    formData.append("imageProfile",files[0]);
+    $.each(_arr, function(index, element){
+        if($(element).attr('type') === 'file') {
+            if($(element).val() !== '')
+                formData.append("imageProfile",$(element)[0].files[0]);
+        } else {
+            if($(element).attr('name'))
+                formData.append("" + $(element).attr('name'), $(element).val());
+        }
+    });
 
     $.ajax({
         url: "/member/mypage/modify",
         type: "POST",
-        // data: JSON.stringify({
-        //     // DTO : html id
-        //     email: $('#email').val(),
-        //     bankAcnt: $('#bankAcnt').val(),
-        //     bankAcntOwr: $('#bankAcntOwr').val(),
-        //     bankNm: $('#bankNm').val(),
-        //     usrId: $('#usrID').val(), // where 조건문 사용시 필요
-        //     intro : $('#myInfoText').val()
-        // }),
         data: formData,
         processData : false,
         contentType : false,
@@ -305,7 +295,7 @@ $('#modifyDone').on('click', function(){
             console.log("ajax 요청 실패..");
             console.log(e)
         }
-    })
+    });
 });
 
 

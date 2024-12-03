@@ -36,5 +36,7 @@ public interface ProductMapper {
     // 게시글 전체 개수
     Long countAllProduct(Pager pager);
 
+    int clickgood(Map<String, String> map);
+
     // prdId로 해시태그 찾기
 }

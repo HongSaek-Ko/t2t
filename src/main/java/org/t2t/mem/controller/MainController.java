@@ -83,7 +83,7 @@ public class MainController {
                 createCookie(cid, cpw, Boolean.valueOf(cauto), response);
             }
         }
-        return "index";
+        return "product/list";
     }
 
     // 쿠키 생성 메서드

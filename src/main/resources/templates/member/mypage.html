@@ -14,141 +14,141 @@
         <th:block th:replace="fragments/sidebar::setMySideBar(~{::content})">
             <th:block th:fragment="content">
                 <div class="container text-center">
-                    <div class="row">
-                        <div class="col">
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td>
-                                        <img th:src="|/member/mypage/image/${myuser.imageProfile.getProfImg()}|" width="300px;" height="300px;"
-                                             id="profileImg" class="img-thumbnail mx-auto rounded-circle" alt="...">
-                                    </td>
-                                    <td>
+                    <form id="modifyForm" >
+                        <div class="row">
+                                <div class="col">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <img th:src="|/member/mypage/image/${myuser.imageProfile.getProfImg()}|" width="300px;" height="300px;"
+                                                     id="profileImg" class="img-thumbnail mx-auto rounded-circle" alt="...">
+                                            </td>
+                                            <td>
 
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="mb-3" id="profileForm">
-                                            <i class="bi bi-person-bounding-box">
-                                                <label for="formFile" class="form-label">프로필 사진 변경하기</label></i>
-                                            <input class="form-control" type="file" id="formFile">
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="mb-3" id="searchKeyword">
-                                            <label for="myinfotext" class="form-label">자기소개</label>
-                                            <textarea class="form-control" id="myInfoText" rows="3"
-                                                      style="height:250px;resize:none;"
-                                                      th:text="${myuser.intro}" readonly></textarea>
-                                            <span id="lengthCheck"> (0/ 최대 200자 ) </span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="mb-3" id="profileForm">
+                                                    <i class="bi bi-person-bounding-box">
+                                                        <label for="formFile" class="form-label">프로필 사진 변경하기</label></i>
+                                                    <input class="form-control" type="file" id="formFile" required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="mb-3" id="searchKeyword">
+                                                    <label for="myinfotext" class="form-label">자기소개</label>
+                                                    <textarea class="form-control" id="myInfoText" rows="3" name="intro"
+                                                              style="height:250px;resize:none;"
+                                                              th:text="${myuser.intro}" readonly required></textarea>
+                                                    <span id="lengthCheck"> (0/ 최대 200자 ) </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            <div class="col">
+                                    <table class="table">
+                                        <tbody>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" >보유 마일리지</span>
+                                                    <input type="text" class="form-control" placeholder="Username"
+                                                           aria-label="Username" aria-describedby="mile" id="mile" readonly
+                                                           th:value="${myuser.mile.point}" required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text" id="grade">등급 현황</span>
+                                                    <input type="text" class="form-control" placeholder="Username"
+                                                           aria-label="Username" aria-describedby="grade" readonly
+                                                           th:value="${myuser.rank.score}" style="background: #d3d3d3;" required>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <button type="button" class="btn btn-primary" id="rechargeEvent"
+                                                        value="rechargeEvent">충전
+                                                </button>
+                                                <button type="button" class="btn btn-warning" id="exchageEvent"
+                                                        value="exchageEvent">환전
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="usrID" class="form-label" style="text-align:left;display:block;">ID</label>
+                                                <input type="id" class="form-control" id="usrID" name="usrId" placeholder="ID" readonly
+                                                       th:value="${myuser.usrId}" style="background: #d3d3d3;" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="passwd" class="form-label" style="text-align:left;display:block;">Password</label>
+                                                <input type="password" class="form-control" name="password" id="passwd" placeholder="password" readonly
+                                                       th:value="${myuser.passwd}" style="background: #d3d3d3;" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <button type="button" class="btn btn-primary" id="modifyPasswdModal" > 비밀번호 변경</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="email" class="form-label" style="text-align:left;display:block;">Email</label>
+                                                <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                                       readonly th:value="${myuser.email}" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="name" class="form-label" style="text-align:left;display:block;">이름</label>
+                                                <input type="text" class="form-control" id="name" name="nm" placeholder="이름" readonly
+                                                       th:value="${myuser.nm}" style="background: #d3d3d3;" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="bankAcntOwr" class="form-label" style="text-align:left;display:block;">예금주 명</label>
+                                                <input type="text" class="form-control" id="bankAcntOwr" name="bankAcntOwr" placeholder="계좌주"
+                                                       readonly th:value="${myuser.bankAcntOwr}" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="bankNm" class="form-label" style="text-align:left;display:block;">은행명</label>
+                                                <input type="text" class="form-control" id="bankNm" name="bankNm" placeholder="은행명" readonly
+                                                       th:value="${myuser.bankNm}" style="background: #d3d3d3;" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <label for="bankAcnt" class="form-label" style="text-align:left;display:block;">계좌번호</label>
+                                                <input type="text" class="form-control" id="bankAcnt" name="bankAcnt" placeholder="계좌번호"
+                                                       th:value="${myuser.bankAcnt}" required>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <button type="button" class="btn btn-primary" id="modifyInfo">수정하기</button>
+                                                <button type="button" class="btn btn-primary" id="modifyDone">수정완료</button>
+                                                <button type="button" class="btn btn-danger" id="modifyCancel" th:onclick="|location.href='/member/mypage'|">취소</button>
+                                            </td>
+                                        </tr>
+                                    </table>
+                            </div>
                         </div>
-                        <div class="col">
-                            <form id="modifyform" >
-                                <table class="table">
-                                    <tbody>
-                                    <tr>
-                                        <td colspan="2">
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" >보유 마일리지</span>
-                                                <input type="text" class="form-control" placeholder="Username"
-                                                       aria-label="Username" aria-describedby="mile" id="mile" readonly
-                                                       th:value="${myuser.mile.point}">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="grade">등급 현황</span>
-                                                <input type="text" class="form-control" placeholder="Username"
-                                                       aria-label="Username" aria-describedby="grade" readonly
-                                                       th:value="${myuser.rank.score}" style="background: #d3d3d3;">
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <button type="button" class="btn btn-primary" id="rechargeEvent"
-                                                    value="rechargeEvent">충전
-                                            </button>
-                                            <button type="button" class="btn btn-warning" id="exchageEvent"
-                                                    value="exchageEvent">환전
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="usrID" class="form-label" style="text-align:left;display:block;">ID</label>
-                                            <input type="id" class="form-control" id="usrID" name=usrId placeholder="ID" readonly
-                                                   th:value="${myuser.usrId}" style="background: #d3d3d3;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="passwd" class="form-label" style="text-align:left;display:block;">Password</label>
-                                            <input type="password" class="form-control" name="password" id="passwd" placeholder="password" readonly
-                                                   th:value="${myuser.passwd}" style="background: #d3d3d3;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <button type="button" class="btn btn-primary" id="modifyPasswdModal" > 비밀번호 변경</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="email" class="form-label" style="text-align:left;display:block;">Email</label>
-                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email"
-                                                   readonly th:value="${myuser.email}" >
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="name" class="form-label" style="text-align:left;display:block;">이름</label>
-                                            <input type="text" class="form-control" id="name" name="name" placeholder="이름" readonly
-                                                   th:value="${myuser.nm}" style="background: #d3d3d3;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="bankAcntOwr" class="form-label" style="text-align:left;display:block;">예금주 명</label>
-                                            <input type="text" class="form-control" id="bankAcntOwr" name="bankAcntOwr" placeholder="계좌주"
-                                                   readonly th:value="${myuser.bankAcntOwr}">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="bankNm" class="form-label" style="text-align:left;display:block;">은행명</label>
-                                            <input type="text" class="form-control" id="bankNm" name="bankNm" placeholder="은행명" readonly
-                                                   th:value="${myuser.bankNm}" style="background: #d3d3d3;">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <label for="bankAcnt" class="form-label" style="text-align:left;display:block;">계좌번호</label>
-                                            <input type="text" class="form-control" id="bankAcnt" name="bankAcnt" placeholder="계좌번호"
-                                                   th:value="${myuser.bankAcnt}">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="2">
-                                            <button type="button" class="btn btn-primary" id="modifyInfo">수정하기</button>
-                                            <button type="button" class="btn btn-primary" id="modifyDone">수정완료</button>
-                                            <button type="button" class="btn btn-danger" id="modifyCancel" th:onclick="|location.href='/member/mypage'|">취소</button>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </form>
-                        </div>
-                    </div>
+                    </form>
                 </div>
 
                 <div class="modal fade " id="commonModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -197,7 +197,7 @@
                                 <tr>
                                     <td colspan="2">
                                         <div class="input-group mb-3"><span class="input-group-text">출금할 마일리지</span>
-                                            <input type="text" name="exchange" id="exchangeMile" class="form-control" aria-label="Username" aria-describedby="grade" required min="1" max="8">
+                                            <input type="number" name="exchange" id="exchangeMile" class="form-control" aria-label="Username" aria-describedby="grade" required min="1" max="8">
                                         </div>
                                     </td>
                                 </tr>

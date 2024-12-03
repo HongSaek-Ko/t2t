@@ -2,6 +2,7 @@ $(document).ready(function () {
     registerEvent(['#complaintEvent', '#purchaseEvent', '#deleteEvent']);
     registerGoodEvent('#goodEvent');
     getPrdHashes();
+    selectIhaveGood();
     $(window).on('submit', function (){
         $( "#dialogContent" ).html("구매 완료!")
         $( "#dialog-confirm" ).dialog({
@@ -13,6 +14,10 @@ $(document).ready(function () {
         });
     });
 });
+
+function selectIhaveGood() {
+
+}
 function getPrdHashes() {
     $.ajax({
         url: '/tags/prdHash/' + $('#complaintEvent').data('prdid'),

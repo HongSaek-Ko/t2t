@@ -21,7 +21,7 @@ public class ProfileService {
 
     public ProfileDTO saveFile(MultipartFile file) throws IOException {
         // * 파일 없으면 메서드 강제 종료 null 리턴
-        if(file.isEmpty()) {
+        if(file == null || file.isEmpty()) {
             return null;
         }
         // * 파일 한개 저장

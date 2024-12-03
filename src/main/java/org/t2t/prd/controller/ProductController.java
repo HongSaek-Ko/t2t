@@ -12,6 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.t2t.mem.dto.MemberDTO;
+import org.t2t.mem.dto.ProfileDTO;
+import org.t2t.mem.repository.ProfileMapper;
+import org.t2t.mem.service.MemberService;
+import org.t2t.mem.service.ProfileService;
 import org.t2t.prd.dto.*;
 import org.t2t.prd.repository.ProductMapper;
 import org.t2t.prd.service.FileService;
@@ -20,6 +24,7 @@ import org.t2t.prd.service.TagService;
 
 import java.awt.print.Pageable;
 import java.io.IOException;
+import java.lang.reflect.Member;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +39,9 @@ public class ProductController {
     private final FileService fileService;
     private final TagService tagService;
     private final ProductMapper productMapper;
+    private final ProfileService profileService;
+    private final ProfileMapper profileMapper;
+    private final MemberService memberService;
 
     @Value("${HTTP_SESSION_USER}")
     private String HTTP_SESSION_USER;
@@ -73,9 +81,25 @@ public class ProductController {
     @GetMapping("/{prdId}")
     public String productDetail(@PathVariable("prdId") Long prdId, Model model, HttpSession session) {
         log.info("상품 상세 페이지! prdId: {}", prdId);
+        MemberDTO loggedInMember = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        // prdId로 prd 하나 가져오기
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
         model.addAttribute("goodCount", productService.goodCount(prdId));
+        model.addAttribute("clickgood", productService.clickgood(prdId, loggedInMember.getUsrId()));
+//        // Prd에서 usrId 가져오기
+//        String usrId = product.getUsrId();
+//        log.info("usrId : {}", usrId);
+//
+//        // Prd에서 가져온 usrId로 member 정보 가져오기 + 모델 객체에 담기
+//        MemberDTO member = memberService.findByUserId(product.getUsrId());
+//        log.info("member: {}", member.toString());
+//        model.addAttribute("member", member);
+//
+//        // Prd에서 가져온 usrId로 프로필 이미지 가져오기
+//        ProfileDTO profImg = profileMapper.selectFileList(usrId);
+//        log.info("profImg: {} ", profImg.toString());
+
 
         // 세션에서 유저아이디 추출
 //        String sid = (String) session.getAttribute("sid");

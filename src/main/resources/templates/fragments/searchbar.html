@@ -4,20 +4,9 @@
     <header class="py-3 mb-3 border-bottom">
         <div class="container-fluid d-grid gap-3 align-items-center" style="grid-template-columns: 1fr 2fr;">
             <div class="dropdown">
-                <a href="#" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <a href="/" class="d-flex align-items-center col-lg-4 mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
                     <img src="/common/img/t2t.png" width="40" height="40">
                 </a>
-                <ul class="dropdown-menu text-small shadow" style="">
-                    <li><a class="dropdown-item active" href="#" aria-current="page">Overview</a></li>
-                    <li><a class="dropdown-item" href="#">Inventory</a></li>
-                    <li><a class="dropdown-item" href="#">Customers</a></li>
-                    <li><a class="dropdown-item" href="#">Products</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" href="#">Reports</a></li>
-                    <li><a class="dropdown-item" href="#">Analytics</a></li>
-                </ul>
             </div>
 
             <div class="d-flex align-items-center">
@@ -32,9 +21,7 @@
 
                     <ul class="dropdown-menu text-small shadow" style="">
                         <th:block th:if="${session.t2t_session_user != null}">
-                            <th:block th:if="${!#strings.contains(session.http_session_current_url, 'mypage')}">
-                                <li><a class="dropdown-item" href="/member/mypage" id="modifyEvent">내 프로필보기 </a></li>
-                            </th:block>
+                            <li><a class="dropdown-item" href="/member/mypage" id="modifyEvent">내 프로필보기 </a></li>
                             <li><a class="dropdown-item" href="#" id="leaveEvent">회원탈퇴</a></li>
                             <li><hr class="dropdown-divider" id="divider"></li>
                             <li><a class="dropdown-item" href="#" id="logoutEvent">Log out</a></li>
@@ -48,5 +35,271 @@
             </div>
         </div>
     </header>
+    <script th:src="@{/common/js/common.js}"></script>
+
+    <!--   loginModal 로그인 모달  -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="/common/img/t2t.png" width="40" height="40"/>
+                    <h1 class="modal-title fs-5" id="loginModalLabel">로그인</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/login" method="post" id="loginForm">
+                        <div class="form-floating mb-2">
+                            <input type="text" class="form-control" id="floatingInput" name="usrId" placeholder="User Id" required />
+                            <label for="floatingInput">ID</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="current-password" class="form-control" id="floatingPassword" name="passwd" placeholder="Password" required>
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-check my-1" style="display: flex; justify-content: center;">
+                            <input class="form-check-input" type="checkbox" id="flexCheckDefault" value="auto" name="auto">
+                            <label class="form-check-label" for="flexCheckDefault">자동로그인</label>
+                        </div>
+                        <div class="mb-5" style="display: flex; justify-content: center;">
+                            <button type="button" class="btn btn-primary" id="loginSubmit" >로그인</button>
+                        </div>
+                    </form>
+                    <ul class="nav justify-content-center mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="findIdEvent">아이디 찾기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="findPwdEvent">비밀번호 찾기</a>
+                        </li>
+                    </ul>
+                    <div class="my-1" style="display: flex; justify-content: center;">
+                        <button type="button" class="btn btn-info" id="joinBtn">회원가입</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   joinModal 회원 가입 모달  -->
+    <div class="modal fade" id="joinModal" tabindex="-1" aria-labelledby="joinModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img id="defaultImg" src="/common/img/t2t.png" width="40" height="40"/>
+                    <h1 class="modal-title fs-5" id="joinModalLabel">T2T 회원가입 페이지</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/guest/signup" method="post" id="joinForm" enctype="multipart/form-data">
+                        <div class="form-floating mb-1" style="display: flex; justify-content: center; border-radius: 50%">
+                            <div>
+                                <img src="/common/img/t2t.png" id="imgTag" width="150" height="150"/>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-1" style="display: flex; justify-content: center; width: 350px;">
+                            <input type="file" class="form-control" name="imageProfile" id="floatingJoinProfileInput" placeholder="profile" onchange="loadFile(this)" />
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="text" class="form-control" name="usrId" id="floatingJoinInput" placeholder="userId" required>
+                            <label for="floatingJoinInput">ID*</label>
+                        </div>
+                        <div>
+                            <input type="text" id="idCheck" style="width: 250px; " disabled />
+                            <label for="idCheck">중복 아이디 체크</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="new-password" class="form-control" name="passwd" id="floatingJoinPassword" placeholder="Password" required>
+                            <label for="floatingJoinPassword">Password*</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="new-password" class="form-control" name="pwch" id="floatingJoinPasswordCheck" placeholder="passwordCheck" required>
+                            <label for="floatingJoinPasswordCheck">Password 확인*</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="text" class="form-control" name="nm" id="floatingJoinName" placeholder="name" required>
+                            <label for="floatingJoinName">회원 실명*</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="email" class="form-control" name="email" id="floatingJoinEmail" placeholder="email" required>
+                            <label for="floatingJoinEmail">email address*</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="text" class="form-control" name="bankNm" id="floatingJoinBank" placeholder="bank" required>
+                            <label for="floatingJoinBank">은행명 *카카오뱅크만 가능합니다.!!</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="text" class="form-control" name="bankAcnt" id="floatingJoinBankAccount" placeholder="bankAccount" required>
+                            <label for="floatingJoinBankAccount">계좌번호(- 없이 입력하세요)</label>
+                        </div>
+                        <div class="form-floating mb-1">
+                            <input type="text" class="form-control" name="bankAcntOwr" id="floatingJoinBankAccountOwner" placeholder="bankAccountOwner" required>
+                            <label for="floatingJoinBankAccountOwner">예금주 명</label>
+                        </div>
+                        <div class="form-floating">
+                            <textarea class="form-control" placeholder="Leave a comment here" name="intro" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">자기소개</label>
+                        </div>
+
+                        <div class="mb-5" style="display: flex; justify-content: center">
+                            <button type="button" class="btn btn-primary mx-2" id="joinCompleteBtn" >회원가입완료</button>
+                            <button type="button" class="btn btn-danger mx-2" id="cancelBtn" onclick="window.location='/'">취소</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--   leaveModal  회원 탈퇴  -->
+    <div class="modal fade" id="leaveModal" tabindex="-1" aria-labelledby="leaveModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="/common/img/t2t.png" width="40" height="40"/>
+                    <h1 class="modal-title fs-5" id="leaveModalLabel">탈퇴하시겠습니까?</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/member/{usrId}/delete(usrId=${session.sid})}" method="post" id="leaveForm" >
+                        <div class="form-floating mb-2">
+                            <input type="new-password" class="form-control" id="LeavePassword" name="passwd" placeholder="Password" required>
+                            <label for="LeavePassword">Password</label>
+                        </div>
+                        <div class="mb-5" style="display: flex; justify-content: center">
+                            <button type="button" class="btn btn-danger mx-2" id="leaveCompleteBtn">회원탈퇴</button>
+                        </div>
+                        <ul class="nav justify-content-center mb-2">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">비밀번호 찾기</a>
+                            </li>
+                        </ul>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!--   id 찾기 입력 Modal findIdModal  -->
+    <div class="modal fade" id="findIdModal" tabindex="-1" aria-labelledby="finIdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="/common/img/t2t.png" width="40" height="40"/>
+                    <h1 class="modal-title fs-5" id="findIdModalLabel">아이디 찾기</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="findIdForm">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="findIdNm" name="nm" placeholder="user_name" required>
+                            <label for="findIdNm">사용자 이름</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="email" class="form-control" id="findIdEmail" name="email" placeholder="Email" required>
+                            <label for="findIdEmail">email</label>
+                        </div>
+                        <div class="mb-5" style="display: flex; justify-content: center;">
+                            <button type="button" id="findIdSubmit" class="btn btn-info" >아이디 찾기</button>
+                        </div>
+                    </form>
+                    <ul class="nav justify-content-center mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="loginEvent1">로그인 하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="findPwdEvent1">비밀번호 찾기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   id 찾기 결과 출력 Modal findIdResultModal  -->
+    <div class="modal fade" id="findIdResultModal" tabindex="-1" aria-labelledby="finIdResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="/common/img/t2t.png" width="40" height="40"/>
+                    <h1 class="modal-title fs-5" id="findIdModalResultLabel">회원님의 아이디를 확인해 주세요</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="result-box">
+                        <p class="inquiry" id="findIdWrite">조회결과가 없습니다.</p>
+                    </div>
+
+                    <ul class="nav justify-content-center mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="loginEvent2">로그인 하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="findPwdEvent2">비밀번호 찾기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   비밀번호 찾기 입력 Modal findPwdModal  -->
+    <div class="modal fade" id="findPwdModal" tabindex="-1" aria-labelledby="finPwdModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="/common/img/t2t.png" width="40" height="40"/>
+                    <h1 class="modal-title fs-5" id="findPwdModalLabel">패스워드 찾기</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="findPwdUsrId" name="usrId" placeholder="usrId">
+                        <label for="findIdNm">사용자 아이디</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="findPwdNm" name="nm" placeholder="user_name">
+                        <label for="findIdNm">사용자 이름</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="findPwdEmail" name="email" placeholder="Email">
+                        <label for="findIdEmail">email</label>
+                    </div>
+                    <div class="mb-5" style="display: flex; justify-content: center;">
+                        <button type="button" id="findPwdSubmit" class="btn btn-info">비밀번호 찾기</button>
+                    </div>
+                    <ul class="nav justify-content-center mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="loginEvent3">로그인 하기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--   비밀번호 찾기 결과 출력 Modal findPwdResultModal  -->
+    <div class="modal fade" id="findPwdResultModal" tabindex="-1" aria-labelledby="finPwdResultModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <img src="/common/img/t2t.png" width="40" height="40"/>
+                    <h2 class="modal-title fs-5" id="findPwdModalResultLabel">회원님의 비밀번호를 확인하세요</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="result-box">
+                        <p class="inquiry" id="findPwdWrite">일치하는 회원 정보가 없습니다.</p>
+                    </div>
+
+                    <ul class="nav justify-content-center mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="loginEvent4">로그인 하기</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="findPwdEvent3">비밀번호 다시 찾기</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </th:block>
 </html>
