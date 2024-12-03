@@ -2,9 +2,9 @@ $(document).ready(function () {
     registerEvent(['#complaintEvent', '#purchaseEvent', '#deleteEvent']);
     registerGoodEvent('#goodEvent');
     getPrdHashes();
-    $(window).on('submit', function (){
-        $( "#dialogContent" ).html("구매 완료!")
-        $( "#dialog-confirm" ).dialog({
+    $(window).on('submit', function () {
+        $("#dialogContent").html("구매 완료!")
+        $("#dialog-confirm").dialog({
             resizable: false,
             height: "auto",
             width: 400,
@@ -14,7 +14,7 @@ $(document).ready(function () {
     });
 
     $('#hide_effect').hide();
-    $('#detail_effect').click(function() {
+    $('#detail_effect').click(function () {
         $('#hide_effect').toggle(1000);
     });
 });
@@ -26,12 +26,12 @@ function getPrdHashes() {
         success: function (data) {
             console.log(data, "요청 성공!");
             console.log(data[0], "요청 성공!");
-            $.each(data, function (_i, _el){
-               console.log(_i);
-               console.log(_el.tagId);
-               const html =
-                   `<span class="badge text-bg-secondary">${_el.tagId}</span>`;
-               $('#prdHash').append(html);
+            $.each(data, function (_i, _el) {
+                console.log(_i);
+                console.log(_el.tagId);
+                const html =
+                    `<span class="badge text-bg-secondary">${_el.tagId}</span>`;
+                $('#prdHash').append(html);
             });
         },
         error: function (error) {
@@ -40,23 +40,32 @@ function getPrdHashes() {
     });
 }
 
+
+var clickgood = $('#goodEvent').data('clickgood');
 function registerGoodEvent(registerGoodEvent) {
-    $(registerGoodEvent).on('click', function() {
+    $(registerGoodEvent).on('click', function () {
         // ajax 요청 1; 좋아요 정보 업데이트
         $.ajax({
-           url : '/product/detail/good/' + $('#complaintEvent').data('prdid'),
-           method: 'GET',
+            url: '/product/detail/good/' + $('#complaintEvent').data('prdid'),
+            method: 'GET',
             success: function (data) {
-               $.each(data, function (_i, _el){
-                   console.log(_el); // el: prdId
-                   console.log(_i); // _i: good
-                   console.log(data); // good:prdId
-               });
+                console.log("클릭 전: " + clickgood);
+                if (clickgood === true) {
+                    $('#heart-fill').removeClass().addClass('bi bi-heart');
+                } else {
+                    $('#heart-empty').removeClass().addClass('bi bi-heart-fill');
+                }
+
+                $.each(data, function (_i, _el) {
+                    console.log(_el); // el: prdId
+                    console.log(_i); // _i: good
+                    console.log(data); // good:prdId
+                });
                 // ajax 요청 2; 좋아요 수 업데이트
                 $.ajax({
                     url: '/product/goodCount/' + $('#complaintEvent').data('prdid'),
                     method: 'GET',
-                    success: function (count){
+                    success: function (count) {
                         console.log("ajax post 요청 성공!");
                         console.log("count: " + count);
                         $("#goodCount").text(count);
@@ -164,7 +173,7 @@ function createComplaintLayout() {
 
 function createDeleteLayout() {
     var deleteArr = [];
-    deleteArr.push('<form id="deletePrdForm" action="/product/'+ $('#complaintEvent').data('prdid') +'/delete" method="post">') // <...action="/product/prdId/delete"...>
+    deleteArr.push('<form id="deletePrdForm" action="/product/' + $('#complaintEvent').data('prdid') + '/delete" method="post">') // <...action="/product/prdId/delete"...>
     deleteArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
     deleteArr.push('        <h4> 정말 삭제하시겠습니까? </h4>')
     deleteArr.push('    </div>')
@@ -177,7 +186,7 @@ function createDeleteLayout() {
 
 function createPurchaseLayout() {
     var purchaseArr = [];
-    purchaseArr.push('<form id="purchaseForm" action="/product/'+ $('#complaintEvent').data('prdid') +'/purchase" method="get">') // <...action="/product/prdId/delete"...>
+    purchaseArr.push('<form id="purchaseForm" action="/product/' + $('#complaintEvent').data('prdid') + '/purchase" method="get">') // <...action="/product/prdId/delete"...>
     purchaseArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
     purchaseArr.push('        <h4> 이 상품을 구매하시겠습니까? </h4>')
     purchaseArr.push('    </div>')

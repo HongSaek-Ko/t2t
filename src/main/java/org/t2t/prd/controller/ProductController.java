@@ -1,6 +1,7 @@
 package org.t2t.prd.controller;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -88,27 +89,31 @@ public class ProductController {
 
     // 상품 상세 페이지
     @GetMapping("/{prdId}")
-    public String productDetail(@PathVariable("prdId") Long prdId, Model model, HttpSession session) {
+    public String productDetail(@PathVariable("prdId") Long prdId, Model model, HttpSession session) throws MalformedURLException {
         log.info("상품 상세 페이지! prdId: {}", prdId);
-        MemberDTO loggedInMember = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+        if(session.getAttribute(HTTP_SESSION_USER) != null) {
+            MemberDTO loggedInMember = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
+            model.addAttribute("clickgood", productService.clickgood(prdId, loggedInMember.getUsrId()));
+        }
         // prdId로 prd 하나 가져오기
         ProductDTO product = productService.getProduct(prdId);
         model.addAttribute("product", product);
         model.addAttribute("goodCount", productService.goodCount(prdId));
-        // prd에서 prdId 가져오기, 로그인 세션에서 usrId
-        model.addAttribute("clickgood", productService.clickgood(prdId, loggedInMember.getUsrId()));
-//        // Prd에서 usrId 가져오기
-//        String usrId = product.getUsrId();
-//        log.info("usrId : {}", usrId);
-//
-//        // Prd에서 가져온 usrId로 member 정보 가져오기 + 모델 객체에 담기
-//        MemberDTO member = memberService.findByUserId(product.getUsrId());
-//        log.info("member: {}", member.toString());
-//        model.addAttribute("member", member);
-//
-//        // Prd에서 가져온 usrId로 프로필 이미지 가져오기
-//        ProfileDTO profImg = profileMapper.selectFileList(usrId);
-//        log.info("profImg: {} ", profImg.toString());
+
+        // Prd에서 usrId 가져오기
+        String usrId = product.getUsrId();
+        log.info("usrId : {}", usrId);
+
+        // Prd에서 가져온 usrId로 member 정보 가져오기 + 모델 객체에 담기
+        MemberDTO member = memberService.findByUserId(product.getUsrId());
+        log.info("member: {}", member.toString());
+        model.addAttribute("member", member);
+
+        // Prd에서 가져온 usrId로 프로필 이미지 가져오기
+        if(profileMapper.selectFileList(usrId) != null) {
+            ProfileDTO profImg = profileMapper.selectFileList(usrId);
+            log.info("profImg: {} ", profImg.toString());
+        }
 
         return "product/detail";
     }
