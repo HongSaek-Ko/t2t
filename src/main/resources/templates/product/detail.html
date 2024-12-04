@@ -16,7 +16,7 @@
         window.location.href="/";
     </script>
 </div>
-<div th:if="${session.sid != null}">
+<div th:if="${session.sid != null}" th:data-productid="${product.prdId}" id="productId">
     <div th:if="${product.salStat != 'PRD02'}">
         <div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
           <!-- Sidebar -->
@@ -42,7 +42,7 @@
                               <div class="card" style="width: 18rem; border:none;position: fixed; top:80px;left:200px;z-index:9999;" id="hide_effect">
                                   <div class="card-body" >
     <!--                                  <img width="32" height="32" class="rounded-circle" th:src="@{/upload/profile/{url}(url=${product.uploadMemberInfo.getImageProfile().getProfImg()})}" />-->
-                                      <img width="32" height="32" class="rounded-circle" th:src="|/member/image/${member.getImageProfile().getProfImg()}|" />
+                                      <img width="32" height="32" class="rounded-circle" th:src="|/upload/profile/${member.getImageProfile().getProfImg()}|" />
                                       <code><span class="card-text ml-15" style="font-weight: bold;font-size: 20px;" th:text="${product.uploadMemberInfo.usrId}"></span></code>
                                   </div>
                               </div>
@@ -55,13 +55,13 @@
                           <div th:if="${session.sid == product.usrId}">
                               <div class="card" style="width: 18rem; border:none;" >
                                   <div class="card-body">
-                                      <img th:src="|/member/image/${member.getImageProfile().getProfImg()}|" width="32" height="32" class="rounded-circle">
+                                      <img th:src="|/upload/profile/${member.getImageProfile().getProfImg()}|" width="32" height="32" class="rounded-circle">
                                       <code><span style="font-weight: bold;font-size: 20px;">[[${product.usrId}]] 님의 T2T</span></code>
                                   </div>
                               </div>
                           </div>
-                        <div class="card" style="width: 30rem;border:none;margin-left: 120px;">
-                          <img th:src="|/product/image/${product.getImgFile().getFileNm()}|" class="card-img-top" style="border-radius: 20%;">
+                        <div class="card" style="width: 30rem;border:none;border-radius: 10%;margin-left: 120px;">
+                          <img th:src="|/product/image/${product.getImgFile().getFileNm()}|" class="card-img-top" style="border-radius: 10%;">
 
                           <!--좋아요, 조회수, 구매량 표시 부분-->
                           <div class="card-body">
@@ -115,22 +115,24 @@
                         <div class="mb-3">
                           <label for="cont" class="form-label">설명</label>
                           <textarea class="form-control" id="cont" rows="3" th:text="${product.cont}" readonly></textarea>
+                            <div class="card-body" id="prdHash" style="margin-top: 5px; text-align: left"></div>
+
                         </div> <!--제목/설명 끝-->
 
-                        <div class="card">
-                            <div class="card-body" id="prdHash" >
-                            </div>
+                        <div class="card" style="border: none;" align="left">
+<!--                            <div class="card-body" id="prdHash" >-->
+<!--                            </div>-->
                         </div>
 
-                        <div class="card">
-                          <div class="card-body">
+                        <div class="card" >
+                          <div class="card-body" style="font-size: 18px">
                             카테고리: [[${product.cate}]]
                           </div>
                         </div>
                         <p class="margin">
 
                         <div class="card">
-                          <div class="card-body">
+                          <div class="card-body" style="font-size: 18px">
                             <p>가격: [[${product.price}]]원</p>
                             남은 수량: [[${product.trgtSalQty}]]개
                           </div>
@@ -143,10 +145,10 @@
                                           <h4>댓글쓰기
                                               <span></span>
                                           </h4>
+                                          <input type="button" class="comment-btn" id="comment-btn" value="등록"/>
                                           <span class="ps_box">
                                             <input type="text" placeholder="댓글 입력..." class="int" name="content"/>
                                           </span>
-                                          <input type="button" class="comment-btn" id="comment-btn" value="등록"/>
                                       </div>
                                   </li>
                                   <li id="reply-list"></li>

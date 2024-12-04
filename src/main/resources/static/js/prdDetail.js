@@ -1,4 +1,6 @@
+var productId = $('#productId').data('productid');
 $(document).ready(function () {
+
     registerEvent(['#complaintEvent', '#purchaseEvent', '#deleteEvent']);
     registerGoodEvent('#goodEvent');
     getPrdHashes();
@@ -21,20 +23,22 @@ $(document).ready(function () {
 
 function getPrdHashes() {
     $.ajax({
-        url: '/tags/prdHash/' + $('#complaintEvent').data('prdid'),
+        url: '/tags/prdHash/' + $('#productId').data('productid'),
         method: 'GET',
         success: function (data) {
+            console.log("prdId: " + $('#productId').data('prdid'));
             console.log(data, "요청 성공!");
             console.log(data[0], "요청 성공!");
             $.each(data, function (_i, _el) {
                 console.log(_i);
                 console.log(_el.tagId);
                 const html =
-                    `<span class="badge text-bg-secondary">${_el.tagId}</span>`;
+                    `<span class="badge text-bg-secondary"><h6>${_el.tagId}</h6></span>&ensp;`;
                 $('#prdHash').append(html);
             });
         },
         error: function (error) {
+            console.log("prdId: " + $('#productId').data('prdid'));
             console.log(error, "요청 실패.");
         }
     });
@@ -46,7 +50,7 @@ function registerGoodEvent(registerGoodEvent) {
     $(registerGoodEvent).on('click', function () {
         // ajax 요청 1; 좋아요 정보 업데이트
         $.ajax({
-            url: '/product/detail/good/' + $('#complaintEvent').data('prdid'),
+            url: '/product/detail/good/' + productId,
             method: 'GET',
             success: function (data) {
                 console.log("클릭 전: " + clickgood);
@@ -63,7 +67,7 @@ function registerGoodEvent(registerGoodEvent) {
                 });
                 // ajax 요청 2; 좋아요 수 업데이트
                 $.ajax({
-                    url: '/product/goodCount/' + $('#complaintEvent').data('prdid'),
+                    url: '/product/goodCount/' + productId,
                     method: 'GET',
                     success: function (count) {
                         console.log("ajax post 요청 성공!");
@@ -84,7 +88,7 @@ function registerEvent(_target) {
     $.each(_target, function (_i, _el) {
         $(_el).on('click', function (e) {
             var _id = e.target.value;
-            console.log($('#complaintEvent').data('prdid')); // prdId 가져오기, 다른 것들도 동일
+            console.log(productId); // prdId 가져오기, 다른 것들도 동일
             console.log(_target);
             console.log(_i);
             console.log(_el);
@@ -173,7 +177,7 @@ function createComplaintLayout() {
 
 function createDeleteLayout() {
     var deleteArr = [];
-    deleteArr.push('<form id="deletePrdForm" action="/product/' + $('#complaintEvent').data('prdid') + '/delete" method="post">') // <...action="/product/prdId/delete"...>
+    deleteArr.push('<form id="deletePrdForm" action="/product/' + productId + '/delete" method="post">') // <...action="/product/prdId/delete"...>
     deleteArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
     deleteArr.push('        <h4> 정말 삭제하시겠습니까? </h4>')
     deleteArr.push('    </div>')
@@ -186,7 +190,7 @@ function createDeleteLayout() {
 
 function createPurchaseLayout() {
     var purchaseArr = [];
-    purchaseArr.push('<form id="purchaseForm" action="/product/' + $('#complaintEvent').data('prdid') + '/purchase" method="get">') // <...action="/product/prdId/delete"...>
+    purchaseArr.push('<form id="purchaseForm" action="/product/' + productId + '/purchase" method="get">') // <...action="/product/prdId/delete"...>
     purchaseArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
     purchaseArr.push('        <h4> 이 상품을 구매하시겠습니까? </h4>')
     purchaseArr.push('    </div>')
