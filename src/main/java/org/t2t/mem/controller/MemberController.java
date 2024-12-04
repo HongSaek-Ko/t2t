@@ -212,7 +212,7 @@ public class MemberController {
         MemberDTO user = (MemberDTO)session.getAttribute(HTTP_SESSION_USER);
         List<ComplaintDTO> cmpList = memberService.findComplaintListByUsrId(user.getUsrId());
         model.addAttribute("cmpList", cmpList);
-        return "/member/mycomplaint";
+        return "member/mycomplaint";
     }
 
     //FAQ
@@ -229,6 +229,6 @@ public class MemberController {
         List<OrderDTO> orList = memberService.selectOrderList(user.getUsrId());
 
         model.addAttribute("orList", orList);
-        return "/member/mypageList";
+        return "member/mypageList";
     }
 }

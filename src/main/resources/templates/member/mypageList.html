@@ -74,7 +74,7 @@
                             <tr th:each="prd :${orderList}">
                                 <td th:text="${prd.prdId}"></td>
                                 <td th:text="${prd.title}"></td>
-                                <td><img th:src="@{/upload/product/{url}(url=${prd.getFileNm()})}" /></td>
+                                <td><img width="50%" height="50%" th:src="@{/upload/product/{url}(url=${prd.getFileNm()})}" /></td>
                                 <td th:text="${prd.cont}"></td>
                             </tr>
                             </tbody>

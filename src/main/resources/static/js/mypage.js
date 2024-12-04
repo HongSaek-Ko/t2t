@@ -5,7 +5,6 @@
 //비밀번호 일치 여부 확인 이벤트
 $(document).ready(function () {
     registerEvent(['#rechargeEvent', '#exchageEvent']);
-    registerTabEvent('#tabEvent');
     passwordcheckEvent();
     passwdModify();
     modifyProfile();
@@ -40,7 +39,6 @@ $("#modifyForm").validate({
     }
 });
 
-
 //Ajax 충전버튼 클릭시 이벤트
 function registerModalEvent() {
     $('.modal.fade #addMileBtn').on('click', function () {
@@ -61,11 +59,8 @@ function registerModalEvent() {
             else
                 alert('충전 할수 없습니다.');
         });
-
     });
-
 }
-
 //Ajax 환전버튼 클릭시 이벤트
 function exchangeModalEvent() {
     $('.modal.fade #exchangeMileBtn').on('click', function () {
@@ -84,11 +79,9 @@ function exchangeModalEvent() {
                 if(data.success == true) {
                     $('#commonModal').modal('hide');
                     $('#mile').val(data.mile);
-
                 }
                 else
                     alert('환전 할수 없습니다.');
-
             });
         } else {
             //마일리지가 -가 되면 환전할 마일리지 0으로 리셋
@@ -96,7 +89,6 @@ function exchangeModalEvent() {
             $('#exchangeMile').val("0");
         }
     });
-
 }
 
 //모달 찾아서 바디, 풋터 비우기

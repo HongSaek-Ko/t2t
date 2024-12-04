@@ -10,6 +10,7 @@ import org.t2t.mem.service.MemberService;
 import org.t2t.prd.dto.*;
 import org.t2t.prd.repository.FileMapper;
 import org.t2t.prd.repository.ProductMapper;
+import org.t2t.prd.repository.ReplyMapper;
 import org.t2t.prd.repository.TagMapper;
 
 import java.io.IOException;
@@ -32,6 +33,8 @@ public class ProductService {
     private final TagService tagService;
     private final TagMapper tagMapper;
     private final MemberService memberService;
+    private final ReplyService replyService;
+    private final ReplyMapper replyMapper;
 
     public void write(ProductFormDTO product) throws IOException {
 
@@ -108,6 +111,7 @@ public class ProductService {
         fileService.deleteFile(file.getFileNm());
         fileMapper.deleteFile(prdId);
         productMapper.deleteProduct(prdId);
+        replyMapper.deleteReply(prdId);
     }
 
     public int goodCount(Long prdId) {

@@ -16,7 +16,7 @@
         window.location.href="/";
     </script>
 </div>
-<div th:if="${session.sid != null}" th:data-productid="${product.prdId}" id="productId">
+<div th:if="${session.sid != null}" th:data-productid="${product.prdId}" id="productId" th:data-prdusrid="${product.usrId}">
     <div th:if="${product.salStat != 'PRD02'}">
         <div id="wrapper" th:replace="fragments/base::setContent(~{::searchbar}, ~{::sidebar})">
           <!-- Sidebar -->
@@ -61,7 +61,7 @@
                               </div>
                           </div>
                         <div class="card" style="width: 30rem;border:none;border-radius: 10%;margin-left: 120px;">
-                          <img th:src="|/product/image/${product.getImgFile().getFileNm()}|" class="card-img-top" style="border-radius: 10%;">
+                          <img th:src="|/product/image/${product.getImgFile().getFileNm()}|" id="productImg" class="card-img-top" style="border-radius: 10%;">
 
                           <!--좋아요, 조회수, 구매량 표시 부분-->
                           <div class="card-body">
@@ -207,6 +207,7 @@
 
 
                   <script type="text/javascript" th:src='@{/js/prdDetail.js}'></script>
+                  <script type="text/javascript" th:src='@{/js/third/watermark.js}'></script>
                 <!-- 컨텐츠 종료 지점 -->
               </th:block>
             </th:block>

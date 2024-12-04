@@ -25,7 +25,6 @@ public class Error implements ErrorController {
             if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
                 return ERROR_TEMPLATE_PATH + "500";
             }
-
         }
         return "error";
     }

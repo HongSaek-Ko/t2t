@@ -1,11 +1,13 @@
 var productId = $('#productId').data('productid');
 $(document).ready(function () {
-
+    $(window).on('submit', function (){
+        window.location.href = '/'
+    });
     registerEvent(['#complaintEvent', '#purchaseEvent', '#deleteEvent']);
     registerGoodEvent('#goodEvent');
     getPrdHashes();
     $(window).on('submit', function () {
-        $("#dialogContent").html("구매 완료!")
+        $("#dialogContent").html("요청 처리 완료!")
         $("#dialog-confirm").dialog({
             resizable: false,
             height: "auto",
@@ -14,10 +16,16 @@ $(document).ready(function () {
             redirect: '/'
         });
     });
-
     $('#hide_effect').hide();
     $('#detail_effect').click(function () {
         $('#hide_effect').toggle(1000);
+    });
+
+    $('#productImg').watermark({
+        text : $('#productId').data('prdusrid'),
+        textSize : 20,
+        outputType : 'webp',
+        outputWidth: 500
     });
 });
 
@@ -190,12 +198,12 @@ function createDeleteLayout() {
 
 function createPurchaseLayout() {
     var purchaseArr = [];
-    purchaseArr.push('<form id="purchaseForm" action="/product/' + productId + '/purchase" method="get">') // <...action="/product/prdId/delete"...>
+    purchaseArr.push('<form id="purchaseForm" action="/product/' + productId + '/purchase" method="post">') // <...action="/product/prdId/delete"...>
     purchaseArr.push('    <div class="mb-3" style="display: flex; justify-content: center">')
     purchaseArr.push('        <h4> 이 상품을 구매하시겠습니까? </h4>')
     purchaseArr.push('    </div>')
     purchaseArr.push('    <div class="mb-2" style="display: flex; justify-content: center">')
-    purchaseArr.push('        <button type="submit" class="btn btn-danger mx-2" id="purchaseComplete" value="purchaseComplete">구매</button>')
+    purchaseArr.push('        <button type="submit" class="btn btn-danger mx-2" id="purchaseComplete" value="purchaseComplete" onclick="/">구매</button>')
     purchaseArr.push('    </div>')
     purchaseArr.push('</form>')
     return purchaseArr.join('');
