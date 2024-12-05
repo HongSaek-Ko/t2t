@@ -249,7 +249,7 @@ function joinEvent() {
     function joinSubmit() {
         $("#joinForm").validate({
             rules: {
-                usrId: {required: true},
+                usrId: {required: true, minlength: 5},
                 passwd: {required: true},
                 pwch: {
                     required: true
@@ -261,14 +261,14 @@ function joinEvent() {
                 bankAcntOwr: {required: true}
             },
             messages: {
-                usrId: "ID를 입력해 주세요.",
-                passwd: "비밀번호를 입력해 주세요.",
-                pwch: "비밀번호를 한번 더 입력해 주세요.",
-                nm: "이름을 입력해 주세요.",
-                email: "이메일을 입력해 주세요.",
-                bankNm: "은행명을 입력해 주세요.",
-                bankAcnt: "계좌번호를 입력해 주세요.",
-                bankAcntOwr: "예금주를 입력해 주세요"
+                usrId: "ID를 입력해주세요 (5자 이상).",
+                passwd: "비밀번호를 입력해주세요.",
+                pwch: "비밀번호를 한번 더 입력해주세요.",
+                nm: "이름을 입력해주세요.",
+                email: "이메일을 입력해주세요. (이메일 양식 준수)",
+                bankNm: "은행명을 입력해주세요.",
+                bankAcnt: "계좌번호를 입력해주세요.",
+                bankAcntOwr: "예금주를 입력해주세요"
             },
             errorElement: "div",
             errorPlacement: function (error, element) {

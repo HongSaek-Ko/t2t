@@ -82,11 +82,12 @@
                               <a style="margin-left: 30px">
                                 <i class="bi bi-cash"></i>
                               </a><span>구매량(숫자)</span>
-
                                 <p class="margin"></p><br/>
-                                  <button type="button" class="btn btn-success marg" >판매자와 연락하기</button> <!--채팅으로 연결-->
+                                  <th:block th:if="${session.sid != product.usrId}">
+                                    <button type="button" class="btn btn-success marg" >판매자와 연락하기</button> <!--채팅으로 연결-->
                                   <p class="margin"></p><br/>
-                                  <button type="button" class="btn btn-primary" id="purchaseEvent" value="purchaseEvent">구매하기</button> <!--modal 창으로 띄움 -->
+                                    <button type="button" class="btn btn-primary" id="purchaseEvent" value="purchaseEvent">구매하기</button>
+                                  </th:block><!--modal 창으로 띄움 -->
                               </div>
                           </div>
                         </div>
