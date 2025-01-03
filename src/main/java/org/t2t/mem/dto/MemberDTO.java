@@ -2,8 +2,6 @@ package org.t2t.mem.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import org.t2t.mem.service.MileDTO;
-import org.t2t.mem.service.RankingDTO;
 
 import java.time.LocalDateTime;
 @Data
@@ -25,8 +23,4 @@ public class MemberDTO {
     private String bankAcntOwr;
     private LocalDateTime regDt;
     private LocalDateTime lastDt;
-
-    private MileDTO mile;
-    private RankingDTO rank;
-
 }

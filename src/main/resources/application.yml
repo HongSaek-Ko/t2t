@@ -3,12 +3,16 @@ spring:
   application:
     name: t2t
 
+  batch:
+    job:
+      enabled: false # 프로젝트 실행 시 자동으로 배치 작업이 가동되는 것을 방지
+
   devtools:
     restart:
       enabled: true
 
   datasource:
-    url: jdbc:mysql://localhost:3306/project?serverTimezone=UTC&characterEncoding=UTF-8
+    url: jdbc:mysql://localhost:3306/project?useSSL=false&serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: test1
     password: 1234
@@ -22,7 +26,6 @@ spring:
 #uploadfile.dir: D:\\project\\t2t\\src\\main\\resources\\static\\upload\\
 #movingfile.from: profile\\temp\\
 #movedfile.to: profile\\
-HTTP_SESSION_USER: t2t_session_user
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
@@ -34,6 +37,7 @@ logging:
     org.k8go4go.miniboard.mapper: trace
 
 server:
+  port: 8888
   servlet:
     context-path: /
 
